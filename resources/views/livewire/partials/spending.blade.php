@@ -8,7 +8,9 @@
                                                 (Monthly)
                                             @endif
                                         </div>
-                                        <div class="h7 mb-0 font-weight-bold text-danger">Rp.
+                                        <div class="h7 mb-0 @if (Auth::user()->
+                                            uangkeluar($daterange) >= 1000000000) small @endif
+                                            font-weight-bold text-danger">Rp.
                                             {{ number_format(Auth::user()->uangkeluar($daterange)) }}</div>
                                     </div>
                                     <div class="col-auto">

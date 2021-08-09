@@ -5,7 +5,7 @@
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                         Total Balance</div>
-                    <div class="h7 mb-0 font-weight-bold text-info">Rp.
+                    <div class="h7 mb-0 @if (Auth::user()->saldo() >= 1000000000) small @endif font-weight-bold text-info">Rp.
                         {{ number_format(Auth::user()->saldo()) }}</div>
                 </div>
                 <div class="col-auto">

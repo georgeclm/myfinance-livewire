@@ -8,7 +8,7 @@
                             (Monthly)
                         @endif
                     </div>
-                    <div class="h7 mb-0 font-weight-bold text-success">Rp.
+                    <div class="h7 mb-0 @if (Auth::user()->uangmasuk() >= 1000000000) small @endif font-weight-bold text-success">Rp.
                         {{ number_format(Auth::user()->uangmasuk()) }}</div>
                 </div>
                 <div class="col-auto">
