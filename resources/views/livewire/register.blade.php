@@ -37,8 +37,8 @@
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="password"
                                         class="border-0 form-control form-control-user @error('form.password') is-invalid @enderror"
-                                        wire:model="form.password" name="password" required autocomplete="new-password"
-                                        placeholder="Password">
+                                        wire:model="form.password" id="myInput" name="password" required
+                                        autocomplete="new-password" placeholder="Password">
                                     @error('form.password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -48,7 +48,15 @@
                                 <div class="col-sm-6">
                                     <input type="password" class="border-0 form-control form-control-user"
                                         wire:model="form.password_confirmation" name="password_confirmation" required
-                                        autocomplete="new-password" placeholder="Repeat Password">
+                                        autocomplete="new-password" id="myInput2" placeholder="Repeat Password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox small">
+                                    <input onclick="myFunction()" type="checkbox" class="custom-control-input"
+                                        id="customCheck">
+                                    <label class="custom-control-label text-white" for="customCheck">Show
+                                        Password</label>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-dark btn-user btn-block">
