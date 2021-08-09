@@ -16,6 +16,7 @@ class Detail extends Component
     public $search = 0;
     public $search2 = 0;
     public $q = 0;
+    public $total;
 
     public function mount($id)
     {
@@ -32,6 +33,7 @@ class Detail extends Component
         } else {
             $this->transactions = $this->jenisuang->user_transactions($this->q, $this->daterange);
         }
+        $this->total = $this->transactions->sum('jumlah');
 
         return view('livewire.transaction.detail');
     }

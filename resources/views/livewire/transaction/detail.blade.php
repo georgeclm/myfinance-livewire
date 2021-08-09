@@ -7,15 +7,15 @@
         @livewire('partials.income')
         @livewire('partials.spending')
         @livewire('partials.balance')
-        {{-- <div class="small-when-0 col-xl-12 col-md-12 mb-4">
-                                <div class="bg-gray-100 border-0 card shadow h-100 py-2 border-bottom-warning">
-                                    <div class="h3 fw-bold text-info card-body text-center">
-                                        <input wire:model="daterange" class="form-control" type="text"
-                                            onchange="this.dispatchEvent(new InputEvent('input'))"
-                                            style="text-align:center;" name="daterange" />
-                                    </div>
-                                </div>
-                            </div> --}}
+        <div class="small-when-0 col-xl-12 col-md-12 mb-4">
+            <div class="bg-gray-100 border-0 card shadow h-100 py-2 border-bottom-warning">
+                <div class="h3 fw-bold text-info card-body text-center">
+                    <input wire:model="daterange" class="form-control" type="text"
+                        onchange="this.dispatchEvent(new InputEvent('input'))" style="text-align:center;"
+                        name="daterange" />
+                </div>
+            </div>
+        </div>
         @if (auth()->user()->rekenings->isEmpty())
             @livewire('partials.newaccount')
         @endif
@@ -26,12 +26,12 @@
                 <div class="col-md-5">
                     <h6 class="font-weight-bold text-primary">{{ $jenisuang->nama }}</h6>
                 </div>
+                <div class="col-md-5 my-2">
+                    <h6 class="font-weight-bold text-primary">Rp.
+                        {{ number_format($total) }}
+                    </h6>
+                </div>
                 @if ($jenisuang->id == 2)
-                    <div class="col-md-5 my-2">
-                        <h6 class="font-weight-bold text-danger">Rp.
-                            {{ number_format($jenisuang->categoryTotal($search)) }}
-                        </h6>
-                    </div>
                     <div class="col-md-2">
                         {{-- <input type="hidden" wire:model="q" value="{{ request()->q }}"> --}}
                         <select wire:model="search" class="form-control form-control-user" onchange="$wire.render()">
@@ -44,11 +44,6 @@
                     </div>
                 @endif
                 @if ($jenisuang->id == 1)
-                    <div class="col-md-5 my-2">
-                        <h6 class="font-weight-bold text-success">Rp.
-                            {{ number_format($jenisuang->categoryMasukTotal($search2)) }}
-                        </h6>
-                    </div>
                     <div class="col-md-2">
                         {{-- <input type="hidden" wire:model="q" value="{{ request()->q }}"> --}}
                         <select wire:model="search2" class="form-control form-control-user">

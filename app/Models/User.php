@@ -57,7 +57,7 @@ class User extends Authenticatable
             $return = $return->where('created_at', '>=', $date_range1[0]);
             $return = $return->where('created_at', '<=', $date_range1[1]);
         }
-        return $return->orderBy('created_at', 'desc');
+        return $return->whereMonth('created_at', now()->month)->orderBy('created_at', 'desc');
 
         // if (request()->has('q')) {
         //     return (request()->q == 1)
