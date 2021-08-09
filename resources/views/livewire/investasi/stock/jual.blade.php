@@ -23,7 +23,7 @@
         </script>
     @endif
 
-    <div class="modal fade" wire:ignore id="jual-{{ $stock->id }}" tabindex="-1" role="dialog"
+    <div class="modal fade" wire:ignore.self id="jual-{{ $stock->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-dark  modal-content">
@@ -36,15 +36,21 @@
                 <div class="modal-body">
                     <form id="formjual-{{ $stock->id }}" wire:submit.prevent="submit">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" wire:model="form.kode"
+                            <input type="text" class="form-control form-control-user " wire:model="form.kode"
                                 placeholder="Stock Code" disabled>
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="number" class="form-control form-control-user" wire:model="form.lot"
-                                placeholder="Total" required>
+                            <input type="number"
+                                class="form-control form-control-user @error('form.lot') is-invalid @enderror"
+                                wire:model="form.lot" placeholder="Total" required>
                             <div class="input-group-append">
                                 <span class="input-group-text">lot</span>
                             </div>
+                            @error('form.lot')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
                             <input wire:model="form.harga_beli" type-currency="IDR" type="text" required

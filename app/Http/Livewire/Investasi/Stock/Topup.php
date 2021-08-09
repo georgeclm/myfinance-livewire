@@ -23,6 +23,17 @@ class Topup extends Component
         'keterangan' => null
     ];
 
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName, [
+            'form.rekening_id' => ['required', 'numeric', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
+        ]);
+    }
+
+    protected $validationAttributes = [
+        'form.rekening_id' => 'pocket',
+    ];
+
     public function mount()
     {
         $this->form['kode'] = $this->stock->kode;
@@ -54,8 +65,7 @@ class Topup extends Component
 
         if ($total > $rekening->saldo_sekarang) {
             $this->form['harga_beli'] = $frontJumlah;
-            $this->error = 'Balance Not Enough';
-            $this->dispatchBrowserEvent('contentChanged');
+            $this->addError('form.rekening_id', 'Balance In Pocket Not Enough');
             return $this->render();
         }
 

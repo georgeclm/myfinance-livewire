@@ -33,6 +33,7 @@ class Create extends Component
             'form.jatuh_tempo' => 'required'
         ];
     }
+
     public function submit()
     {
         $frontJumlah = $this->form['jumlah'];
@@ -42,10 +43,9 @@ class Create extends Component
 
         $this->validate();
         if ($this->form['jumlah'] > $this->form['harga_jual']) {
-            $this->form['harga_beli'] = $frontJumlah;
+            $this->form['jumlah'] = $frontJumlah;
             $this->form['harga_jual'] = $frontJual;
-            $this->error = 'Return Amount Less than First Amount';
-            $this->dispatchBrowserEvent('contentChanged');
+            $this->addError('form.harga_jual', 'Return Amount Less than First Amount');
             return $this->render();
         }
 
@@ -53,10 +53,9 @@ class Create extends Component
         $rekening = Rekening::findOrFail($this->form['rekening_id']);
 
         if ($this->form['jumlah'] > $rekening->saldo_sekarang) {
-            $this->form['harga_beli'] = $frontJumlah;
+            $this->form['jumlah'] = $frontJumlah;
             $this->form['harga_jual'] = $frontJual;
-            $this->error = 'Balance Not Enough';
-            $this->dispatchBrowserEvent('contentChanged');
+            $this->addError('form.rekening_id', 'Balance Not Enough');
             return $this->render();
         }
 

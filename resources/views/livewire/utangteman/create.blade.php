@@ -23,8 +23,8 @@
         </script>
     @endif
 
-    <div class="modal fade" wire:ignore id="addRekening" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" wire:ignore.self id="addRekening" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-black  modal-content">
                 <div class="modal-header bg-gray-100 border-0">

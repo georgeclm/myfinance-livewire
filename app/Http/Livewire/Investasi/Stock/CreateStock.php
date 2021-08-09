@@ -23,6 +23,24 @@ class CreateStock extends Component
         'keterangan' => null
     ];
 
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName, [
+            'form.kode' => 'required',
+            'form.lot' => ['required', 'numeric'],
+            'form.rekening_id' => ['required', 'numeric', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
+            'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',')],
+        ]);
+    }
+
+    protected $validationAttributes = [
+        'form.kode' => 'code',
+        'form.lot' => 'lot',
+        'form.rekening_id' => 'pocket',
+        'form.financial_plan_id' => 'financial plan',
+    ];
+
     public function rules()
     {
         return [
@@ -44,16 +62,14 @@ class CreateStock extends Component
         $stocks = Stock::where('user_id', auth()->id())->where('kode', $this->form['kode'])->get();
         if ($stocks->isNotEmpty()) {
             $this->form['harga_beli'] = $frontJumlah;
-            $this->error = 'Code already listed please TopUp';
-            $this->dispatchBrowserEvent('contentChanged');
+            $this->addError('form.kode', 'Code already listed please TopUp');
             return $this->render();
         }
         $total = $this->form['harga_beli'] * $this->form['lot'] * 100;
         $rekening = Rekening::findOrFail($this->form['rekening_id']);
         if ($total > $rekening->saldo_sekarang) {
             $this->form['harga_beli'] = $frontJumlah;
-            $this->error = 'Balance Not Enough';
-            $this->dispatchBrowserEvent('contentChanged');
+            $this->addError('form.rekening_id', 'Balance In Pocket Not Enough ');
             return $this->render();
         }
 

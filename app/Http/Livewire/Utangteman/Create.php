@@ -19,6 +19,21 @@ class Create extends Component
     ];
     public $error;
 
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName, [
+            'form.nama' => 'required',
+            'form.jumlah' => 'required',
+            'form.rekening_id' => ['required', 'numeric', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
+        ]);
+    }
+
+    protected $validationAttributes = [
+        'form.nama' => 'name',
+        'form.jumlah' => 'total',
+        'form.rekening_id' => 'pocket',
+    ];
+
     public function rules()
     {
         return [

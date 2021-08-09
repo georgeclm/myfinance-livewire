@@ -22,7 +22,7 @@
             });
         </script>
     @endif
-    <div class="modal fade" wire:ignore id="DanaMenabung" tabindex="-1" role="dialog"
+    <div class="modal fade" wire:ignore.self id="DanaMenabung" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-black  modal-content">
@@ -56,12 +56,12 @@
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
                             <input type="number" wire:model="form.bulan"
-                                class="border-0 form-control form-control-user @error('bulan') is-invalid @enderror"
+                                class="border-0 form-control form-control-user @error('form.bulan') is-invalid @enderror"
                                 name="bulan" placeholder="How long?" required>
                             <div class="input-group-append">
-                                <span class="input-group-text" id="basic-addon2">bulan</span>
+                                <span class="input-group-text" id="basic-addon2">months</span>
                             </div>
-                            @error('bulan')
+                            @error('form.bulan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

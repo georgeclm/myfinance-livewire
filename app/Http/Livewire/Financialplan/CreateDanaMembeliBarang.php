@@ -18,10 +18,21 @@ class CreateDanaMembeliBarang extends Component
     public $rules = [
         'form.nama' => 'required',
         'form.target' => ['required', 'numeric'],
-        'form.bulan' => ['required', 'numeric'],
+        'form.bulan' => ['required', 'numeric', 'between:1,99'],
         'form.jumlah' => ['required', 'numeric']
     ];
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName, [
+            'form.nama' => 'required',
+            'form.bulan' => ['required', 'numeric', 'between:1,99'],
+        ]);
+    }
 
+    protected $validationAttributes = [
+        'form.nama' => 'name',
+        'form.bulan' => 'month',
+    ];
     public function submit()
     {
         $frontTarget = $this->form['target'];
@@ -29,10 +40,10 @@ class CreateDanaMembeliBarang extends Component
         $frontJumlah = $this->form['jumlah'];
         $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
         $this->validate();
-        if ($this->form['target'] == '0' || $this->form['bulan'] == '0') {
+        if ($this->form['target'] == '0') {
             $this->form['target'] = $frontTarget;
             $this->form['jumlah'] = $frontJumlah;
-            $this->error = 'Stuff Price or how long cannot be 0';
+            $this->error = 'Stuff Price cannot be 0';
             $this->dispatchBrowserEvent('contentChanged');
             return $this->render();
         }

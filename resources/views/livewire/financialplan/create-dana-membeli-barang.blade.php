@@ -22,7 +22,7 @@
             });
         </script>
     @endif
-    <div class="modal fade" wire:ignore id="DanaMembeliBarang" tabindex="-1" role="dialog"
+    <div class="modal fade" wire:ignore.self id="DanaMembeliBarang" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-black  modal-content">
@@ -36,9 +36,9 @@
                     <form id="addDanaMembeliBarang" wire:submit.prevent="submit">
                         <div class="form-group">
                             <input type="text"
-                                class="border-0 form-control form-control-user @error('nama') is-invalid @enderror"
+                                class="border-0 form-control form-control-user @error('form.nama') is-invalid @enderror"
                                 wire:model="form.nama" name="nama" placeholder="Stuff Name" required>
-                            @error('nama')
+                            @error('form.nama')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -47,8 +47,8 @@
                         <div class="mb-3 hide-inputbtns input-group">
                             <input type="text" name="target" type-currency="IDR" wire:model="form.target" required
                                 placeholder="Stuff Price"
-                                class="border-0  form-control form-control-user @error('target') is-invalid @enderror">
-                            @error('target')
+                                class="border-0  form-control form-control-user @error('form.target') is-invalid @enderror">
+                            @error('form.target')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -56,12 +56,12 @@
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
                             <input type="number"
-                                class="border-0 form-control form-control-user @error('bulan') is-invalid @enderror"
+                                class="border-0 form-control form-control-user @error('form.bulan') is-invalid @enderror"
                                 wire:model="form.bulan" name="bulan" placeholder="How long?" required>
                             <div class="input-group-append">
                                 <span class="input-group-text" id="basic-addon2">months</span>
                             </div>
-                            @error('bulan')
+                            @error('form.bulan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -70,8 +70,8 @@
                         <div class="mb-3 hide-inputbtns input-group">
                             <input wire:model="form.jumlah" type-currency="IDR" type="text" name="jumlah" required
                                 placeholder="Fund Avalible Now"
-                                class="border-0  form-control form-control-user @error('jumlah') is-invalid @enderror">
-                            @error('jumlah')
+                                class="border-0  form-control form-control-user @error('form.jumlah') is-invalid @enderror">
+                            @error('form.jumlah')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

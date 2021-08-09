@@ -23,7 +23,7 @@
         </script>
     @endif
 
-    <div class="modal fade" wire:ignore id="topup-{{ $stock->id }}" tabindex="-1" role="dialog"
+    <div class="modal fade" wire:ignore.self id="topup-{{ $stock->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-dark  modal-content">
@@ -55,13 +55,19 @@
 
                         </div>
                         <div class="form-group">
-                            <select wire:model="form.rekening_id" class="form-control form-control-user form-block"
+                            <select wire:model="form.rekening_id"
+                                class="form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
                                 style="padding: 0.5rem !important">
                                 @foreach (auth()->user()->rekenings as $rekening)
                                     <option value="{{ $rekening->id }}">
                                         {{ $rekening->nama_akun }}</option>
                                 @endforeach
                             </select>
+                            @error('form.rekening_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <select wire:model="form.financial_plan_id"

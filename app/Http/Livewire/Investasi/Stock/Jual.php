@@ -32,6 +32,13 @@ class Jual extends Component
     }
 
 
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName, [
+            'form.lot' => ['required', 'numeric'],
+        ]);
+    }
+
 
     public function rules()
     {
@@ -49,8 +56,7 @@ class Jual extends Component
 
         if ($this->form['lot'] > $this->stock->lot) {
             $this->form['harga_beli'] = $frontJumlah;
-            $this->error = 'Total Lot More than the limit';
-            $this->dispatchBrowserEvent('contentChanged');
+            $this->addError('form.lot', 'Total Lot More than the current');
             return $this->render();
         }
 
