@@ -23,27 +23,28 @@
                     </div>
                     <div class="form-group">
                         <input type="text" class="border-0 form-control form-control-user " name="nama_akune"
-                            wire:model="form.nama_akun" required placeholder="Pocket Name">
+                            wire:model.defer="form.nama_akun" required placeholder="Pocket Name">
                     </div>
                     @if ($rekening->jenis_id != 1)
                         <div class="form-group">
                             <input type="text" class="border-0 form-control form-control-user " name="nama_banke"
-                                wire:model="form.nama_bank" required placeholder="Nama Bank">
+                                wire:model.defer="form.nama_bank" required placeholder="Nama Bank">
                         </div>
                     @endif
                     <div class="mb-3 hide-inputbtns input-group">
                         <input type="text" type-currency="IDR" class="border-0 form-control form-control-user "
-                            wire:model="form.saldo_sekarang" disabled placeholder="Current Balance">
+                            wire:model.defer="form.saldo_sekarang" disabled placeholder="Current Balance">
                     </div>
                     @if ($rekening->jenis_id == 2)
                         <div class="mb-3 hide-inputbtns input-group">
                             <input type="text" type-currency="IDR" class="border-0 form-control form-control-user "
-                                wire:model="form.saldo_mengendap" name="saldo_mengendape" placeholder="Balance Settles">
+                                wire:model.defer="form.saldo_mengendap" name="saldo_mengendape"
+                                placeholder="Balance Settles">
                         </div>
                     @endif
                     <div class="form-group">
                         <input type="text" class="border-0 form-control form-control-user " name="keterangane"
-                            wire:model="form.keterangan" placeholder="Description">
+                            wire:model.defer="form.keterangan" placeholder="Description">
                     </div>
                 </form>
             </div>

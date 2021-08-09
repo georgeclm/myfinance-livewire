@@ -35,7 +35,7 @@
                 <div class="modal-body">
                     <form id="addDanaMenabung" wire:submit.prevent="submit">
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model="form.target" type="text" name="target" type-currency="IDR" required
+                            <input wire:model.defer="form.target" type="text" name="target" type-currency="IDR" required
                                 placeholder="Starting Funds"
                                 class="border-0 form-control form-control-user @error('target') is-invalid @enderror">
                             @error('target')
@@ -45,7 +45,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model="form.jumlah" type-currency="IDR" type="text" name="jumlah" required
+                            <input wire:model.defer="form.jumlah" type-currency="IDR" type="text" name="jumlah" required
                                 placeholder="Amount to invest each month"
                                 class="border-0 form-control form-control-user @error('jumlah') is-invalid @enderror">
                             @error('jumlah')
@@ -55,7 +55,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="number" wire:model="form.bulan"
+                            <input type="number" wire:model.defer="form.bulan"
                                 class="border-0 form-control form-control-user @error('form.bulan') is-invalid @enderror"
                                 name="bulan" placeholder="How long?" required>
                             <div class="input-group-append">

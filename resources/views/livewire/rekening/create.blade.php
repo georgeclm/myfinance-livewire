@@ -13,7 +13,8 @@
                     <div class="form-group">
                         <select
                             class="border-0 form-control form-control-user form-block @error('form.jenis_id') is-invalid @enderror"
-                            wire:model="form.jenis_id" name="jenis_id" style="padding: 0.5rem !important" required>
+                            wire:model.defer="form.jenis_id" name="jenis_id" style="padding: 0.5rem !important"
+                            required>
                             <option value="" selected disabled hidden>Choose Type</option>
                             @foreach ($jeniss as $jenis)
                                 <option value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
@@ -28,7 +29,8 @@
                     <div class="form-group">
                         <input type="text" id="nama-akun"
                             class="border-0 form-control form-control-user @error('form.nama_akun') is-invalid @enderror"
-                            wire:model="form.nama_akun" name="nama_akun" required placeholder="Pocket Name" disabled>
+                            wire:model.defer="form.nama_akun" name="nama_akun" required placeholder="Pocket Name"
+                            disabled>
                         @error('form.nama_akun')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -38,8 +40,8 @@
                     <div class="form-group">
                         <input type="text"
                             class="border-0 form-control form-control-user @error('form.nama_bank') is-invalid @enderror"
-                            wire:model="form.nama_bank" name="nama_bank" required id="nama_bank" placeholder="Nama Bank"
-                            disabled>
+                            wire:model.defer="form.nama_bank" name="nama_bank" required id="nama_bank"
+                            placeholder="Nama Bank" disabled>
                         @error('form.nama_bank')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -49,8 +51,8 @@
                     <div class="mb-3 hide-inputbtns input-group">
                         <input type="text" type-currency="IDR"
                             class="border-0 form-control form-control-user @error('form.saldo_sekarang') is-invalid @enderror "
-                            wire:model="form.saldo_sekarang" name="saldo_sekarang" required disabled id="saldo_sekarang"
-                            placeholder="Current Balance">
+                            wire:model.defer="form.saldo_sekarang" name="saldo_sekarang" required disabled
+                            id="saldo_sekarang" placeholder="Current Balance">
                         @error('form.saldo_sekarang') .
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -60,7 +62,7 @@
                     <div class="mb-3 hide-inputbtns input-group">
                         <input type="text" type-currency="IDR"
                             class="border-0 form-control form-control-user @error('form.saldo_mengendap') is-invalid @enderror"
-                            wire:model="form.saldo_mengendap" name="saldo_mengendap" id="saldo_mengendap"
+                            wire:model.defer="form.saldo_mengendap" name="saldo_mengendap" id="saldo_mengendap"
                             placeholder="Balance Settles" disabled>
                         @error('form.saldo_mengendap')
                             <span class="invalid-feedback" role="alert">
@@ -71,8 +73,8 @@
                     <div class="form-group">
                         <input type="text"
                             class="border-0 form-control form-control-user @error('form.keterangan') is-invalid @enderror"
-                            wire:model="form.keterangan" name="keterangan" id="keterangan" placeholder="Description"
-                            disabled>
+                            wire:model.defer="form.keterangan" name="keterangan" id="keterangan"
+                            placeholder="Description" disabled>
                         @error('form.keterangan')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

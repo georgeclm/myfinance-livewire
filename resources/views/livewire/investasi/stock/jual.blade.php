@@ -42,7 +42,7 @@
                         <div class="mb-3 hide-inputbtns input-group">
                             <input type="number"
                                 class="form-control form-control-user @error('form.lot') is-invalid @enderror"
-                                wire:model="form.lot" placeholder="Total" required>
+                                wire:model.defer="form.lot" placeholder="Total" required>
                             <div class="input-group-append">
                                 <span class="input-group-text">lot</span>
                             </div>
@@ -53,7 +53,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model="form.harga_beli" type-currency="IDR" type="text" required
+                            <input wire:model.defer="form.harga_beli" type-currency="IDR" type="text" required
                                 placeholder="Sell Price" class="form-control form-control-user ">
                             <div class="input-group-append">
                                 <span class="input-group-text">Per Lembar</span>
@@ -61,8 +61,8 @@
 
                         </div>
                         <div class="form-group">
-                            <select wire:model="form.rekening_id" class="form-control form-control-user form-block"
-                                style="padding: 0.5rem !important">
+                            <select wire:model.defer="form.rekening_id"
+                                class="form-control form-control-user form-block" style="padding: 0.5rem !important">
                                 @foreach (auth()->user()->rekenings as $rekening)
                                     <option value="{{ $rekening->id }}">
                                         {{ $rekening->nama_akun }}</option>
@@ -70,7 +70,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select wire:model="form.financial_plan_id"
+                            <select wire:model.defer="form.financial_plan_id"
                                 class="form-control form-control-user form-block @error('financial_plan_id') is-invalid @enderror"
                                 style="padding: 0.5rem !important" name="financial_plan_id" disabled>
                                 @foreach (auth()->user()->financialplans as $financialplan)
@@ -86,7 +86,7 @@
 
                         </div>
                         <div class="form-group">
-                            <input type="text" wire:model="form.keterangan" class="form-control form-control-user"
+                            <input type="text" wire:model.defer="form.keterangan" class="form-control form-control-user"
                                 disabled placeholder="Description">
                         </div>
                     </form>

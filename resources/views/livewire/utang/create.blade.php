@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <form id="rekening" wire:submit.prevent="submit">
                     <div class="form-group">
-                        <input type="text" name="nama" required placeholder="Debt to who" wire:model="form.nama"
+                        <input type="text" name="nama" required placeholder="Debt to who" wire:model.defer="form.nama"
                             class="border-0 form-control form-control-user @error('form.nama') is-invalid @enderror">
                         @error('form.nama')
                             <span class="invalid-feedback" role="alert">
@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <select
                             class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
-                            wire:model="form.rekening_id" name="rekening_id" style="padding: 0.5rem !important"
+                            wire:model.defer="form.rekening_id" name="rekening_id" style="padding: 0.5rem !important"
                             required>
                             <option value="" selected disabled hidden>For Pocket</option>
                             @foreach (auth()->user()->rekenings as $rekening)
@@ -36,7 +36,7 @@
                         @enderror
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input type="text" type-currency="IDR" name="jumlah" required wire:model="form.jumlah"
+                        <input type="text" type-currency="IDR" name="jumlah" required wire:model.defer="form.jumlah"
                             placeholder="Total"
                             class="border-0 form-control form-control-user @error('form.jumlah') is-invalid @enderror">
                         @error('form.jumlah')
@@ -46,7 +46,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <input type="text" name="keterangan" placeholder="Description" wire:model="form.keterangan"
+                        <input type="text" name="keterangan" placeholder="Description"
+                            wire:model.defer="form.keterangan"
                             class="border-0 form-control form-control-user @error('form.keterangan') is-invalid @enderror">
                         @error('form.keterangan')
                             <span class="invalid-feedback" role="alert">

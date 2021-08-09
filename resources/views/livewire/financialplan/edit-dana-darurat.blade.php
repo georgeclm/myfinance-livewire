@@ -22,7 +22,7 @@
             });
         </script>
     @endif
-    <div class="modal fade" wire:ignore id="editmodal-{{ $financialplan->id }}" tabindex="-1" role="dialog"
+    <div class="modal fade" wire:ignore.self id="editmodal-{{ $financialplan->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-black  modal-content">
@@ -35,7 +35,7 @@
                 <div class="modal-body">
                     <form id="formeditmodal-{{ $financialplan->id }}" wire:submit.prevent="submit">
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type-currency="IDR" type="text" name="jumlah" wire:model="form.jumlah" required
+                            <input type-currency="IDR" type="text" name="jumlah" wire:model.defer="form.jumlah" required
                                 class="border-0 form-control form-control-user @error('jumlah') is-invalid @enderror">
                             @error('jumlah')
                                 <span class="invalid-feedback" role="alert">
@@ -44,7 +44,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <select wire:model="form.status"
+                            <select wire:model.defer="form.status"
                                 class="border-0 form-control form-control-user form-block @error('status') is-invalid @enderror"
                                 name="status" style="padding: 0.5rem !important" required>
                                 <option value="1">Single</option>

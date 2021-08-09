@@ -22,7 +22,7 @@
             });
         </script>
     @endif
-    <div class="modal fade" wire:ignore id="editmodal-{{ $financialplan->id }}" tabindex="-1" role="dialog"
+    <div class="modal fade" wire:ignore.self id="editmodal-{{ $financialplan->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-black  modal-content">
@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <input type="text"
                                 class="border-0 form-control form-control-user @error('nama') is-invalid @enderror"
-                                name="nama" wire:model="form.nama" placeholder="Stuff Name" required>
+                                name="nama" wire:model.defer="form.nama" placeholder="Stuff Name" required>
                             @error('nama')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="text" name="target" type-currency="IDR" wire:model="form.target" required
+                            <input type="text" name="target" type-currency="IDR" wire:model.defer="form.target" required
                                 placeholder="Stuff Price"
                                 class="border-0 form-control form-control-user @error('target') is-invalid @enderror">
                             @error('target')
@@ -55,7 +55,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="number" wire:model="form.bulan"
+                            <input type="number" wire:model.defer="form.bulan"
                                 class="border-0 form-control form-control-user @error('bulan') is-invalid @enderror"
                                 name="bulan" placeholder="How long?" required>
                             <div class="input-group-append">
@@ -68,7 +68,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="text" name="jumlah" type-currency="IDR" wire:model="form.jumlah" required
+                            <input type="text" name="jumlah" type-currency="IDR" wire:model.defer="form.jumlah" required
                                 placeholder="Fund Avalible Now"
                                 class="border-0 form-control form-control-user @error('jumlah') is-invalid @enderror">
                             @error('jumlah')

@@ -25,7 +25,7 @@
     <div class="modal fade" wire:ignore id="adjustmodal-{{ $rekening->id }}" role="dialog" tabindex="-1"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="bg-dark modal-content">
+            <div class="bg-black modal-content">
                 <div class="modal-header bg-gray-100 border-0">
                     <h5 class="modal-title text-white">
                         Adjust Balance
@@ -44,9 +44,9 @@
                     Your Real Balance
                     <form class="mt-2" id="{{ $rekening->id }}adjustform" wire:submit.prevent="submit">
                         <div class="hide-inputbtns input-group">
-                            <input type="text" type-currency="IDR" name="saldo_sekarang" wire:model="saldo_sekarang"
-                                placeholder="Fill Your Real Balance" required data-number-stepfactor="100"
-                                class="form-control">
+                            <input type="text" type-currency="IDR" name="saldo_sekarang"
+                                wire:model.defer="saldo_sekarang" placeholder="Fill Your Real Balance" required
+                                class="border-0 form-control">
                         </div>
                     </form>
                 </div>

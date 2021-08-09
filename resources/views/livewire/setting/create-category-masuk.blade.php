@@ -22,7 +22,7 @@
             });
         </script>
     @endif
-    <div class="modal fade" wire:ignore id="addCategoryMasuk" tabindex="-1" role="dialog"
+    <div class="modal fade" wire:ignore.self id="addCategoryMasuk" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-black modal-content">
@@ -36,7 +36,7 @@
                     <form id="rekening2" wire:submit.prevent="submit">
                         <div class="form-group">
                             <input type="text" class="border-0 form-control form-control-user " name="nama"
-                                wire:model="form.nama" required placeholder="Category Name">
+                                wire:model.defer="form.nama" required placeholder="Category Name">
                         </div>
                     </form>
                 </div>

@@ -1,4 +1,4 @@
-<div class="modal fade" wire:ignore id="change-{{ $p2p->id }}" tabindex="-1" role="dialog"
+<div class="modal fade" wire:ignore.self id="change-{{ $p2p->id }}" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="bg-black  modal-content">
@@ -11,8 +11,9 @@
             <div class="modal-body">
                 <form id="formchange-{{ $p2p->id }}" wire:submit.prevent="submit">
                     <div class="form-group">
-                        <input type="text" wire:model="form.nama_p2p" class="border-0 form-control form-control-user"
-                            disabled name="nama_p2p" placeholder="P2P Name" required>
+                        <input type="text" wire:model.defer="form.nama_p2p"
+                            class="border-0 form-control form-control-user" disabled name="nama_p2p"
+                            placeholder="P2P Name" required>
                     </div>
                     {{-- <div class="mb-3 hide-inputbtns input-group">
                         <input type="text" maxlength="3"
@@ -28,22 +29,22 @@
                         @enderror
                     </div> --}}
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input wire:model="form.jumlah" type-currency="IDR" disabled type="text" name="jumlah" required
-                            placeholder="Amount" class=" border-0 form-control form-control-user ">
+                        <input wire:model.defer="form.jumlah" type-currency="IDR" disabled type="text" name="jumlah"
+                            required placeholder="Amount" class=" border-0 form-control form-control-user ">
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input wire:model="form.harga_jual" type-currency="IDR" disabled type="text" name="harga_jual"
-                            required placeholder=" Expected Maturity Amount"
+                        <input wire:model.defer="form.harga_jual" type-currency="IDR" disabled type="text"
+                            name="harga_jual" required placeholder=" Expected Maturity Amount"
                             class="border-0  form-control form-control-user ">
                     </div>
                     <div class="form-group">
-                        <input wire:model="form.jatuh_tempo" disabled
+                        <input wire:model.defer="form.jatuh_tempo" disabled
                             onchange="this.dispatchEvent(new InputEvent('input'))" class="border-0 form-control"
                             type="text" name="jatuh_tempo" />
                     </div>
                     <div class="form-group">
                         <select class="border-0 form-control form-control-user form-block " disabled
-                            wire:model="form.rekening_id" name="rekening_id" style="padding: 0.5rem !important"
+                            wire:model.defer="form.rekening_id" name="rekening_id" style="padding: 0.5rem !important"
                             required>
                             <option value="" selected disabled hidden>From Pocket</option>
                             @foreach (auth()->user()->rekenings as $rekening)
@@ -53,7 +54,7 @@
                     </div>
                     <div class="form-group">
                         <select class="border-0 form-control form-control-user form-block"
-                            wire:model="form.financial_plan_id" name="financial_plan_id"
+                            wire:model.defer="form.financial_plan_id" name="financial_plan_id"
                             style="padding: 0.5rem !important" required>
                             <option value="" selected disabled hidden>Invest Goal</option>
                             @foreach (auth()->user()->financialplans as $financialplan)
@@ -64,7 +65,8 @@
                     </div>
                     <div class="form-group">
                         <input type="text" class="border-0 form-control form-control-user " disabled
-                            wire:model="form.keterangan" name="keterangan" id="keterangan" placeholder="Description">
+                            wire:model.defer="form.keterangan" name="keterangan" id="keterangan"
+                            placeholder="Description">
                     </div>
                 </form>
             </div>

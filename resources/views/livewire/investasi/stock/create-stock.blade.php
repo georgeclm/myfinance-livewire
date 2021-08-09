@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <input type="text" maxlength="4"
                                 class="border-0 form-control form-control-user @error('form.kode') is-invalid @enderror"
-                                name="kode" wire:model="form.kode" placeholder="Stock Code" required>
+                                name="kode" wire:model.defer="form.kode" placeholder="Stock Code" required>
                             @error('form.kode')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -46,7 +46,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="number" wire:model="form.lot"
+                            <input type="number" wire:model.defer="form.lot"
                                 class="border-0 form-control form-control-user @error('form.lot') is-invalid @enderror"
                                 name="lot" placeholder="Total" required>
                             <div class="input-group-append">
@@ -60,7 +60,7 @@
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
                             <input type="text" name="harga_beli" required placeholder="Buy Price" type-currency="IDR"
-                                wire:model="form.harga_beli"
+                                wire:model.defer="form.harga_beli"
                                 class="border-0 form-control form-control-user @error('form.harga_beli') is-invalid @enderror">
                             <div class="input-group-append">
                                 <span class="input-group-text">Per Lembar</span>
@@ -88,7 +88,7 @@
                             <select
                                 class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
                                 name="rekening_id" style="padding: 0.5rem !important" required
-                                wire:model="form.rekening_id">
+                                wire:model.defer="form.rekening_id">
                                 <option value="" selected disabled hidden>From Pocket</option>
                                 @foreach (auth()->user()->rekenings as $rekening)
                                     <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }}</option>
@@ -103,7 +103,7 @@
                         <div class="form-group">
                             <select
                                 class="border-0 form-control form-control-user form-block @error('form.financial_plan_id') is-invalid @enderror"
-                                wire:model="form.financial_plan_id" name="financial_plan_id"
+                                wire:model.defer="form.financial_plan_id" name="financial_plan_id"
                                 style="padding: 0.5rem !important" required>
                                 <option value="" selected disabled hidden>Invest Goal</option>
                                 @foreach (auth()->user()->financialplans as $financialplan)
@@ -120,7 +120,7 @@
                         <div class="form-group">
                             <input type="text"
                                 class="border-0 form-control form-control-user @error('form.keterangan') is-invalid @enderror"
-                                name="keterangan" wire:model="form.keterangan" id="keterangan"
+                                name="keterangan" wire:model.defer="form.keterangan" id="keterangan"
                                 placeholder="Description">
                             @error('form.keterangan')
                                 <span class="invalid-feedback" role="alert">

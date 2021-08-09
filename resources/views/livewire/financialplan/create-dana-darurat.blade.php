@@ -23,8 +23,8 @@
         </script>
     @endif
 
-    <div class="modal fade" wire:ignore id="danaDarurat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" wire:ignore.self id="danaDarurat" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-black  modal-content">
                 <div class="modal-header bg-gray-100 border-0">
@@ -37,7 +37,7 @@
                     <form id="addDanaDarurat" wire:submit.prevent="submit">
                         <div class="mb-3 hide-inputbtns input-group">
                             <input type="text" name="jumlah" type-currency="IDR" required placeholder="Spending Monthly"
-                                wire:model="form.jumlah"
+                                wire:model.defer="form.jumlah"
                                 class="border-0 form-control form-control-user @error('jumlah') is-invalid @enderror">
                             @error('jumlah')
                                 <span class="invalid-feedback" role="alert">
@@ -48,7 +48,8 @@
                         <div class="form-group">
                             <select
                                 class="border-0 form-control form-control-user form-block @error('status') is-invalid @enderror"
-                                wire:model="form.status" name="status" style="padding: 0.5rem !important" required>
+                                wire:model.defer="form.status" name="status" style="padding: 0.5rem !important"
+                                required>
                                 <option value="" selected disabled hidden>Marital Status</option>
                                 <option value="1">Single</option>
                                 <option value="2">Married</option>

@@ -36,7 +36,8 @@
                 <div class="modal-body">
                     <form id="rekening" wire:submit.prevent="submit">
                         <div class="form-group">
-                            <input type="text" name="nama" required wire:model="form.nama" placeholder="Debt from who"
+                            <input type="text" name="nama" required wire:model.defer="form.nama"
+                                placeholder="Debt from who"
                                 class="border-0 form-control form-control-user @error('form.nama') is-invalid @enderror">
                             @error('form.nama')
                                 <span class="invalid-feedback" role="alert">
@@ -47,8 +48,8 @@
                         <div class="form-group">
                             <select
                                 class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
-                                wire:model="form.rekening_id" name="rekening_id" style="padding: 0.5rem !important"
-                                required>
+                                wire:model.defer="form.rekening_id" name="rekening_id"
+                                style="padding: 0.5rem !important" required>
                                 <option value="" selected disabled hidden>From Pocket</option>
                                 @foreach (auth()->user()->rekenings as $rekening)
                                     <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }}</option>
@@ -62,7 +63,7 @@
                         </div>
 
                         <div class="mb-3 hide-inputbtns input-group" id="kategori">
-                            <input type="text" type-currency="IDR" name="jumlah" wire:model="form.jumlah" required
+                            <input type="text" type-currency="IDR" name="jumlah" wire:model.defer="form.jumlah" required
                                 placeholder="Total Debt"
                                 class="border-0 form-control form-control-user @error('form.jumlah') is-invalid @enderror">
                             @error('form.jumlah')
@@ -72,7 +73,8 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <input type="text" name="keterangan" placeholder="Description" wire:model="form.keterangan"
+                            <input type="text" name="keterangan" placeholder="Description"
+                                wire:model.defer="form.keterangan"
                                 class="border-0 form-control form-control-user @error('form.keterangan') is-invalid @enderror">
                             @error('form.keterangan')
                                 <span class="invalid-feedback" role="alert">

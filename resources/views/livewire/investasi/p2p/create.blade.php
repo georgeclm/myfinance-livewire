@@ -36,7 +36,7 @@
                 <div class="modal-body">
                     <form id="addStock" wire:submit.prevent="submit">
                         <div class="form-group">
-                            <input type="text" wire:model="form.nama_p2p"
+                            <input type="text" wire:model.defer="form.nama_p2p"
                                 class="border-0 form-control form-control-user " name="nama_p2p" placeholder="P2P Name"
                                 required>
                         </div>
@@ -54,11 +54,11 @@
                         @enderror
                     </div> --}}
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model="form.jumlah" type-currency="IDR" type="text" name="jumlah" required
+                            <input wire:model.defer="form.jumlah" type-currency="IDR" type="text" name="jumlah" required
                                 placeholder="Amount" class=" border-0 form-control form-control-user ">
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model="form.harga_jual" type-currency="IDR" type="text" name="harga_jual"
+                            <input wire:model.defer="form.harga_jual" type-currency="IDR" type="text" name="harga_jual"
                                 required placeholder=" Expected Maturity Amount"
                                 class="border-0  form-control form-control-user  @error('form.harga_jual') is-invalid @enderror ">
                             @error('form.harga_jual')
@@ -68,14 +68,15 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <input wire:model="form.jatuh_tempo" onchange="this.dispatchEvent(new InputEvent('input'))"
-                                class="border-0 form-control" type="text" name="jatuh_tempo" />
+                            <input wire:model.defer="form.jatuh_tempo"
+                                onchange="this.dispatchEvent(new InputEvent('input'))" class="border-0 form-control"
+                                type="text" name="jatuh_tempo" />
                         </div>
                         <div class="form-group">
                             <select
                                 class="border-0 form-control form-control-user form-block  @error('form.rekening_id') is-invalid @enderror"
-                                wire:model="form.rekening_id" name="rekening_id" style="padding: 0.5rem !important"
-                                required>
+                                wire:model.defer="form.rekening_id" name="rekening_id"
+                                style="padding: 0.5rem !important" required>
                                 <option value="" selected disabled hidden>From Pocket</option>
                                 @foreach (auth()->user()->rekenings as $rekening)
                                     <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }}</option>
@@ -89,7 +90,7 @@
                         </div>
                         <div class="form-group">
                             <select class="border-0 form-control form-control-user form-block"
-                                wire:model="form.financial_plan_id" name="financial_plan_id"
+                                wire:model.defer="form.financial_plan_id" name="financial_plan_id"
                                 style="padding: 0.5rem !important" required>
                                 <option value="" selected disabled hidden>Invest Goal</option>
                                 @foreach (auth()->user()->financialplans as $financialplan)
@@ -100,7 +101,7 @@
                         </div>
                         <div class="form-group">
                             <input type="text" class="border-0 form-control form-control-user "
-                                wire:model="form.keterangan" name="keterangan" id="keterangan"
+                                wire:model.defer="form.keterangan" name="keterangan" id="keterangan"
                                 placeholder="Description">
                         </div>
                     </form>
