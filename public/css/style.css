@@ -1,0 +1,28 @@
+* {
+  font-family: "Montserrat", sans-serif;
+  list-style: none; /*to make list without any style*/
+}
+.text-start ul li {
+  /*to add line and new style for list in right resume*/
+  position: relative; /*same as before to add new obj*/
+}
+
+/*:before function to add something before every new line*/
+.text-start ul li:before {
+  content: ""; /*unfill content just to make shape */
+  position: absolute; /*to make the position to the relative*/
+  top: 15px; /*to make the obj isnt on top of list */
+  left: -22.5px; /*adjust the obj */
+  width: 12px; /*how the big the object or shape is */
+  height: 12px;
+  border: 2px solid rgb(43, 40, 40);
+}
+.img-fluid {
+  width: 20rem;
+}
+@media screen and (max-width: 768px) {
+  .card {
+    position: absolute !important;
+    width: 100% !important;
+  }
+}
