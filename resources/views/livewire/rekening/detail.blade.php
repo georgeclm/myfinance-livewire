@@ -3,7 +3,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">{{ $rekening->nama_akun }}</h1>
     </div>
-    <div class="row">
+    <div class="row mobile">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="bg-gray-100 border-0 card shadow h-100 py-2 border-bottom-info">
                 <div class="h3 fw-bold text-info card-body">
@@ -96,11 +96,16 @@
                                     </div>
                                 </div>
                             @empty
+                                <div class="row">
+                                    <div class="cell">
+                                        Records Empty
+                                    </div>
+                                </div>
                             @endforelse
                         </div>
                     </div>
 
-                    <table class="table table-bordered table-dark" width="100%" cellspacing="0" id="bigtable">
+                    <table class="only-big table table-bordered table-dark" width="100%" cellspacing="0" id="bigtable">
                         <thead>
                             <tr class="{{ $jenisuang->color() }} text-light">
                                 <th>Total</th>

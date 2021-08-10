@@ -10,7 +10,7 @@
                     class="fas fa-download fa-sm text-white-50"></i> Add P2P</a>
         @endif
     </div>
-    <div class="row">
+    <div class="row mobile">
         <div class="small-when-0 col-xl-3 col-md-6 mb-4">
             <div class="bg-gray-100 border-0 card border-left-success shadow h-100 py-2">
                 <div class="card-body">

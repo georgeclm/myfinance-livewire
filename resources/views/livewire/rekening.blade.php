@@ -9,12 +9,13 @@
                 class="fas fa-download fa-sm text-white-50"></i> Add Pocket</a>
     </div>
     <!-- Content Row -->
-    <div class="row">
+    <div class="row mobile">
         @livewire('partials.totalbalance')
         @livewire('partials.balancewithasset')
     </div>
 
     @foreach ($jeniss as $jenis)
+
         <!-- DataTales Example -->
         <div class="bg-dark border-0 card shadow mb-4">
             <div class="bg-gray-100 border-0 card-header py-3">

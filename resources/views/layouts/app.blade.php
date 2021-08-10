@@ -55,9 +55,18 @@
             overflow-y: auto !important;
         }
 
+        .mobile {
+            margin-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
         @media screen and (max-width: 768px) {
             .small-when-0 {
                 padding: 0 !important;
+            }
+
+            .only-big {
+                display: none !important;
             }
         }
 
@@ -87,7 +96,7 @@
             </div>
         </div>
         @if (!in_array(Route::current()->uri, ['login', 'register']))
-            <a class="scroll-to-top rounded" href="#page-top">
+            <a class="only-big scroll-to-top rounded" href="#page-top">
                 <i class="fas fa-angle-up"></i>
             </a>
         @endif

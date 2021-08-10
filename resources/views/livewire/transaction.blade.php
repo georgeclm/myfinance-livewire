@@ -9,7 +9,7 @@
                     class="fas fa-download fa-sm text-white-50"></i> Add Transaction</a>
         @endif
     </div>
-    <div class="row">
+    <div class="row mobile">
         @livewire('partials.income')
         @livewire('partials.spending',['daterange' => $daterange])
         @livewire('partials.balance')

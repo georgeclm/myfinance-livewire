@@ -8,7 +8,7 @@
                         class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
     </div>
     <!-- Content Row -->
-    <div class="row">
+    <div class="row mobile">
         <div class="col-lg-6 small-when-0 mb-3 this_small">
             <!-- Project Card Example -->
             <div class="d-flex align-items-center justify-content-between">
@@ -39,7 +39,7 @@
         @livewire('partials.balancewithasset')
     </div>
 
-    <div class="row">
+    <div class="row mobile">
         @if (auth()->user()->uangkeluar() != 0)
             <!-- Content Column -->
             <div class="small-when-0 col-lg-6 mb-4">

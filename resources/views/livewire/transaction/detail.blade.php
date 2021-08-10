@@ -3,7 +3,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">{{ $jenisuang->nama }}</h1>
     </div>
-    <div class="row">
+    <div class="row mobile">
         @livewire('partials.income')
         @livewire('partials.spending')
         @livewire('partials.balance')
@@ -102,10 +102,15 @@
                                 </div>
                             </div>
                         @empty
+                            <div class="row">
+                                <div class="cell">
+                                    Records Empty
+                                </div>
+                            </div>
                         @endforelse
                     </div>
                 </div>
-                <table class="table table-bordered table-dark" width="100%" cellspacing="0" id="bigtable">
+                <table class="only-big table table-bordered table-dark" width="100%" cellspacing="0" id="bigtable">
                     <thead>
                         <tr class="{{ $jenisuang->color() }} text-light">
                             <th>Total</th>

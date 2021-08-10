@@ -4,7 +4,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Financial Plan</h1>
     </div>
-    <div class="row">
+    <div class="row mobile">
         <div class="col-lg-6 small-when-0">
             <!-- Dropdown Card Example -->
             <div class="bg-dark border-0 card shadow mb-4">

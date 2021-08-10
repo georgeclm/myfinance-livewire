@@ -9,7 +9,7 @@
                         class="fas fa-download fa-sm text-white-50"></i> Add Your Friends Debt </a>
             @endif
         </div>
-        <div class="row">
+        <div class="row mobile">
             <!-- Income (Monthly) Card Example -->
             @if (!$utangs->isEmpty())
                 <div class="small-when-0 col-xl-3 col-md-6 mb-4">

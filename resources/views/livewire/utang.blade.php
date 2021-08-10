@@ -9,7 +9,7 @@
                     class="fas fa-download fa-sm text-white-50"></i> Add Your Debt</a>
         @endif
     </div>
-    <div class="row">
+    <div class="row mobile">
         @if (Auth::user()->totalutang() != 0)
             <!-- Income (Monthly) Card Example -->
             <div class="small-when-0 col-xl-3 col-md-6 mb-4">

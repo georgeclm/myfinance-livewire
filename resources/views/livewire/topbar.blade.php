@@ -53,16 +53,18 @@
     <nav class="navbar navbar-dark bg-black navbar-expand d-md-none d-lg-none d-xl-none fixed-bottom p-0">
         <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item" style="line-height: 80% !important; word-wrap:normal;">
-                <a href="/" class="nav-link  @if (Route::current()->uri == 'home') active @endif"><i class="fas fa-fw fa-tachometer-alt"></i><br>
+                <a href="/" class="nav-link  @if (Route::current()->uri == '/') active @endif"><i class="fas fa-fw fa-tachometer-alt"></i><br>
                     <span style="font-size: 10px">Home</span>
                 </a>
             </li>
             <li class="nav-item" style="line-height: 80% !important; word-wrap:normal;">
-                <a href="/pockets" class="nav-link @if (Route::current()->uri == 'rekenings') active @endif"><i class="fas fa-fw fa-wallet"></i><br>
+                <a href="/pockets" class="nav-link @if (Route::current()->uri == 'pockets') active @endif"><i class="fas fa-fw fa-wallet"></i><br>
                     <span style="font-size: 10px">Pockets</span>
                 </a>
             </li>
-            <li class="nav-item dropup no-arrow" style="line-height: 80% !important; word-wrap:normal;">
+            <li class="nav-item dropup no-arrow @if (in_array(Route::current()->uri,
+                ['transactions', 'transactions/{id}'])) active @endif" style="line-height: 80%
+                !important; word-wrap:normal;">
                 <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-fw fa-dollar-sign"></i><br>
