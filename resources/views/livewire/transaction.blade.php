@@ -17,7 +17,7 @@
             <div class="bg-gray-100 border-0 card shadow h-100 py-2 border-bottom-warning">
                 <div class="h3 fw-bold text-info card-body text-center">
                     <input wire:model="daterange" class="form-control picker_select" style="text-align:center;"
-                        type="text" name="daterange" onchange="this.dispatchEvent(new InputEvent('input'))" />
+                        type="text" readonly name="daterange" onchange="this.dispatchEvent(new InputEvent('input'))" />
                 </div>
             </div>
         </div>

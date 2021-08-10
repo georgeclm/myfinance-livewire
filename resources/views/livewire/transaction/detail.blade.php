@@ -10,7 +10,7 @@
         <div class="small-when-0 col-xl-12 col-md-12 mb-4">
             <div class="bg-gray-100 border-0 card shadow h-100 py-2 border-bottom-warning">
                 <div class="h3 fw-bold text-info card-body text-center">
-                    <input wire:model="daterange" class="form-control" type="text"
+                    <input wire:model="daterange" class="form-control" type="text" readonly
                         onchange="this.dispatchEvent(new InputEvent('input'))" style="text-align:center;"
                         name="daterange" />
                 </div>
