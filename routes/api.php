@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RekeningApiController;
+use App\Http\Controllers\TestApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::resource('rekenings', RekeningApiController::class);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::get('rekenings', [RekeningApiController::class, 'index']);
+Route::get('/welcomeinfo/', [TestApiController::class, 'welcomeinfo']);
+// Route::get('rekenings/{rekening}', [RekeningApiController::class, 'show']);
+Route::get('rekenings/search/{name}', [RekeningApiController::class, 'search']);
+
+// Protected Routes
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('rekenings', [RekeningApiController::class, 'store']);
+    Route::put('rekenings/{rekening}/update', [RekeningApiController::class, 'update']);
+    Route::delete('rekenings/{rekening}', [RekeningApiController::class, 'destroy']);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
