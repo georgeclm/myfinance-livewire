@@ -69,35 +69,31 @@
         data-turbolinks-track="true" />
 </head>
 
-<body class="bg-dark">
+<body id="page-top" class="bg-dark">
     @if (!in_array(Route::current()->uri, ['login', 'register']))
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-    @endif
-    <div id="app">
-        @if (!in_array(Route::current()->uri, ['login', 'register']))
-            <div id="page-top">
-                <!-- Page Wrapper -->
-                <div id="wrapper">
-                    @livewire('sidebar')
-                    <div id="content-wrapper" class="d-flex flex-column">
-                        <!-- Main Content -->
-                        <div id="content " class="bg-black">
-                            @livewire('topbar')
-                            <!-- Begin Page Content -->
-                            <br>
-                            {{ $slot }}
-                            <br><br><br><br><br>
-                            @livewire('footer')
-                        </div>
-                    </div>
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+            @livewire('sidebar')
+            <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Main Content -->
+                <div id="content " class="bg-black">
+                    @livewire('topbar')
+                    <!-- Begin Page Content -->
+                    <br>
+                    {{ $slot }}
+                    <br><br><br><br><br>
+                    @livewire('footer')
                 </div>
             </div>
-        @else
-            {{ $slot }}
+        </div>
+        @if (!in_array(Route::current()->uri, ['login', 'register']))
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
         @endif
-    </div>
+    @else
+        {{ $slot }}
+    @endif
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
