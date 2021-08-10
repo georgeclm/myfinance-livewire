@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('rekenings', [RekeningApiController::class, 'index']);
-Route::get('/welcomeinfo/', [TestApiController::class, 'welcomeinfo']);
+Route::get('/welcomeinfo', [TestApiController::class, 'welcomeinfo']);
 // Route::get('rekenings/{rekening}', [RekeningApiController::class, 'show']);
 Route::get('rekenings/search/{name}', [RekeningApiController::class, 'search']);
 
