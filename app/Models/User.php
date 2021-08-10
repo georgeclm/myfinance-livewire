@@ -6,8 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -44,7 +46,32 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+    public static function checkToken($token)
+    {
+        if ($token->token) {
+            return true;
+        }
+        return false;
+    }
+    public static function getCurrentUser($request)
+    {
+        if (!User::checkToken($request)) {
+            return response()->json([
+                'message' => 'Token is required'
+            ], 422);
+        }
 
+        $user = JWTAuth::parseToken()->authenticate();
+        return $user;
+    }
     public function rekenings()
     {
         return $this->hasMany(Rekening::class)->where('user_id', auth()->id());
