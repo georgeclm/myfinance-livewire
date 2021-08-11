@@ -28,7 +28,7 @@ class Login extends Component
     {
         // $this->addError('email', 'The email field is invalid.');
         $this->validate();
-        if (Auth::attempt($this->form)) {
+        if (Auth::attempt($this->form, true)) {
             return redirect(route('home'));
         } else {
             session()->flash('error', 'Email or Password Is Incorrect');
