@@ -18,4 +18,25 @@ class TestApiController extends Controller
         }
         return response()->json($list);
     }
+    public function recommendedArticles()
+    {
+        $list = new Article();
+        $list = $list->getRecommended();
+        foreach ($list as $item) {
+            $item['article_content'] = strip_tags($item['article_content']);
+            $item['article_content'] = $Content = preg_replace("/&#?[a-z0-9]+;/i", " ", $item['article_content']);
+        }
+        return response()->json($list);
+    }
+
+    public function allArticles()
+    {
+        $list = new Article();
+        $list = $list->getAllArticles();
+        foreach ($list as $item) {
+            $item['article_content'] = strip_tags($item['article_content']);
+            $item['article_content'] = $Content = preg_replace("/&#?[a-z0-9]+;/i", " ", $item['article_content']);
+        }
+        return response()->json($list);
+    }
 }

@@ -32,3 +32,5 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 //get type_ie=3 articles where are welcome info
 Route::get('/welcomeinfo', [TestApiController::class, 'welcomeinfo']);
+Route::get('/recommendedarticles', [TestApiController::class, 'recommendedArticles']);
+Route::get('/allarticles', [TestApiController::class, 'allArticles']);
