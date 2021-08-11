@@ -45,7 +45,7 @@ class Register extends Component
         $this->validate();
 
         User::create($this->form);
-        Auth::attempt(['email' => $this->form['email'], 'password' => bcrypt($this->form['password'])], true);
+        Auth::attempt(['email' => $this->form['email'], 'password' => $this->form['password']], true);
         return redirect(route('home'));
     }
 
