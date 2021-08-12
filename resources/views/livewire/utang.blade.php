@@ -20,7 +20,7 @@
                                 <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                     Total Debt</div>
                                 <div class="h7 mb-0 font-weight-bold text-danger">Rp.
-                                    {{ number_format(Auth::user()->totalutang()) }}
+                                    {{ number_format(Auth::user()->totalutang(), 0, ',', '.') }}
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -59,7 +59,7 @@
                             @livewire('utang.edit',['utang' => $utang])
                             <tr>
                                 <td>{{ $utang->nama }}</td>
-                                <td>Rp. {{ number_format($utang->jumlah) }}</td>
+                                <td>Rp. {{ number_format($utang->jumlah, 0, ',', '.') }}</td>
                                 <td>{{ $utang->keterangan ?? '-' }}</td>
                                 <td>{{ $utang->created_at->format('l j F Y') }}</td>
                                 <td> <button data-toggle="modal" data-target="#editmodal-{{ $utang->id }}"

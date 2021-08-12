@@ -18,7 +18,7 @@ class Edit extends Component
     {
         $this->form = [
             'nama' => $this->utang->nama,
-            'jumlah' => 'Rp ' . number_format($this->utang->jumlah),
+            'jumlah' => 'Rp ' . number_format($this->utang->jumlah, 0, ',', '.'),
             'keterangan' => $this->utang->keterangan,
         ];
     }

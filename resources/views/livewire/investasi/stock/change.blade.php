@@ -69,7 +69,7 @@
                                 style="padding: 0.5rem !important" name="financial_plan_id">
                                 @foreach (auth()->user()->financialplans as $financialplan)
                                     <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>{{ $financialplan->nama }} - Rp.
-                                        {{ number_format($financialplan->target) }}</option>
+                                        {{ number_format($financialplan->target, 0, ',', '.') }}</option>
                                 @endforeach
                                 @error('financial_plan_id')
                                     <span class="invalid-feedback" role="alert">

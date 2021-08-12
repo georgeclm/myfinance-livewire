@@ -43,7 +43,7 @@
                                     @livewire('cicilan.delete',['cicilan' => $cicilan])
                                     <tr>
                                         <td>{{ $cicilan->nama }}</td>
-                                        <td>Rp. {{ number_format($cicilan->jumlah) }}</td>
+                                        <td>Rp. {{ number_format($cicilan->jumlah, 0, ',', '.') }}</td>
                                         <td>{{ $cicilan->sekarang }}/{{ $cicilan->bulan }}
                                         </td>
                                         <td>{{ $cicilan->tanggal }}</td>

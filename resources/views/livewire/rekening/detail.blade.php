@@ -58,7 +58,7 @@
                             @forelse ($jenisuang->user_transactions($q)->where('rekening_id',$rekening->id) as $transaction)
                                 <div class="row">
                                     <div class="cell {{ $jenisuang->textColor() }}" data-title="Jumlah">
-                                        Rp. {{ number_format($transaction->jumlah) }}
+                                        Rp. {{ number_format($transaction->jumlah, 0, ',', '.') }}
                                     </div>
                                     @if ($transaction->utang_id)
                                         <div class="cell text-white" data-title="Nama Utang">
@@ -127,7 +127,7 @@
                         <tbody>
                             @forelse ($jenisuang->user_transactions($q)->where('rekening_id',$rekening->id) as $transaction)
                                 <tr>
-                                    <td>Rp. {{ number_format($transaction->jumlah) }}</td>
+                                    <td>Rp. {{ number_format($transaction->jumlah, 0, ',', '.') }}</td>
                                     @if ($transaction->utang_id)
                                         <td>{{ $transaction->utang->keterangan ?? $transaction->utang->nama }}
                                         </td>

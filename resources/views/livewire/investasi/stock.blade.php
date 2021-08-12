@@ -19,7 +19,7 @@
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Total Stock</div>
                             <div class="h7 mb-0 font-weight-bold text-success">Rp.
-                                {{ number_format(Auth::user()->total_stocks()) }}
+                                {{ number_format(Auth::user()->total_stocks(), 0, ',', '.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -37,7 +37,7 @@
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Total Gain Or Loss</div>
                             <div class="h7 mb-0 font-weight-bold text-warning">Rp.
-                                {{ number_format(Auth::user()->total_stocks_gain_or_loss()) }}
+                                {{ number_format(Auth::user()->total_stocks_gain_or_loss(), 0, ',', '.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -58,7 +58,7 @@
                 <div
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">{{ $stock->kode }} - Rp.
-                        {{ number_format($stock->total) }}
+                        {{ number_format($stock->total, 0, ',', '.') }}
                     </h6>
                     <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -80,7 +80,7 @@
                 <div class="card-body text-white">
                     <div class="d-flex">
                         <div class="flex-grow-1">
-                            Avg Price: Rp. {{ number_format($stock->harga_beli) }} per-Lembar
+                            Avg Price: Rp. {{ number_format($stock->harga_beli, 0, ',', '.') }} per-Lembar
                         </div>
                         {{ $stock->lot }} Lot
                     </div>

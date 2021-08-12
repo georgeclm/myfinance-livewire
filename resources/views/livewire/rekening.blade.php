@@ -49,9 +49,9 @@
                                     @if ($rekening->jenis_id != 1)
                                         <td>{{ $rekening->nama_bank }}</td>
                                     @endif
-                                    <td>Rp. {{ number_format($rekening->saldo_sekarang) }}</td>
+                                    <td>Rp. {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</td>
                                     @if ($rekening->jenis_id == 2)
-                                        <td>Rp. {{ number_format($rekening->saldo_mengendap) }}
+                                        <td>Rp. {{ number_format($rekening->saldo_mengendap, 0, ',', '.') }}
                                         </td>
                                     @endif
                                     <td>{{ $rekening->keterangan ?? '-' }}</td>

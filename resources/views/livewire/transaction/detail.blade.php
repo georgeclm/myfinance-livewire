@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-md-5 my-2">
                     <h6 class="font-weight-bold text-primary">Rp.
-                        {{ number_format($total) }}
+                        {{ number_format($total, 0, ',', '.') }}
                     </h6>
                 </div>
                 @if ($jenisuang->id == 2)
@@ -64,7 +64,7 @@
                         @forelse ($transactions as $transaction)
                             <div class="row">
                                 <div class="cell {{ $jenisuang->textColor() }}" data-title="Jumlah">
-                                    Rp. {{ number_format($transaction->jumlah) }}
+                                    Rp. {{ number_format($transaction->jumlah, 0, ',', '.') }}
                                 </div>
                                 @if ($jenisuang->id == 4)
                                     <div class="cell text-white" data-title="Nama Utang">
@@ -131,7 +131,7 @@
                     <tbody>
                         @forelse ($transactions as $transaction)
                             <tr>
-                                <td>Rp {{ number_format($transaction->jumlah) }}</td>
+                                <td>Rp {{ number_format($transaction->jumlah, 0, ',', '.') }}</td>
                                 @if ($jenisuang->id == 4)
                                     <td>{{ $transaction->utang->keterangan ?? $transaction->utang->nama }}
                                     </td>

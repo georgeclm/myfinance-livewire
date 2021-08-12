@@ -6,7 +6,7 @@
                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                         Total Balance</div>
                     <div class="h7 mb-0 @if (Auth::user()->saldo() >= 1000000000) small @endif font-weight-bold text-info">Rp.
-                        {{ number_format(Auth::user()->saldo()) }}</div>
+                        {{ number_format(Auth::user()->saldo(), 0, ',', '.') }}</div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-hand-holding-usd fa-2x text-info"></i>

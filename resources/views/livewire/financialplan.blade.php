@@ -64,11 +64,12 @@
                                     </div>
                                 </div>
                                 <h4 class="small font-weight-bold text-white">Rp.
-                                    {{ number_format($financialplan->jumlah) }}<span class="float-right">Rp.
-                                        {{ number_format($financialplan->target) }}</span>
+                                    {{ number_format($financialplan->jumlah, 0, ',', '.') }}<span
+                                        class="float-right">Rp.
+                                        {{ number_format($financialplan->target, 0, ',', '.') }}</span>
                                 </h4>
                                 <div class="text-center  font-weight-bold text-white"> Rp.
-                                    {{ number_format($financialplan->perbulan) }} /Month
+                                    {{ number_format($financialplan->perbulan, 0, ',', '.') }} /Month
                                 </div>
                             </div>
                             @if (!$loop->last)
@@ -125,11 +126,12 @@
                                     </div>
                                 </div>
                                 <h4 class="small font-weight-bold text-white">Rp.
-                                    {{ number_format($financialplan->jumlah) }}<span class="float-right">Rp.
-                                        {{ number_format($financialplan->target) }}</span>
+                                    {{ number_format($financialplan->jumlah, 0, ',', '.') }}<span
+                                        class="float-right">Rp.
+                                        {{ number_format($financialplan->target, 0, ',', '.') }}</span>
                                 </h4>
                                 <div class="text-center  font-weight-bold text-white"> Rp.
-                                    {{ number_format($financialplan->perbulan) }} /Month
+                                    {{ number_format($financialplan->perbulan, 0, ',', '.') }} /Month
                                 </div>
                             </div>
                             @if (!$loop->last)

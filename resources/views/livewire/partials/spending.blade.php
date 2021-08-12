@@ -11,7 +11,7 @@
                                         <div class="h7 mb-0 @if (Auth::user()->
                                             uangkeluar($daterange) >= 1000000000) small @endif
                                             font-weight-bold text-danger">Rp.
-                                            {{ number_format(Auth::user()->uangkeluar($daterange)) }}</div>
+                                            {{ number_format(Auth::user()->uangkeluar($daterange), 0, ',', '.') }}</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-funnel-dollar fa-2x text-danger"></i>

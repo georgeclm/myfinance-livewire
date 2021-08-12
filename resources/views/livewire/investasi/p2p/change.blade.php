@@ -59,7 +59,7 @@
                             <option value="" selected disabled hidden>Invest Goal</option>
                             @foreach (auth()->user()->financialplans as $financialplan)
                                 <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>{{ $financialplan->nama }} - Rp.
-                                    {{ number_format($financialplan->target) }}</option>
+                                    {{ number_format($financialplan->target, 0, ',', '.') }}</option>
                             @endforeach
                         </select>
                     </div>

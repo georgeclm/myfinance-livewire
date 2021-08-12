@@ -19,7 +19,7 @@
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Total P2P</div>
                             <div class="h7 mb-0 font-weight-bold text-success">Rp.
-                                {{ number_format(Auth::user()->total_p2ps()) }}
+                                {{ number_format(Auth::user()->total_p2ps(), 0, ',', '.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -37,7 +37,7 @@
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Total Earnings</div>
                             <div class="h7 mb-0 font-weight-bold text-primary">Rp.
-                                {{ number_format(Auth::user()->total_p2p_gain_or_loss()) }}
+                                {{ number_format(Auth::user()->total_p2p_gain_or_loss(), 0, ',', '.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -56,7 +56,7 @@
                 <div
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">{{ $p2p->nama_p2p }} - Rp.
-                        {{ number_format($p2p->harga_jual) }}
+                        {{ number_format($p2p->harga_jual, 0, ',', '.') }}
                     </h6>
                     <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="javascript:void(0)" role="button" id="dropdownMenuLink"
@@ -76,10 +76,10 @@
                 <div class="card-body text-white">
                     <div class="d-flex">
                         <div class="flex-grow-1">
-                            Amount : Rp. {{ number_format($p2p->jumlah) }}<br />
+                            Amount : Rp. {{ number_format($p2p->jumlah, 0, ',', '.') }}<br />
                             {{ $p2p->jatuh_tempo->diffForHumans() }}
                         </div>
-                        {{ number_format($p2p->bunga, 1) }} %
+                        {{ number_format($p2p->bunga, 1, ',', '.') }} %
                     </div>
                 </div>
             </div>

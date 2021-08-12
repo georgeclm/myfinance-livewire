@@ -37,7 +37,7 @@
                 <div class="modal-body text-white">
                     <b> Current Balance</b>
                     <br>
-                    Balance {{ $rekening->nama }} : Rp. {{ number_format($rekening->saldo_sekarang) }}
+                    Balance {{ $rekening->nama }} : Rp. {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}
                     <hr>
                     <b> Adjust Balance</b>
                     <br>

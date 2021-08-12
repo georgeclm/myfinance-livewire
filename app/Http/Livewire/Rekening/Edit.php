@@ -55,7 +55,7 @@ class Edit extends Component
             'jenis_id' => $this->rekening->jenis_id,
             'nama_akun' => $this->rekening->nama_akun,
             'nama_bank' => $this->rekening->nama_bank,
-            'saldo_sekarang' => 'Rp ' . number_format($this->rekening->saldo_sekarang),
+            'saldo_sekarang' => 'Rp ' . number_format($this->rekening->saldo_sekarang, 0, ',', '.'),
             'saldo_mengendap' => $this->rekening->saldo_mengendap,
             'keterangan' => $this->rekening->keterangan,
         ];

@@ -8,7 +8,7 @@
                     </div>
                     <div class="h7 mb-0 font-weight-bold @if (Auth::user()->total_with_assets() >=
                         1000000000) small @endif text-warning">Rp.
-                        {{ number_format(Auth::user()->total_with_assets()) }}
+                        {{ number_format(Auth::user()->total_with_assets(), 0, ',', '.') }}
                     </div>
                 </div>
                 <div class="col-auto">
