@@ -82,7 +82,7 @@ class Topup extends Component
             'jumlah' => $total,
             'rekening_id' => $this->form['rekening_id'],
             'keterangan' => 'Buy Stock ' . $this->stock->kode,
-            'category_id' => Category::firstWhere('nama', 'Investasi')->id,
+            'category_id' => Category::firstWhere('nama', 'Investment')->id,
         ]);
 
         $total_lot = $this->form['lot'] + $this->stock->lot;

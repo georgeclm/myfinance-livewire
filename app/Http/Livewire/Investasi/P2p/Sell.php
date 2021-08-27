@@ -56,7 +56,7 @@ class Sell extends Component
             'jumlah' => $this->form['harga_jual'],
             'rekening_id' => $this->form['rekening_id'],
             'keterangan' => 'Sell P2P ' . $this->p2p->nama_p2p,
-            'category_masuk_id' => CategoryMasuk::firstWhere('nama', 'Jual Investasi')->id,
+            'category_masuk_id' => CategoryMasuk::firstWhere('nama', 'Sell Investment')->id,
         ]);
         $this->p2p->delete();
 

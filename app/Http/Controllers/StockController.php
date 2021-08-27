@@ -215,7 +215,7 @@ class StockController extends Controller
             'jumlah' => $total_jual,
             'rekening_id' => request()->rekening_id,
             'keterangan' => 'Jual Stock ' . $stock->kode,
-            'category_masuk_id' => CategoryMasuk::firstWhere('nama', 'Jual Investasi')->id,
+            'category_masuk_id' => CategoryMasuk::firstWhere('nama', 'Sell Investment')->id,
         ]);
         return redirect()->back()->with('success', 'Stock Telah Terjual');
     }

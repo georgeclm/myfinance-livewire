@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Transaction;
 
 use App\Models\Category;
+use App\Models\CategoryMasuk;
 use App\Models\Jenisuang;
 use Livewire\Component;
 
@@ -13,6 +14,7 @@ class Detail extends Component
     public $daterange = null;
     public $transactions;
     public $categories;
+    public $category_masuks;
     public $search = 0;
     public $search2 = 0;
     public $q = 0;
@@ -22,6 +24,7 @@ class Detail extends Component
     {
         $this->jenisuang = Jenisuang::find($id);
         $this->categories = Category::where('user_id', null)->orWhere('user_id', auth()->id())->get();
+        $this->category_masuks = CategoryMasuk::where('user_id', null)->orWhere('user_id', auth()->id())->get();
     }
 
     public function render()

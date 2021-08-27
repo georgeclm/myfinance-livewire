@@ -39,8 +39,8 @@ class CicilanController extends Controller
                 return $e->id  == 3;
             });
         }
-        $categories = Category::where('user_id', null)->orWhere('user_id', auth()->id())->whereNotIn('nama', ['Penyesuaian', 'Investasi'])->get();
-        $categorymasuks = CategoryMasuk::where('user_id', null)->orWhere('user_id', auth()->id())->whereNotIn('nama', ['Penyesuaian', 'Jual Investasi'])->get();
+        $categories = Category::where('user_id', null)->orWhere('user_id', auth()->id())->whereNotIn('nama', ['Adjustment', 'Investment'])->get();
+        $categorymasuks = CategoryMasuk::where('user_id', null)->orWhere('user_id', auth()->id())->whereNotIn('nama', ['Adjustment', 'Sell Investment'])->get();
         return view('cicilan.index', compact('jenisuangs', 'jenisuangsSelect', 'categorymasuks', 'categories'));
     }
 

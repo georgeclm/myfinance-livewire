@@ -176,7 +176,7 @@ class P2PController extends Controller
             'jumlah' => request()->harga_jual,
             'rekening_id' => request()->rekening_jual_id,
             'keterangan' => 'Sell P2P ' . $p2p->nama_p2p,
-            'category_masuk_id' => CategoryMasuk::firstWhere('nama', 'Jual Investasi')->id,
+            'category_masuk_id' => CategoryMasuk::firstWhere('nama', 'Sell Investment')->id,
         ]);
         $p2p->delete();
 

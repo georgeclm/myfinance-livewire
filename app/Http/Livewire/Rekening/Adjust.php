@@ -33,10 +33,10 @@ class Adjust extends Component
 
         if ($this->saldo_sekarang > $this->rekening->saldo_sekarang) {
             $jenisuang_id = 1;
-            $category_masuk_id = CategoryMasuk::firstWhere('nama', 'Penyesuaian')->id;
+            $category_masuk_id = CategoryMasuk::firstWhere('nama', 'Adjustment')->id;
         } else {
             $jenisuang_id = 2;
-            $category_id = Category::firstWhere('nama', 'Penyesuaian')->id;
+            $category_id = Category::firstWhere('nama', 'Adjustment')->id;
         }
 
         Transaction::create([
@@ -44,7 +44,7 @@ class Adjust extends Component
             'jenisuang_id' => $jenisuang_id,
             'jumlah' => $jumlah,
             'rekening_id' => $this->rekening->id,
-            'keterangan' => 'Penyesuaian',
+            'keterangan' => 'Adjustment',
             'category_id' => $category_id,
             'category_masuk_id' => $category_masuk_id
         ]);

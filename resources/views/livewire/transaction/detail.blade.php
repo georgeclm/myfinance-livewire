@@ -48,7 +48,7 @@
                         {{-- <input type="hidden" wire:model="q" value="{{ request()->q }}"> --}}
                         <select wire:model="search2" class="form-control form-control-user">
                             <option value="0" selected>Category</option>
-                            @foreach (App\Models\CategoryMasuk::all() as $category)
+                            @foreach ($category_masuks as $category)
                                 <option value="{{ $category->id }}">{{ $category->nama }}
                                 </option>
                             @endforeach

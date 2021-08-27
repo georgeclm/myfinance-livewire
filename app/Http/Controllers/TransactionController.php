@@ -37,8 +37,8 @@ class TransactionController extends Controller
                 return $e->id  == 3;
             });
         }
-        $categories = Category::whereNotIn('nama', ['Penyesuaian', 'Investasi'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
-        $categorymasuks = CategoryMasuk::whereNotIn('nama',  ['Penyesuaian', 'Jual Investasi'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
+        $categories = Category::whereNotIn('nama', ['Adjustment', 'Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
+        $categorymasuks = CategoryMasuk::whereNotIn('nama',  ['Adjustment', 'Sell Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
         return view('transaction.index', compact('jenisuangs', 'categories', 'jenisuangsSelect', 'categorymasuks'));
     }
 

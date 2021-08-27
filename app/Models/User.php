@@ -127,7 +127,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function total_p2ps()
     {
-        return $this->p2ps()->sum('harga_jual');
+        return $this->p2ps()->sum('jumlah');
     }
     public function total_p2p_gain_or_loss()
     {

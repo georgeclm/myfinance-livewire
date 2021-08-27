@@ -54,7 +54,7 @@
                             <select disabled
                                 class="border-0 form-control form-control-user form-block @error('form.utang_id') is-invalid @enderror"
                                 wire:model.defer="form.utang_id" name="utang_id" style="padding: 0.5rem !important">
-                                <option value='' selected disabled hidden>Utang Siapa</option>
+                                <option value='' selected disabled hidden>Debt Who</option>
                                 @foreach (auth()->user()->utangs as $utang)
                                     <option value="{{ $utang->id }}">
                                         {{ $utang->nama }}, {{ Str::limit($utang->keterangan, 30) }}</option>
@@ -71,7 +71,7 @@
                                 class="border-0 form-control form-control-user form-block @error('form.utangteman_id') is-invalid @enderror"
                                 wire:model.defer="form.utangteman_id" name="utangteman_id"
                                 style="padding: 0.5rem !important">
-                                <option value='' selected disabled hidden>Utang Siapa</option>
+                                <option value='' selected disabled hidden>Debt Who</option>
                                 @foreach (auth()->user()->utangtemans as $utang)
                                     <option value="{{ $utang->id }}">
                                         {{ $utang->nama }}, {{ Str::limit($utang->keterangan, 30) }}</option>
@@ -98,7 +98,7 @@
                                 class="border-0 form-control form-control-user form-block @error('form.category_id') is-invalid @enderror"
                                 wire:model.defer="form.category_id" name="category_id"
                                 style="padding: 0.5rem !important" id="category_id">
-                                <option value='' selected disabled hidden>Pilih Kategori</option>
+                                <option value='' selected disabled hidden>Choose Category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->nama }}</option>
                                 @endforeach
@@ -114,7 +114,7 @@
                                 class="border-0 form-control form-control-user form-block @error('form.category_masuk_id') is-invalid @enderror"
                                 wire:model.defer="form.category_masuk_id" name="category_masuk_id"
                                 style="padding: 0.5rem !important" id="category_masuk_id">
-                                <option value='' selected disabled hidden>Pilih Kategori</option>
+                                <option value='' selected disabled hidden>Choose Category</option>
                                 @foreach ($categorymasuks as $category)
                                     <option value="{{ $category->id }}">{{ $category->nama }}</option>
                                 @endforeach
@@ -130,7 +130,7 @@
                                 class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
                                 wire:model.defer="form.rekening_id" name="rekening_id"
                                 style="padding: 0.5rem !important" required>
-                                <option value="" selected disabled hidden>Pilih Akun</option>
+                                <option value="" selected disabled hidden>Choose Pocket</option>
                                 @foreach (auth()->user()->rekenings as $rekening)
                                     <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }}</option>
                                 @endforeach
@@ -146,7 +146,7 @@
                                 class="border-0 form-control form-control-user form-block @error('form.rekening_id2') is-invalid @enderror"
                                 wire:model.defer="form.rekening_id2" name="rekening_id2"
                                 style="padding: 0.5rem !important" id="transfer">
-                                <option value='' selected disabled hidden>Pilih Akun Tujuan</option>
+                                <option value='' selected disabled hidden>Choose Pocket Destination</option>
                                 @foreach (auth()->user()->rekenings as $rekening)
                                     <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }}</option>
                                 @endforeach

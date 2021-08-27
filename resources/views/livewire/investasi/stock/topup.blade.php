@@ -26,7 +26,7 @@
     <div class="modal fade" wire:ignore.self id="topup-{{ $stock->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="bg-dark  modal-content">
+            <div class="bg-black  modal-content">
                 <div class="modal-header bg-gray-100 border-0">
                     <h5 class="modal-title text-white">Buy More Stock</h5>
                     <button type="button" data-dismiss="modal" aria-label="Close" class="close text-white">
@@ -36,19 +36,19 @@
                 <div class="modal-body">
                     <form id="formtopup-{{ $stock->id }}" wire:submit.prevent="submit">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" wire:model="form.kode"
+                            <input type="text" class="border-0 form-control form-control-user" wire:model="form.kode"
                                 placeholder="Stock Code" disabled>
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="number" class="form-control form-control-user" wire:model.defer="form.lot"
-                                placeholder="Total" required>
+                            <input type="number" class="border-0 form-control form-control-user"
+                                wire:model.defer="form.lot" placeholder="Total" required>
                             <div class="input-group-append">
                                 <span class="input-group-text">lot</span>
                             </div>
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
                             <input wire:model.defer="form.harga_beli" type-currency="IDR" type="text" required
-                                placeholder="Buy Price" class="form-control form-control-user ">
+                                placeholder="Buy Price" class="border-0 form-control form-control-user ">
                             <div class="input-group-append">
                                 <span class="input-group-text">Per Lembar</span>
                             </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="form-group">
                             <select wire:model.defer="form.rekening_id"
-                                class="form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
+                                class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
                                 style="padding: 0.5rem !important">
                                 @foreach (auth()->user()->rekenings as $rekening)
                                     <option value="{{ $rekening->id }}">
@@ -71,10 +71,11 @@
                         </div>
                         <div class="form-group">
                             <select wire:model.defer="form.financial_plan_id"
-                                class="form-control form-control-user form-block @error('financial_plan_id') is-invalid @enderror"
+                                class="border-0 form-control form-control-user form-block @error('financial_plan_id') is-invalid @enderror"
                                 style="padding: 0.5rem !important" name="financial_plan_id" disabled>
                                 @foreach (auth()->user()->financialplans as $financialplan)
-                                    <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>{{ $financialplan->nama }} - Rp.
+                                    <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
+                                        {{ $financialplan->nama }} - Rp.
                                         {{ number_format($financialplan->target, 0, ',', '.') }}</option>
                                 @endforeach
                                 @error('financial_plan_id')
@@ -86,8 +87,8 @@
 
                         </div>
                         <div class="form-group">
-                            <input type="text" wire:model.defer="form.keterangan" class="form-control form-control-user"
-                                disabled placeholder="Description">
+                            <input type="text" wire:model.defer="form.keterangan"
+                                class="border-0 form-control form-control-user" disabled placeholder="Description">
                         </div>
                     </form>
                 </div>

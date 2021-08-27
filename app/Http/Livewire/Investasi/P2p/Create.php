@@ -72,7 +72,7 @@ class Create extends Component
             'jumlah' => $this->form['jumlah'],
             'rekening_id' => $this->form['rekening_id'],
             'keterangan' => 'Beli P2P ' . $this->form['nama_p2p'],
-            'category_id' => Category::firstWhere('nama', 'Investasi')->id,
+            'category_id' => Category::firstWhere('nama', 'Investment')->id,
         ]);
 
         P2P::create([

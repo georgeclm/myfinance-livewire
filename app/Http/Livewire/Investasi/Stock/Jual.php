@@ -84,7 +84,7 @@ class Jual extends Component
             'jumlah' => $total_jual,
             'rekening_id' => $this->form['rekening_id'],
             'keterangan' => 'Sell Stock ' . $this->stock->kode,
-            'category_masuk_id' => CategoryMasuk::firstWhere('nama', 'Jual Investasi')->id,
+            'category_masuk_id' => CategoryMasuk::firstWhere('nama', 'Sell Investment')->id,
         ]);
         session()->flash('success', 'Stock have been sold');
         return redirect(route('stock'));

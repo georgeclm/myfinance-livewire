@@ -54,13 +54,16 @@ class AuthController extends Controller
     }
     public function logout(Request $request)
     {
-        if (!User::checkToken($request)) {
+        if (!auth()->logout()) {
             return response()->json([
                 'message' => 'Token is required',
                 'success' => false,
             ], 422);
         }
-
+        return response()->json([
+            'success' => true,
+            'message' => 'User logged out successfully'
+        ]);
         try {
             JWTAuth::invalidate(JWTAuth::parseToken($request->token));
             return response()->json([

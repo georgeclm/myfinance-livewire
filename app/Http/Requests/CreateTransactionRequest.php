@@ -27,7 +27,6 @@ class CreateTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required',
             'jenisuang_id' => ['required', 'in:' . JenisUang::pluck('id')->implode(',')],
             'jumlah' => ['required', 'numeric'],
             'rekening_id' => ['required', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
