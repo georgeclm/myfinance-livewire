@@ -5,9 +5,12 @@
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                         Net Worth
+                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="right"
+                            title="Total Balance + Investment">
+                            <i class="fas fa-question-circle"></i>
+                        </a>
                     </div>
-                    <div class="h7 mb-0 font-weight-bold @if (Auth::user()->total_with_assets() >=
-                        1000000000) small @endif text-warning">Rp.
+                    <div class="h7 mb-0 font-weight-bold @if (Auth::user()->total_with_assets() >= 1000000000) small @endif text-warning">Rp.
                         {{ number_format(Auth::user()->total_with_assets(), 0, ',', '.') }}
                     </div>
                 </div>

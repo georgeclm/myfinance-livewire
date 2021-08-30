@@ -4,7 +4,12 @@
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                        Total Balance</div>
+                        Total Balance
+                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="right"
+                            title="Total Balance - Settles Balance">
+                            <i class="fas fa-question-circle"></i>
+                        </a>
+                    </div>
                     <div class="h7 mb-0 @if (Auth::user()->saldo() >= 1000000000) small @endif font-weight-bold text-info">Rp.
                         {{ number_format(Auth::user()->saldo(), 0, ',', '.') }}</div>
                 </div>

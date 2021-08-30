@@ -4,8 +4,11 @@
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                    Balance @if (request()->q == 2)@else
-                            (Monthly)@endif
+                        Balance
+                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="right"
+                            title="Income - Spending">
+                            <i class="fas fa-question-circle"></i>
+                        </a>
                     </div>
                     <div class="h7 mb-0 @if (Auth::user()->saldoperbulan() >= 1000000000) small @endif font-weight-bold text-primary">Rp.
                         {{ number_format(Auth::user()->saldoperbulan(), 0, ',', '.') }}

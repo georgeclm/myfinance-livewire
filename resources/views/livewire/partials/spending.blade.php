@@ -4,14 +4,19 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                        Spending @if (request()->q == 2)@else
-                                                (Monthly)
-                                            @endif
+                                            Spending
+                                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="right"
+                                                title="Total {{ now()->format('F') }} Spending">
+                                                <i class="fas fa-question-circle"></i>
+                                            </a>
+
                                         </div>
-                                        <div class="h7 mb-0 @if (Auth::user()->
-                                            uangkeluar($daterange) >= 1000000000) small @endif
-                                            font-weight-bold text-danger">Rp.
-                                            {{ number_format(Auth::user()->uangkeluar($daterange), 0, ',', '.') }}</div>
+                                        <div
+                                            class="h7 mb-0 @if (Auth::user()->uangkeluar($daterange) >= 1000000000) small @endif
+                                            font-weight-bold text-danger">
+                                            Rp.
+                                            {{ number_format(Auth::user()->uangkeluar($daterange), 0, ',', '.') }}
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-funnel-dollar fa-2x text-danger"></i>
