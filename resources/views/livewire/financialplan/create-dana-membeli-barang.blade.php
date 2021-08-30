@@ -45,8 +45,8 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="text" name="target" type-currency="IDR" wire:model.defer="form.target" required
-                                placeholder="Stuff Price"
+                            <input type="text" name="target" type-currency="IDR" inputmode="numeric"
+                                wire:model.defer="form.target" required placeholder="Stuff Price"
                                 class="border-0  form-control form-control-user @error('form.target') is-invalid @enderror">
                             @error('form.target')
                                 <span class="invalid-feedback" role="alert">
@@ -68,8 +68,8 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model.defer="form.jumlah" type-currency="IDR" type="text" name="jumlah" required
-                                placeholder="Fund Avalible Now"
+                            <input wire:model.defer="form.jumlah" type-currency="IDR" inputmode="numeric" type="text"
+                                name="jumlah" required placeholder="Fund Avalible Now"
                                 class="border-0  form-control form-control-user @error('form.jumlah') is-invalid @enderror">
                             @error('form.jumlah')
                                 <span class="invalid-feedback" role="alert">

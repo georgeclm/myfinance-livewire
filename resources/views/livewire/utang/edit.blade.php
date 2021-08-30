@@ -18,7 +18,7 @@
                             class="border-0 form-control form-control-user">
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input wire:model="form.jumlah" type-currency="IDR" type="text" disabled
+                        <input wire:model="form.jumlah" type-currency="IDR" inputmode="numeric" type="text" disabled
                             placeholder="Jumlah Utang" class="border-0 form-control form-control-user">
                     </div>
                     <div class="form-group">

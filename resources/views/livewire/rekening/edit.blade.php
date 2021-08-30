@@ -32,14 +32,15 @@
                         </div>
                     @endif
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input type="text" type-currency="IDR" class="border-0 form-control form-control-user "
-                            wire:model.defer="form.saldo_sekarang" disabled placeholder="Current Balance">
+                        <input type="text" type-currency="IDR" inputmode="numeric"
+                            class="border-0 form-control form-control-user " wire:model.defer="form.saldo_sekarang"
+                            disabled placeholder="Current Balance">
                     </div>
                     @if ($rekening->jenis_id == 2)
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="text" type-currency="IDR" class="border-0 form-control form-control-user "
-                                wire:model.defer="form.saldo_mengendap" name="saldo_mengendape"
-                                placeholder="Balance Settles">
+                            <input type="text" type-currency="IDR" inputmode="numeric"
+                                class="border-0 form-control form-control-user " wire:model.defer="form.saldo_mengendap"
+                                name="saldo_mengendape" placeholder="Balance Settles">
                         </div>
                     @endif
                     <div class="form-group">

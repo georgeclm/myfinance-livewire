@@ -59,8 +59,8 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="text" name="harga_beli" required placeholder="Buy Price" type-currency="IDR"
-                                wire:model.defer="form.harga_beli"
+                            <input type="text" name="harga_beli" required placeholder="Buy Price" inputmode="numeric"
+                                type-currency="IDR" wire:model.defer="form.harga_beli"
                                 class="border-0 form-control form-control-user @error('form.harga_beli') is-invalid @enderror">
                             <div class="input-group-append">
                                 <span class="input-group-text">Per Lembar</span>
@@ -107,7 +107,8 @@
                                 style="padding: 0.5rem !important" required>
                                 <option value="" selected disabled hidden>Invest Goal</option>
                                 @foreach (auth()->user()->financialplans as $financialplan)
-                                    <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>{{ $financialplan->nama }} - Rp.
+                                    <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
+                                        {{ $financialplan->nama }} - Rp.
                                         {{ number_format($financialplan->target, 0, ',', '.') }}</option>
                                 @endforeach
                             </select>

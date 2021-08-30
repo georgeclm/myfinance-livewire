@@ -29,12 +29,13 @@
                         @enderror
                     </div> --}}
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input wire:model.defer="form.jumlah" type-currency="IDR" disabled type="text" name="jumlah"
-                            required placeholder="Amount" class=" border-0 form-control form-control-user ">
+                        <input wire:model.defer="form.jumlah" type-currency="IDR" inputmode="numeric" disabled
+                            type="text" name="jumlah" required placeholder="Amount"
+                            class=" border-0 form-control form-control-user ">
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input wire:model.defer="form.harga_jual" type-currency="IDR" disabled type="text"
-                            name="harga_jual" required placeholder=" Expected Maturity Amount"
+                        <input wire:model.defer="form.harga_jual" type-currency="IDR" inputmode="numeric" disabled
+                            type="text" name="harga_jual" required placeholder=" Expected Maturity Amount"
                             class="border-0  form-control form-control-user ">
                     </div>
                     <div class="form-group">
@@ -58,7 +59,8 @@
                             style="padding: 0.5rem !important" required>
                             <option value="" selected disabled hidden>Invest Goal</option>
                             @foreach (auth()->user()->financialplans as $financialplan)
-                                <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>{{ $financialplan->nama }} - Rp.
+                                <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
+                                    {{ $financialplan->nama }} - Rp.
                                     {{ number_format($financialplan->target, 0, ',', '.') }}</option>
                             @endforeach
                         </select>

@@ -18,7 +18,7 @@
                             class="form-control form-control-user">
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input type="text" wire:model="form.jumlah" type-currency="IDR" disabled
+                        <input type="text" wire:model="form.jumlah" inputmode="numeric" type-currency="IDR" disabled
                             placeholder="Total Debt" class="form-control form-control-user">
                     </div>
                     <div class="form-group">

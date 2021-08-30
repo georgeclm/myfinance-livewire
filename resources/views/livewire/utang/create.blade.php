@@ -36,8 +36,8 @@
                         @enderror
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input type="text" type-currency="IDR" name="jumlah" required wire:model.defer="form.jumlah"
-                            placeholder="Total"
+                        <input type="text" type-currency="IDR" inputmode="numeric" name="jumlah" required
+                            wire:model.defer="form.jumlah" placeholder="Total"
                             class="border-0 form-control form-control-user @error('form.jumlah') is-invalid @enderror">
                         @error('form.jumlah')
                             <span class="invalid-feedback" role="alert">

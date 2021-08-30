@@ -35,7 +35,8 @@
                 <div class="modal-body">
                     <form id="formeditmodal-{{ $financialplan->id }}" wire:submit.prevent="submit">
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type-currency="IDR" type="text" name="jumlah" wire:model.defer="form.jumlah" required
+                            <input type-currency="IDR" inputmode="numeric" type="text" name="jumlah"
+                                wire:model.defer="form.jumlah" required
                                 class="border-0 form-control form-control-user @error('jumlah') is-invalid @enderror">
                             @error('jumlah')
                                 <span class="invalid-feedback" role="alert">

@@ -44,7 +44,7 @@
                     Your Real Balance
                     <form class="mt-2" id="{{ $rekening->id }}adjustform" wire:submit.prevent="submit">
                         <div class="hide-inputbtns input-group">
-                            <input type="text" type-currency="IDR" name="saldo_sekarang"
+                            <input type="text" type-currency="IDR" inputmode="numeric" name="saldo_sekarang"
                                 wire:model.defer="saldo_sekarang" placeholder="Fill Your Real Balance" required
                                 class="border-0 form-control">
                         </div>

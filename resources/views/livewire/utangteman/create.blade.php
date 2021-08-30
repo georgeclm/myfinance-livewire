@@ -63,8 +63,8 @@
                         </div>
 
                         <div class="mb-3 hide-inputbtns input-group" id="kategori">
-                            <input type="text" type-currency="IDR" name="jumlah" wire:model.defer="form.jumlah" required
-                                placeholder="Total Debt"
+                            <input type="text" type-currency="IDR" inputmode="numeric" name="jumlah"
+                                wire:model.defer="form.jumlah" required placeholder="Total Debt"
                                 class="border-0 form-control form-control-user @error('form.jumlah') is-invalid @enderror">
                             @error('form.jumlah')
                                 <span class="invalid-feedback" role="alert">

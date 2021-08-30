@@ -35,8 +35,8 @@
                 <div class="modal-body">
                     <form id="formeditmodal-{{ $financialplan->id }}" wire:submit.prevent="submit">
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="text" name="target" type-currency="IDR" required wire:model.defer="form.target"
-                                placeholder="Starting Funds"
+                            <input type="text" name="target" type-currency="IDR" inputmode="numeric" required
+                                wire:model.defer="form.target" placeholder="Starting Funds"
                                 class="border-0 form-control form-control-user @error('target') is-invalid @enderror">
                             @error('target')
                                 <span class="invalid-feedback" role="alert">
@@ -45,8 +45,8 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="text" name="jumlah" type-currency="IDR" wire:model.defer="form.jumlah" required
-                                placeholder="Amount to invest each month"
+                            <input type="text" name="jumlah" type-currency="IDR" inputmode="numeric"
+                                wire:model.defer="form.jumlah" required placeholder="Amount to invest each month"
                                 class="border-0 form-control form-control-user @error('jumlah') is-invalid @enderror">
                             @error('jumlah')
                                 <span class="invalid-feedback" role="alert">

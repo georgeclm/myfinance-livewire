@@ -49,7 +49,7 @@
                         @enderror
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input type="text" type-currency="IDR"
+                        <input type="text" type-currency="IDR" inputmode="numeric"
                             class="border-0 form-control form-control-user @error('form.saldo_sekarang') is-invalid @enderror "
                             wire:model.defer="form.saldo_sekarang" name="saldo_sekarang" required disabled
                             id="saldo_sekarang" placeholder="Current Balance">
@@ -60,7 +60,7 @@
                         @enderror
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input type="text" type-currency="IDR"
+                        <input type="text" type-currency="IDR" inputmode="numeric"
                             class="border-0 form-control form-control-user @error('form.saldo_mengendap') is-invalid @enderror"
                             wire:model.defer="form.saldo_mengendap" name="saldo_mengendap" id="saldo_mengendap"
                             placeholder="Balance Settles" disabled>

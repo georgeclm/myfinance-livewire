@@ -15,12 +15,14 @@
                             disabled name="nama_p2p" placeholder="P2P Name" required>
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input wire:model="form.jumlah" type-currency="IDR" disabled type="text" name="jumlah" required
-                            placeholder="Amount" class=" border-0 form-control form-control-user ">
+                        <input wire:model="form.jumlah" type-currency="IDR" inputmode="numeric" disabled type="text"
+                            name="jumlah" required placeholder="Amount"
+                            class=" border-0 form-control form-control-user ">
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input wire:model="form.harga_jual" type-currency="IDR" type="text" name="harga_jual" required
-                            placeholder=" Expected Maturity Amount" class="border-0  form-control form-control-user ">
+                        <input wire:model="form.harga_jual" type-currency="IDR" inputmode="numeric" type="text"
+                            name="harga_jual" required placeholder=" Expected Maturity Amount"
+                            class="border-0  form-control form-control-user ">
                     </div>
                     <div class="form-group">
                         <input wire:model="form.jatuh_tempo" disabled
@@ -43,7 +45,8 @@
                             style="padding: 0.5rem !important" required>
                             <option value="" selected disabled hidden>Invest Goal</option>
                             @foreach (auth()->user()->financialplans as $financialplan)
-                                <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>{{ $financialplan->nama }} - Rp.
+                                <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
+                                    {{ $financialplan->nama }} - Rp.
                                     {{ number_format($financialplan->target, 0, ',', '.') }}</option>
                             @endforeach
                         </select>

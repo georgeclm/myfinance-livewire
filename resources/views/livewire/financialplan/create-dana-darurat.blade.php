@@ -36,8 +36,8 @@
                 <div class="modal-body">
                     <form id="addDanaDarurat" wire:submit.prevent="submit">
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="text" name="jumlah" type-currency="IDR" required placeholder="Spending Monthly"
-                                wire:model.defer="form.jumlah"
+                            <input type="text" name="jumlah" type-currency="IDR" inputmode="numeric" required
+                                placeholder="Spending Monthly" wire:model.defer="form.jumlah"
                                 class="border-0 form-control form-control-user @error('jumlah') is-invalid @enderror">
                             @error('jumlah')
                                 <span class="invalid-feedback" role="alert">
