@@ -53,7 +53,8 @@
                         <div class="mb-3 hide-inputbtns input-group">
                             <input type="text" disabled type-currency="IDR"
                                 class="border-0 form-control form-control-user @error('form.jumlah') is-invalid @enderror"
-                                wire:model.defer="form.jumlah" name="jumlah" required placeholder="Total">
+                                wire:model.defer="form.jumlah" inputmode="numeric" name="jumlah" required
+                                placeholder="Total">
                             @error('form.jumlah')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
