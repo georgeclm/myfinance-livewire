@@ -5,8 +5,8 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Pockets</h1>
         <a href="#" data-toggle="modal" data-target="#addRekening"
-            class="d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
-                class="fas fa-download fa-sm text-white-50"></i> Add Pocket</a>
+            class="d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i>
+            Create Pocket</a>
     </div>
     <!-- Content Row -->
     <div class="row mobile">
@@ -22,72 +22,59 @@
                 <h6 class="m-0 font-weight-bold text-primary">{{ $jenis->nama }}</h6>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-dark" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Pocket Name</th>
-                                @if ($jenis->id != 1)
-                                    <th>Bank Name</th>
-                                @endif
-                                <th>Current Balance</th>
-                                @if ($jenis->id == 2)
-                                    <th>Balance Settles</th>
-                                @endif
-                                <th>Description</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($jenis->user_rekenings as $rekening)
-                                @livewire('rekening.edit',['rekening' => $rekening,'jeniss' =>
-                                $jeniss])
-                                @livewire('rekening.delete',['rekening' => $rekening])
-                                @livewire('rekening.adjust',['rekening' => $rekening])
-                                <tr>
-                                    <td>{{ $rekening->nama_akun }}</td>
-                                    @if ($rekening->jenis_id != 1)
-                                        <td>{{ $rekening->nama_bank }}</td>
-                                    @endif
-                                    <td>Rp. {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</td>
-                                    @if ($rekening->jenis_id == 2)
-                                        <td>Rp. {{ number_format($rekening->saldo_mengendap, 0, ',', '.') }}
-                                        </td>
-                                    @endif
-                                    <td>{{ $rekening->keterangan ?? '-' }}</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-caret-down"></i>
-                                            </button>
-                                            <div class=" bg-dark border-0  dropdown-menu"
-                                                aria-labelledby="dropdownMenuButton">
-                                                <a data-toggle="modal" data-target="#editmodal-{{ $rekening->id }}"
-                                                    class="dropdown-item text-white" href="javascript:void(0)">Edit</a>
-                                                <a data-toggle="modal" data-target="#deletemodal-{{ $rekening->id }}"
-                                                    class="dropdown-item text-white"
-                                                    href="javascript:void(0)">Delete</a>
-                                                <a data-toggle="modal" data-target="#adjustmodal-{{ $rekening->id }}"
-                                                    class="dropdown-item text-white"
-                                                    href="javascript:void(0)">Adjust</a>
-                                                <a class="dropdown-item text-white"
-                                                    href="/pockets/{{ $rekening->id }}">Mutation
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center">Pocket Empty</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                @forelse ($jenis->user_rekenings as $rekening)
+                    @livewire('rekening.edit',['rekening' => $rekening,'jeniss' =>
+                    $jeniss])
+                    @livewire('rekening.delete',['rekening' => $rekening])
+                    @livewire('rekening.adjust',['rekening' => $rekening])
+                    <div class="py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary"><a
+                                href="/pockets/{{ $rekening->id }}">{{ $rekening->nama_akun }}</a> - Rp.
+                            {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}
+                        </h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-caret-down"></i>
+                                {{-- <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i> --}}
+                            </a>
+                            <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <a data-toggle="modal" data-target="#editmodal-{{ $rekening->id }}"
+                                    class="dropdown-item text-white" href="javascript:void(0)">Edit</a>
+                                <a data-toggle="modal" data-target="#deletemodal-{{ $rekening->id }}"
+                                    class="dropdown-item text-white" href="javascript:void(0)">Delete</a>
+                                <a data-toggle="modal" data-target="#adjustmodal-{{ $rekening->id }}"
+                                    class="dropdown-item text-white" href="javascript:void(0)">Adjust</a>
+                                <a class="dropdown-item text-white" href="/pockets/{{ $rekening->id }}">Mutation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="text-white my-3 mx-0">
+                        <div class="d-flex ">
+                            <div class="flex-grow-1">
+                                {{ $rekening->keterangan ?? '-' }}
+                            </div>
+                            @if ($rekening->jenis_id != 1)
+                                {{ $rekening->nama_bank }}
+                            @endif
+                        </div>
+                    </div>
+                    <hr class="bg-white my-1">
+                @empty
+                    <div class="text-center font-weight-bold text-white-50">
+                        Empty
+                    </div>
+                @endforelse
             </div>
         </div>
     @endforeach
+    <div class="mt-2 text-center">
+        <a class="font-weight-bold text-primary" href="#" data-toggle="modal" data-target="#addRekening">
+            <i class="fas fa-plus-circle text-white-50"></i> Create New Pocket
+        </a>
+    </div>
     @livewire('rekening.create',['jeniss' => $jeniss])
 </div>

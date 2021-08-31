@@ -115,13 +115,13 @@
                 </div>
             </div>
         </div>
-        @if (!auth()->user()->rekenings->isEmpty())
-            <a class="add-button rounded-circle" data-toggle="modal" data-target="#quickAdd" href="#">
-                <i class="fas fa-plus"></i>
-            </a>
-            @livewire('transaction.quick-add')
-        @endif
         @if (!in_array(Route::current()->uri, ['login', 'register']))
+            @if (!auth()->user()->rekenings->isEmpty())
+                <a class="add-button rounded-circle" data-toggle="modal" data-target="#quickAdd" href="#">
+                    <i class="fas fa-plus"></i>
+                </a>
+                @livewire('transaction.quick-add')
+            @endif
             <a class="only-big scroll-to-top rounded" href="#page-top">
                 <i class="fas fa-angle-up"></i>
             </a>
@@ -153,25 +153,28 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
         data-turbolinks-track="true"></script>
     <script>
-        @if (!auth()->user()->rekenings->isEmpty())
-            $('#jenisuang').on('change', function(e) {
-            var optionSelected = $("option:selected", this);
-            var valueSelected = this.value;
-            $('input').prop('disabled', false);
-            $('select').prop('disabled', false);
-            $('#category_id').prop('required', false);
-            $('#category_masuk_id').prop('required', false);
-            $('#category_id').hide("slow");
-            $('#category_masuk_id').hide("slow");
-            if (valueSelected == 1) {
-            $('#category_masuk_id').show("slow");
-            $('#category_masuk_id').prop('required', true);
-            } else if (valueSelected == 2) {
-            $('#category_id').show("slow");
-            $('#category_id').prop('required', true);
-            } else if (valueSelected == 4) {} else if (valueSelected == 3) {} else {}
-            });
-        @endif
+        @auth
+
+            @if (!auth()->user()->rekenings->isEmpty())
+                $('#jenisuang').on('change', function(e) {
+                var optionSelected = $("option:selected", this);
+                var valueSelected = this.value;
+                $('input').prop('disabled', false);
+                $('select').prop('disabled', false);
+                $('#category_id').prop('required', false);
+                $('#category_masuk_id').prop('required', false);
+                $('#category_id').hide("slow");
+                $('#category_masuk_id').hide("slow");
+                if (valueSelected == 1) {
+                $('#category_masuk_id').show("slow");
+                $('#category_masuk_id').prop('required', true);
+                } else if (valueSelected == 2) {
+                $('#category_id').show("slow");
+                $('#category_id').prop('required', true);
+                } else if (valueSelected == 4) {} else if (valueSelected == 3) {} else {}
+                });
+            @endif
+        @endauth
         $(function() {
             var start = moment().startOf('month');
             var end = moment().endOf('month');
