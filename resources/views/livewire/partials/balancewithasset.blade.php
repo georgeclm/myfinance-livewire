@@ -5,8 +5,7 @@
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                         Net Worth
-                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="right"
-                            title="Total Balance + Investment">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#assetModal">
                             <i class="fas fa-question-circle"></i>
                         </a>
                     </div>
@@ -17,6 +16,20 @@
                 <div class="col-auto">
                     <i class="fas fa-landmark fa-2x text-warning"></i>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="assetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="bg-dark modal-content">
+                <div class="border-0 modal-header">
+                    <h5 class="modal-title text-white">Net Worth</h5>
+                    <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body text-white">Total Balance + Investment</div>
             </div>
         </div>
     </div>

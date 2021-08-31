@@ -5,8 +5,7 @@
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                         Income
-                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="right"
-                            title="Total {{ now()->format('F') }} Income">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#incomeModal">
                             <i class="fas fa-question-circle"></i>
                         </a>
                     </div>
@@ -16,6 +15,20 @@
                 <div class="col-auto">
                     <i class="fas fa-money-bill-wave-alt fa-2x text-success"></i>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="incomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="bg-dark modal-content">
+                <div class="border-0 modal-header">
+                    <h5 class="modal-title text-white">Income</h5>
+                    <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body text-white">Total {{ now()->format('F') }} Income</div>
             </div>
         </div>
     </div>
