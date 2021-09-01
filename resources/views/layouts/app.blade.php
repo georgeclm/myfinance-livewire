@@ -116,7 +116,8 @@
             </div>
         </div>
         @if (!in_array(Route::current()->uri, ['login', 'register']))
-            @if (!auth()->user()->rekenings->isEmpty())
+            @if (!auth()->user()->rekenings->isEmpty() &&
+    Route::current()->uri != 'transactions')
                 <a class="add-button rounded-circle" data-toggle="modal" data-target="#quickAdd" href="#">
                     <i class="fas fa-plus"></i>
                 </a>
@@ -154,8 +155,8 @@
         data-turbolinks-track="true"></script>
     <script>
         @auth
-
-            @if (!auth()->user()->rekenings->isEmpty())
+            @if (!auth()->user()->rekenings->isEmpty() &&
+                Route::current()->uri != 'transactions')
                 $('#jenisuang').on('change', function(e) {
                 var optionSelected = $("option:selected", this);
                 var valueSelected = this.value;
