@@ -18,7 +18,7 @@ class CreateP2PSTable extends Migration
             $table->integer('user_id');
             $table->string('nama_p2p');
             $table->integer('jumlah');
-            $table->integer('bunga');
+            $table->double('bunga');
             $table->integer('rekening_id');
             $table->string('jatuh_tempo');
             $table->integer('harga_jual')->nullable();

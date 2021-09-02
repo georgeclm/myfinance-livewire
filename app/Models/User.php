@@ -74,11 +74,11 @@ class User extends Authenticatable implements JWTSubject
     }
     public function rekenings()
     {
-        return $this->hasMany(Rekening::class)->where('user_id', auth()->id());
+        return $this->hasMany(Rekening::class)->where('user_id', $this->id);
     }
     public function transactions($daterange = null)
     {
-        $return = $this->hasMany(Transaction::class)->where('user_id', auth()->id());
+        $return = $this->hasMany(Transaction::class)->where('user_id', $this->id);
         if ($daterange != null) {
             $date_range1 = explode(" / ", $daterange);
             $return = $return->where('created_at', '>=', $date_range1[0]);
@@ -88,34 +88,34 @@ class User extends Authenticatable implements JWTSubject
 
         // if (request()->has('q')) {
         //     return (request()->q == 1)
-        //         ? $this->hasMany(Transaction::class)->whereMonth('created_at', now()->subMonth()->month)->where('user_id', auth()->id())
-        //         : $this->hasMany(Transaction::class)->where('user_id', auth()->id());
+        //         ? $this->hasMany(Transaction::class)->whereMonth('created_at', now()->subMonth()->month)->where('user_id', $this->id)
+        //         : $this->hasMany(Transaction::class)->where('user_id', $this->id);
         // }
-        // return $this->hasMany(Transaction::class)->whereMonth('created_at', now()->month)->where('user_id', auth()->id());
+        // return $this->hasMany(Transaction::class)->whereMonth('created_at', now()->month)->where('user_id', $this->id);
     }
     public function utangs()
     {
-        return $this->hasMany(Utang::class)->where('user_id', auth()->id())->where('lunas', 0)->orderBy('created_at', 'desc');
+        return $this->hasMany(Utang::class)->where('user_id', $this->id)->where('lunas', 0)->orderBy('created_at', 'desc');
     }
     public function utangtemans()
     {
-        return $this->hasMany(Utangteman::class)->where('user_id', auth()->id())->where('lunas', 0);
+        return $this->hasMany(Utangteman::class)->where('user_id', $this->id)->where('lunas', 0);
     }
     public function financialplans()
     {
-        return $this->hasMany(FinancialPlan::class)->where('user_id', auth()->id());
+        return $this->hasMany(FinancialPlan::class)->where('user_id', $this->id);
     }
     public function stocks()
     {
-        return $this->hasMany(Stock::class)->where('user_id', auth()->id())->latest();
+        return $this->hasMany(Stock::class)->where('user_id', $this->id)->latest();
     }
     public function p2ps()
     {
-        return $this->hasMany(P2P::class)->where('user_id', auth()->id())->latest();
+        return $this->hasMany(P2P::class)->where('user_id', $this->id)->latest();
     }
     public function p2pscount()
     {
-        return $this->hasMany(P2P::class)->where('user_id', auth()->id())->withTrashed()->count();
+        return $this->hasMany(P2P::class)->where('user_id', $this->id)->withTrashed()->count();
     }
     public function total_stocks()
     {
@@ -131,7 +131,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function total_p2p_gain_or_loss()
     {
-        return $this->p2ps()->onlyTrashed()->sum('gain_or_loss');
+        return $this->p2ps()->onlyTrashed()->sum('gain_or_loss') + $this->previous_p2p;
     }
 
     public function total_investments()
@@ -172,7 +172,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function cicil_notifications()
     {
-        return $this->hasMany(NotifCicilan::class)->where('user_id', auth()->id());
+        return $this->hasMany(NotifCicilan::class)->where('user_id', $this->id);
     }
     public function total_notif()
     {
