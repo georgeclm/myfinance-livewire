@@ -22,6 +22,7 @@
                                 <i class="fas fa-exclamation-circle text-warning mx-2"></i>Emergency
                                 Fund
                             </div>
+                            <i class="fas fa-angle-right"></i>
                         </a>
                         <a href="#" data-toggle="modal" data-target="#DanaMembeliBarang"
                             class="list-group-item list-group-item-action bg-black d-flex align-items-center">
@@ -29,6 +30,8 @@
                                 <i class="fas fa-shopping-basket text-warning mx-2"></i>Fund for
                                 Stuff
                             </div>
+                            <i class="fas fa-angle-right"></i>
+
                         </a>
                         {{-- <a href="#"
                                             class="list-group-item list-group-item-action bg-black d-flex align-items-center">
@@ -41,6 +44,8 @@
                             <div class="w-100 text-white">
                                 <i class="fas fa-piggy-bank text-primary mx-2"></i>Savings Fund
                             </div>
+                            <i class="fas fa-angle-right"></i>
+
                         </a>
                     </ul>
                 </div>

@@ -29,7 +29,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body text-white">Total Balance + Investment</div>
+                <div class="modal-body text-white">Total Balance + Investment - Your Debt + Your Friends Debt</div>
             </div>
         </div>
     </div>

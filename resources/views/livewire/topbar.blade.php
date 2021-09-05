@@ -40,6 +40,12 @@
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         My Website
                     </a>
+                    <div class="this_small">
+                        <a class="dropdown-item text-white" href="/settings">
+                            <i class="fas fa-wrench fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Settings
+                        </a>
+                    </div>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-white" href="#" data-toggle="modal" data-target="#logoutModal">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -62,8 +68,7 @@
                     <span style="font-size: 10px">Pockets</span>
                 </a>
             </li>
-            <li class="nav-item dropup no-arrow @if (in_array(Route::current()->uri,
-                ['transactions', 'transactions/{id}'])) active @endif" style="line-height: 80%
+            <li class="nav-item dropup no-arrow @if (in_array(Route::current()->uri, ['transactions', 'transactions/{id}'])) active @endif" style="line-height: 80%
                 !important; word-wrap:normal;">
                 <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -72,24 +77,13 @@
 
                 </a>
                 <div class="dropdown-menu bg-dark border-0" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item text-white @if (Route::current()->uri ==
-                        'transactions') active @endif"
-                        href="/transactions">All</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') ==
-                        'ons/1') active @endif"
-                        href="/transactions/1">Income</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') ==
-                        'ons/2') active @endif"
-                        href="/transactions/2">Spending</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') ==
-                        'ons/3') active @endif"
-                        href="/transactions/3">Transfer</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') ==
-                        'ons/4') active @endif"
-                        href="/transactions/4">Your Debt</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') ==
-                        'ons/5') active @endif"
-                        href="/transactions/5">Your Friend Debt</a>
+                    <a class="dropdown-item text-white @if (Route::current()->uri == 'transactions') active @endif" href="/transactions">All</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/1') active @endif" href="/transactions/1">Income</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/2') active @endif" href="/transactions/2">Spending</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/3') active @endif" href="/transactions/3">Transfer</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/4') active @endif" href="/transactions/4">Your Debt</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/5') active @endif" href="/transactions/5">Your Friend
+                        Debt</a>
                 </div>
             </li>
             <li class="nav-item">

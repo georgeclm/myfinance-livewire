@@ -4,9 +4,9 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Settings</h1>
     </div>
-    <div class="row">
+    <div class="mobile row">
 
-        <div class="col-lg-6">
+        <div class="small-when-0 col-lg-6">
             <!-- Dropdown Card Example -->
             <div class="bg-dark border-0 card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -37,7 +37,7 @@
             </div>
 
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 small-when-0 ">
             <div class="bg-dark border-0 card shadow mb-4">
                 <div
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -66,7 +66,7 @@
             </div>
 
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 small-when-0 ">
             <div class="bg-dark border-0 card shadow mb-4">
                 <div
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">

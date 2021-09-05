@@ -181,6 +181,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function total_with_assets()
     {
-        return $this->saldo() + $this->total_investments();
+        return $this->saldo() + $this->total_investments() - $this->totalutang() + $this->totalutangteman();
     }
 }
