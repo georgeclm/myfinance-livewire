@@ -8,6 +8,7 @@ use App\Http\Livewire\Investasi;
 use App\Http\Livewire\Investasi\P2p;
 use App\Http\Livewire\Investasi\Stock;
 use App\Http\Livewire\Login;
+use App\Http\Livewire\MutualFund;
 use App\Http\Livewire\Register;
 use App\Http\Livewire\Rekening;
 use App\Http\Livewire\Rekening\Detail;
@@ -46,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/stocks', Stock::class)->name('stock');
     Route::get('/p2ps', P2p::class)->name('p2p');
     Route::get('/settings', Setting::class)->name('setting');
+    Route::get('/mutualfunds', MutualFund::class)->name('mutualfund');
     Route::get('/transactions/{id}', TransactionDetail::class)->name('transaction.detail');
 });
 

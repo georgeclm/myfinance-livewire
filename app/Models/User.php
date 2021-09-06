@@ -121,9 +121,21 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->stocks()->withTrashed()->sum('total');
     }
+    public function total_mutual_funds()
+    {
+        return $this->mutual_funds()->withTrashed()->sum('total');
+    }
+    public function mutual_funds()
+    {
+        return $this->hasMany(MutualFund::class)->where('user_id', $this->id)->latest();
+    }
     public function total_stocks_gain_or_loss()
     {
         return $this->stocks()->withTrashed()->sum('gain_or_loss');
+    }
+    public function total_mutual_fund_gain_or_loss()
+    {
+        return $this->mutual_funds()->withTrashed()->sum('gain_or_loss');
     }
     public function total_p2ps()
     {
@@ -136,7 +148,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function total_investments()
     {
-        return $this->total_stocks() + $this->total_p2ps();
+        return $this->total_stocks() + $this->total_p2ps() + $this->total_mutual_funds();
     }
     public function uangmasuk($daterange = null)
     {
