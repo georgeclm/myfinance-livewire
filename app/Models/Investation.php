@@ -13,8 +13,10 @@ class Investation extends Model
     {
         return [
             'Stock' => auth()->user()->total_stocks(),
+
             'P2P' => auth()->user()->total_p2ps(),
-            'Mutual Funds (Reksadana)' => auth()->user()->total_mutual_funds()
+            'Mutual Funds (Reksadana)' => auth()->user()->total_mutual_funds(),
+            'Deposito' => auth()->user()->total_depositos()
         ][$this->nama] ?? 0;
     }
 
@@ -23,7 +25,8 @@ class Investation extends Model
         return [
             'Stock' => 'stocks',
             'P2P' => 'p2ps',
-            'Mutual Funds (Reksadana)' => 'mutualfunds'
+            'Mutual Funds (Reksadana)' => 'mutualfunds',
+            'Deposito' => 'deposito'
         ][$this->nama] ?? 'stocks';
     }
 }

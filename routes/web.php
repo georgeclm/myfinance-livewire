@@ -5,6 +5,7 @@ use App\Http\Livewire\Financialplan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Home;
 use App\Http\Livewire\Investasi;
+use App\Http\Livewire\Investasi\Deposito;
 use App\Http\Livewire\Investasi\P2p;
 use App\Http\Livewire\Investasi\Stock;
 use App\Http\Livewire\Login;
@@ -48,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/p2ps', P2p::class)->name('p2p');
     Route::get('/settings', Setting::class)->name('setting');
     Route::get('/mutualfunds', MutualFund::class)->name('mutualfund');
+    Route::get('/deposito', Deposito::class)->name('deposito');
     Route::get('/transactions/{id}', TransactionDetail::class)->name('transaction.detail');
 });
 
