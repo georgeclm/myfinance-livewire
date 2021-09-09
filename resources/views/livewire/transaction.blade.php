@@ -69,7 +69,7 @@
                                         </div>
                                     @endif
                                     <div class="cell text-white" data-title="Keterangan">
-                                        {{ $transaction->keterangan ?? '-' }}
+                                        {{ Str::limit($transaction->keterangan, 15, $end = '...') ?? '-' }}
                                     </div>
                                     <div class="cell text-white" data-title="Tanggal">
                                         {{ $transaction->created_at->format('l j F Y') }}
@@ -129,7 +129,7 @@
                                         <td>{{ isset($transaction->rekening_tujuan) ? $transaction->rekening_tujuan->nama_akun : 'Pocket deleted' }}
                                         </td>
                                     @endif
-                                    <td>{{ $transaction->keterangan ?? '-' }}</td>
+                                    <td>{{ Str::limit($transaction->keterangan, 15, $end = '...') ?? '-' }}</td>
                                     <td>{{ $transaction->created_at->format('l j F Y') }}
                                     </td>
                                 </tr>
