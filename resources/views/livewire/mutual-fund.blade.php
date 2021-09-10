@@ -10,6 +10,7 @@
                     class="fas fa-download fa-sm text-white-50"></i> Add Mutual Fund</a>
         @endif
     </div>
+
     <div class="row mobile">
         <div class="small-when-0 col-xl-3 col-md-6 mb-4">
             <div class="bg-gray-100 border-0 card border-left-success shadow h-100 py-2">
@@ -48,7 +49,10 @@
             </div>
         </div>
     </div>
-
+    @if (auth()->user()->rekenings->isEmpty() &&
+    auth()->user()->financialplans->isEmpty())
+        @livewire('partials.no-data', ['message' => 'Create Pocket and Financial Plan First to Start'])
+    @endif
     <div class="card-body small-when-0 ">
         @forelse ($mutual_funds as $mutual_fund)
             @livewire('investasi.mutualfund.topup',['mutual_fund' => $mutual_fund])

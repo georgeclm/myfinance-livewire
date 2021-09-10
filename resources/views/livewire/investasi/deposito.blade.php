@@ -48,6 +48,10 @@
             </div>
         </div>
     </div>
+    @if (auth()->user()->rekenings->isEmpty() &&
+    auth()->user()->financialplans->isEmpty())
+        @livewire('partials.no-data', ['message' => 'Create Pocket and Financial Plan First to Start'])
+    @endif
     <div class="card-body small-when-0">
         @forelse (auth()->user()->depositos as $deposito)
             @livewire('investasi.deposito.change' , ['deposito' => $deposito])

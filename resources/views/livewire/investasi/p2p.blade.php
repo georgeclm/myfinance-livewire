@@ -54,6 +54,10 @@
             </div>
         </div>
     </div>
+    @if (auth()->user()->rekenings->isEmpty() &&
+    auth()->user()->financialplans->isEmpty())
+        @livewire('partials.no-data', ['message' => 'Create Pocket and Financial Plan First to Start'])
+    @endif
     <div class="card-body small-when-0">
         @forelse (auth()->user()->p2ps as $p2p)
             @livewire('investasi.p2p.change' , ['p2p' => $p2p])
