@@ -1,6 +1,7 @@
 @section('title', 'Home - My Finance')
 
 <div class="container-fluid">
+    {{-- <h1>{{ $new_user }}</h1> --}}
     <!-- Page Heading -->
     <div class=" d-sm-flex align-items-center justify-content-between mb-2">
         <h1 class="h3 mb-0 text-white">Dashboard</h1>
@@ -54,7 +55,8 @@
                         @foreach ($categories as $category)
                             @if ($category->persen() != 0)
                                 <h4 class="small font-weight-bold text-white">
-                                    {{ $category->nama }}<span class="float-right">{{ $category->persen() }}%</span>
+                                    {{ $category->nama }}<span
+                                        class="float-right">{{ $category->persen() }}%</span>
                                 </h4>
                                 <div class="progress mb-4">
                                     <div role="progressbar" style="width: {{ $category->persen() }}%"
@@ -84,7 +86,8 @@
                         @foreach ($category_masuks as $category)
                             @if ($category->persen() != 0)
                                 <h4 class="small font-weight-bold text-white">
-                                    {{ $category->nama }}<span class="float-right">{{ $category->persen() }}%</span>
+                                    {{ $category->nama }}<span
+                                        class="float-right">{{ $category->persen() }}%</span>
                                 </h4>
                                 <div class="progress mb-4">
                                     <div role="progressbar" style="width: {{ $category->persen() }}%"
@@ -98,6 +101,27 @@
                 </div>
             </div>
         @endif
+        @if ($new_user == 1)
+            <div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="bg-dark modal-content">
+                        <div class="border-0 modal-header">
+                            <h5 class="modal-title text-white">Welcome To MyFinance</h5>
+                            <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-white">Start Create Your First Pocket to Use The App</div>
+                        <div class="modal-footer border-0">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-primary" href="/pockets">Pocket</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
     </div>
     <!-- /.container-fluid -->
 </div>

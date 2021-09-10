@@ -154,6 +154,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
         data-turbolinks-track="true"></script>
     <script>
+        $('#new-user').modal('show');
         @auth
             @if (!auth()->user()->rekenings->isEmpty() &&
                 Route::current()->uri != 'transactions')
