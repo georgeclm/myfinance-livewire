@@ -55,7 +55,7 @@
                     <div class="text-white my-3 mx-0">
                         <div class="d-flex ">
                             <div class="flex-grow-1">
-                                {{ $rekening->keterangan ?? '-' }}
+                                {{ Str::limit($rekening->keterangan, 15, $end = '...') ?? '-' }}
                             </div>
                             @if ($rekening->jenis_id != 1)
                                 {{ $rekening->nama_bank }}

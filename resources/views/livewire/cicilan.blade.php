@@ -48,11 +48,11 @@
                                         </td>
                                         <td>{{ $cicilan->tanggal }}</td>
                                         @if ($jenisuang->id == 4)
-                                            <td>{{ $cicilan->utang->keterangan ?? $cicilan->utang->nama }}
+                                            <td>{{ Str::limit($cicilan->utang->keterangan, 15, $end = '...') ?? $cicilan->utang->nama }}
                                             </td>
                                         @endif
                                         @if ($jenisuang->id == 5)
-                                            <td>{{ $cicilan->utangteman->keterangan ?? $cicilan->utangteman->nama }}
+                                            <td>{{ Str::limit($cicilan->utangteman->keterangan, 15, $end = '...') ?? $cicilan->utangteman->nama }}
                                             </td>
                                         @endif
                                         @if ($jenisuang->id == 1)

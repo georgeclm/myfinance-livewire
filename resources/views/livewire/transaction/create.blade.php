@@ -22,8 +22,8 @@
             });
         </script>
     @endif
-    <div class="modal fade" wire:ignore id="addRekening" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" wire:ignore id="addRekening" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-black modal-content">
                 <div class="modal-header bg-gray-100 border-0">
@@ -57,7 +57,8 @@
                                 <option value='' selected disabled hidden>Debt Who</option>
                                 @foreach (auth()->user()->utangs as $utang)
                                     <option value="{{ $utang->id }}">
-                                        {{ $utang->nama }}, {{ Str::limit($utang->keterangan, 30) }}</option>
+                                        {{ $utang->nama }}, {{ Str::limit($utang->keterangan, 15, $end = '...') }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('form.utang_id')
@@ -74,7 +75,8 @@
                                 <option value='' selected disabled hidden>Debt Who</option>
                                 @foreach (auth()->user()->utangtemans as $utang)
                                     <option value="{{ $utang->id }}">
-                                        {{ $utang->nama }}, {{ Str::limit($utang->keterangan, 30) }}</option>
+                                        {{ $utang->nama }}, {{ Str::limit($utang->keterangan, 15, $end = '...') }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('form.utangteman_id')

@@ -37,7 +37,7 @@ class Create extends Component
     public function rules()
     {
         return [
-            'form.nama' => 'required|min:6',
+            'form.nama' => 'required',
             'form.jumlah' => ['required', 'numeric'],
             'form.keterangan' => 'nullable',
             'form.rekening_id' => ['required', 'numeric', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],

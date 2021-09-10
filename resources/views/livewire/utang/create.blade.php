@@ -55,6 +55,7 @@
                             </span>
                         @enderror
                     </div>
+                </form>
             </div>
             <div class="modal-footer border-0">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>

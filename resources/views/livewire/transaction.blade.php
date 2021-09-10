@@ -37,41 +37,41 @@
                         <div class="table">
                             @forelse ($jenisuang->user_transactions($q,$daterange)->take(5) as $transaction)
                                 <div class="row">
-                                    <div class="cell {{ $jenisuang->textColor() }}" data-title="Jumlah">
+                                    <div class="cell {{ $jenisuang->textColor() }}" data-title="Total">
                                         Rp. {{ number_format($transaction->jumlah, 0, ',', '.') }}
                                     </div>
                                     @if ($jenisuang->id == 4)
-                                        <div class="cell text-white" data-title="Nama Utang">
-                                            {{ $transaction->utang->keterangan ?? $transaction->utang->nama }}
+                                        <div class="cell text-white" data-title="Debt Name">
+                                            {{ Str::limit($transaction->utang->keterangan, 15, $end = '...') ?? $transaction->utang->nama }}
                                         </div>
                                     @endif
                                     @if ($jenisuang->id == 5)
-                                        <div class="cell text-white" data-title="Nama Utang">
-                                            {{ $transaction->utangteman->keterangan ?? $transaction->utangteman->nama }}
+                                        <div class="cell text-white" data-title="Debt Name">
+                                            {{ Str::limit($transaction->utangteman->keterangan, 15, $end = '...') ?? $transaction->utangteman->nama }}
                                         </div>
                                     @endif
                                     @if ($jenisuang->id == 1)
-                                        <div class="cell text-white" data-title="Kategori">
+                                        <div class="cell text-white" data-title="Category">
                                             {{ $transaction->category_masuk->nama }}
                                         </div>
                                     @endif
                                     @if ($jenisuang->id == 2)
-                                        <div class="cell text-white" data-title="Kategori">
+                                        <div class="cell text-white" data-title="Category">
                                             {{ $transaction->category->nama }}
                                         </div>
                                     @endif
-                                    <div class="cell text-white" data-title="Akun">
+                                    <div class="cell text-white" data-title="Pocket">
                                         {{ isset($transaction->rekening) ? $transaction->rekening->nama_akun : 'Pocket deleted' }}
                                     </div>
                                     @if ($jenisuang->id == 3)
-                                        <div class="cell text-white" data-title="Akun Tujuan">
+                                        <div class="cell text-white" data-title="Pocket Destination">
                                             {{ isset($transaction->rekening_tujuan) ? $transaction->rekening_tujuan->nama_akun : 'Pocket deleted' }}
                                         </div>
                                     @endif
-                                    <div class="cell text-white" data-title="Keterangan">
+                                    <div class="cell text-white" data-title="Description">
                                         {{ Str::limit($transaction->keterangan, 15, $end = '...') ?? '-' }}
                                     </div>
-                                    <div class="cell text-white" data-title="Tanggal">
+                                    <div class="cell text-white" data-title="Date">
                                         {{ $transaction->created_at->format('l j F Y') }}
                                     </div>
                                 </div>
@@ -110,11 +110,11 @@
                                 <tr>
                                     <td>Rp {{ number_format($transaction->jumlah, 0, ',', '.') }}</td>
                                     @if ($jenisuang->id == 4)
-                                        <td>{{ $transaction->utang->keterangan ?? $transaction->utang->nama }}
+                                        <td>{{ Str::limit($transaction->utang->keterangan, 15, $end = '...') ?? $transaction->utang->nama }}
                                         </td>
                                     @endif
                                     @if ($jenisuang->id == 5)
-                                        <td>{{ $transaction->utangteman->keterangan ?? $transaction->utangteman->nama }}
+                                        <td>{{ Str::limit($transaction->utangteman->keterangan, 15, $end = '...') ?? $transaction->utangteman->nama }}
                                         </td>
                                     @endif
                                     @if ($jenisuang->id == 1)

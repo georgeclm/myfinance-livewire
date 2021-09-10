@@ -40,43 +40,40 @@
     <!-- DataTales Example -->
     <div class="bg-dark border-0 card shadow mb-4">
         <div class="bg-gray-100 border-0 card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Debt</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Your Debt</h6>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-dark" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Debt to who</th>
-                            <th>Total</th>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse (auth()->user()->utangs as $utang)
-                            @livewire('utang.edit',['utang' => $utang])
-                            <tr>
-                                <td>{{ $utang->nama }}</td>
-                                <td>Rp. {{ number_format($utang->jumlah, 0, ',', '.') }}</td>
-                                <td>{{ $utang->keterangan ?? '-' }}</td>
-                                <td>{{ $utang->created_at->format('l j F Y') }}</td>
-                                <td> <button data-toggle="modal" data-target="#editmodal-{{ $utang->id }}"
-                                        type="button" class="btn btn-info btn-circle">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center">You dont have any debts</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+            @forelse (auth()->user()->utangs as $utang)
+                @livewire('utang.edit',['utang'=> $utang])
+
+                <div class="py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary"><a
+                            href="/pockets/{{ $utang->id }}">{{ $utang->nama }}</a> - Rp.
+                        {{ number_format($utang->jumlah, 0, ',', '.') }}
+                    </h6>
+                    <button data-toggle="modal" data-target="#editmodal-{{ $utang->id }}" type="button"
+                        class="btn btn-info btn-circle">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                </div>
+                <!-- Card Body -->
+                <div class="text-white my-3 mx-0">
+                    <div class="d-flex ">
+                        <div class="flex-grow-1">
+                            {{ $utang->created_at->format('l j F Y') }}
+                            {{-- {{ $utang->keterangan ?? '-' }} --}}
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="bg-white my-1">
+            @empty
+                <div class="text-center font-weight-bold text-white-50">
+                    No Debt
+                </div>
+            @endforelse
         </div>
     </div>
+
     @livewire('utang.create')
 </div>
