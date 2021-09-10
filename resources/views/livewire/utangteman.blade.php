@@ -47,12 +47,11 @@
                     @livewire('utangteman.edit',['utang'=> $utang])
 
                     <div class="py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary"><a
-                                href="/pockets/{{ $utang->id }}">{{ $utang->nama }}</a> - Rp.
+                        <h6 class="m-0 font-weight-bold text-primary">{{ $utang->nama }} - Rp.
                             {{ number_format($utang->jumlah, 0, ',', '.') }}
                         </h6>
                         <button data-toggle="modal" data-target="#editmodal-{{ $utang->id }}" type="button"
-                            class="btn btn-info btn-circle">
+                            class="btn btn-sm btn-info btn-circle">
                             <i class="fas fa-info-circle"></i>
                         </button>
                     </div>

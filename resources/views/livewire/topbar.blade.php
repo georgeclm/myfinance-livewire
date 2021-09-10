@@ -6,10 +6,16 @@
         {{-- <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                                     <i class="fa fa-bars"></i>
                                 </button> --}}
-        <a class="ml-3 this_small text-white" href="{{ route('home') }}">
-            <i class="fa fa-balance-scale fa-2x"></i>
-        </a>
+        @if (!in_array(Route::current()->uri, ['login', 'register', '/', 'pockets', 'transactions', 'financialplans', 'investments']))
 
+            <a class="ml-3 this_small text-white" href="{{ url()->previous() }}">
+                <i class="fa fa-chevron-left"></i>
+            </a>
+        @else
+            <a class="ml-3 this_small text-white" href="{{ route('home') }}">
+                <i class="fa fa-balance-scale fa-2x"></i>
+            </a>
+        @endif
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
             <!-- Nav Item - Alerts -->

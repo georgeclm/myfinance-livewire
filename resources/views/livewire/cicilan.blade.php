@@ -9,12 +9,55 @@
                         class="fas fa-download fa-sm text-white-50"></i> Add</a>
             @endif
         </div>
-        <div class="row">
+        <div class="row mobile">
             @if (auth()->user()->rekenings->isEmpty())
                 @livewire('partials.newaccount')
             @endif
         </div>
         @foreach ($jenisuangs as $jenisuang)
+
+            <!-- DataTales Example -->
+            <div class="bg-dark border-0 card shadow mb-4">
+                <div class="bg-gray-100 border-0 card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ $jenisuang->nama }}</h6>
+                </div>
+                <div class="card-body">
+                    @forelse ($jenisuang->cicilans->take(5) as $cicilan)
+                        @livewire('cicilan.delete',['cicilan' => $cicilan])
+                        <div class="py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">{{ $cicilan->nama }} - Rp.
+                                {{ number_format($cicilan->jumlah, 0, ',', '.') }}
+                            </h6>
+                            <button data-toggle="modal" data-target="#deletemodal-{{ $cicilan->id }}" type="button"
+                                class="btn btn-sm btn-danger btn-circle">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="text-white my-3 mx-0">
+                            <div class="d-flex ">
+                                <div class="flex-grow-1">
+                                    @if ($jenisuang->id == 1)
+                                        {{ $cicilan->category_masuk->nama }}
+                                    @elseif($jenisuang->id == 2)
+                                        {{ $cicilan->category->nama }}
+                                    @endif
+                                    <br>
+                                    Date : {{ $cicilan->tanggal }}
+                                </div>
+                                {{ $cicilan->sekarang }}/{{ $cicilan->bulan }}
+                            </div>
+                        </div>
+                        <hr class="bg-white my-1">
+                    @empty
+                        <div class="text-center font-weight-bold text-white-50">
+                            Empty
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+        @endforeach
+        {{-- @foreach ($jenisuangs as $jenisuang)
             <!-- DataTales Example -->
             <div class="bg-dark border-0 card shadow mb-4">
                 <div class="bg-gray-100 border-0 card-header py-3">
@@ -88,6 +131,6 @@
                     </div>
                 </div>
             </div>
-        @endforeach
+        @endforeach --}}
         @livewire('cicilan.create',['jenisuangs' => $jenisuangs])
     </div>
