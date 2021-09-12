@@ -27,10 +27,7 @@ class CreateCategory extends Component
             $this->dispatchBrowserEvent('contentChanged');
             return $this->render();
         }
-        Category::create([
-            'nama' => $this->form['nama'],
-            'user_id' => auth()->id()
-        ]);
+        Category::create($this->form + ['user_id' => auth()->id()]);
         session()->flash('success', 'New Category have been added');
         return redirect(route('setting'));
     }

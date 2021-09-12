@@ -19,7 +19,9 @@ class Create extends Component
         'rekening_id' => '',
         'financial_plan_id' => '',
         'keterangan' => null,
-        'jatuh_tempo' => ''
+        'jatuh_tempo' => '',
+        'gain_or_loss' => '',
+        'bunga' => ''
     ];
     public function rules()
     {
@@ -49,7 +51,7 @@ class Create extends Component
             return $this->render();
         }
 
-        $bunga = ($this->form['harga_jual'] * 100 / $this->form['jumlah']) - 100;
+        $this->form['bunga'] = ($this->form['harga_jual'] * 100 / $this->form['jumlah']) - 100;
         $rekening = Rekening::findOrFail($this->form['rekening_id']);
 
         if ($this->form['jumlah'] > $rekening->saldo_sekarang) {
@@ -74,19 +76,8 @@ class Create extends Component
             'keterangan' => 'Beli P2P ' . $this->form['nama_p2p'],
             'category_id' => Category::firstWhere('nama', 'Investment')->id,
         ]);
-
-        P2P::create([
-            'user_id' => auth()->id(),
-            'nama_p2p' => $this->form['nama_p2p'],
-            'bunga' => $bunga,
-            'jumlah' => $this->form['jumlah'],
-            'harga_jual' => $this->form['harga_jual'],
-            'rekening_id' => $this->form['rekening_id'],
-            'financial_plan_id' => $this->form['financial_plan_id'],
-            'keterangan' => $this->form['keterangan'],
-            'jatuh_tempo' => $this->form['jatuh_tempo'],
-            'gain_or_loss' => $this->form['harga_jual'] - $this->form['jumlah'],
-        ]);
+        $this->form['gain_or_loss'] = $this->form['harga_jual'] - $this->form['jumlah'];
+        P2P::create($this->form + ['user_id' => auth()->id()]);
         session()->flash('success', 'P2P have been saved');
         return redirect(route('p2p'));
     }

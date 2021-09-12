@@ -28,10 +28,7 @@ class CreateCategoryMasuk extends Component
             $this->dispatchBrowserEvent('contentChanged');
             return $this->render();
         }
-        CategoryMasuk::create([
-            'nama' => $this->form['nama'],
-            'user_id' => auth()->id()
-        ]);
+        CategoryMasuk::create($this->form + ['user_id' => auth()->id()]);
         session()->flash('success', 'New Category have been added');
         return redirect(route('setting'));
     }

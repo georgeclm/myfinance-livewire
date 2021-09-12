@@ -18,7 +18,8 @@ class CreateMutualFund extends Component
         'harga_beli' => '',
         'rekening_id' => '',
         'financial_plan_id' => '',
-        'keterangan' => null
+        'keterangan' => null,
+        'total' => ''
     ];
     public function rules()
     {
@@ -37,39 +38,29 @@ class CreateMutualFund extends Component
         $frontJumlah = $this->form['harga_beli'];
         $this->form['harga_beli'] = str_replace('.', '', substr($this->form['harga_beli'], 4));
         $this->validate();
-        $total = $this->form['harga_beli'] * $this->form['unit'];
+        $this->form['total'] = $this->form['harga_beli'] * $this->form['unit'];
         $rekening = Rekening::findOrFail($this->form['rekening_id']);
-        if ($total > $rekening->saldo_sekarang) {
+        if ($this->form['total'] > $rekening->saldo_sekarang) {
             $this->form['harga_beli'] = $frontJumlah;
             $this->addError('form.rekening_id', 'Balance In Pocket Not Enough ');
             return $this->render();
         }
 
-        $rekening->saldo_sekarang -= $total;
+        $rekening->saldo_sekarang -= $this->form['total'];
         $rekening->save();
 
         $financialplan = FinancialPlan::findOrFail($this->form['financial_plan_id']);
-        $financialplan->jumlah += $total;
+        $financialplan->jumlah += $this->form['total'];
         $financialplan->save();
         Transaction::create([
             'user_id' => auth()->id(),
             'jenisuang_id' => 2,
-            'jumlah' => $total,
+            'jumlah' => $this->form['total'],
             'rekening_id' => $this->form['rekening_id'],
             'keterangan' => 'Buy ' . $this->form['nama_reksadana'],
             'category_id' => Category::firstWhere('nama', 'Investment')->id,
         ]);
-        MutualFund::create([
-            'user_id' => auth()->id(),
-            'nama_reksadana' => $this->form['nama_reksadana'],
-            'unit' => $this->form['unit'],
-            'harga_beli' => $this->form['harga_beli'],
-            'rekening_id' => $this->form['rekening_id'],
-            'financial_plan_id' => $this->form['financial_plan_id'],
-            'keterangan' => $this->form['keterangan'],
-            'total' => $total
-        ]);
-
+        MutualFund::create($this->form + ['user_id' => auth()->id()]);
         session()->flash('success', 'Mutual Fund have been saved');
         return redirect(route('mutualfund'));
     }

@@ -18,6 +18,7 @@ class Create extends Component
         'jumlah' => '',
         'bunga' => '',
         'rekening_id' => '',
+        'harga_jual' => '',
         'financial_plan_id' => '',
         'keterangan' => null,
         'jatuh_tempo' => ''
@@ -70,19 +71,8 @@ class Create extends Component
             'keterangan' => 'Buy ' . $this->form['nama_deposito'],
             'category_id' => Category::firstWhere('nama', 'Investment')->id,
         ]);
-
-        Deposito::create([
-            'user_id' => auth()->id(),
-            'nama_deposito' => $this->form['nama_deposito'],
-            'nama_bank' => $this->form['nama_bank'],
-            'bunga' => $this->form['bunga'],
-            'harga_jual' => $this->form['jumlah'] * (100 + $this->form['bunga']) / 100,
-            'jumlah' => $this->form['jumlah'],
-            'rekening_id' => $this->form['rekening_id'],
-            'financial_plan_id' => $this->form['financial_plan_id'],
-            'keterangan' => $this->form['keterangan'],
-            'jatuh_tempo' => $this->form['jatuh_tempo'],
-        ]);
+        $this->form['harga_jual'] = $this->form['jumlah'] * (100 + $this->form['bunga']) / 100;
+        Deposito::create($this->form + ['user_id' => auth()->id()]);
         session()->flash('success', 'Deposito have been saved');
         return redirect(route('deposito'));
     }

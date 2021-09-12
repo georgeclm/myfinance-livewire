@@ -20,7 +20,8 @@ class CreateStock extends Component
         'biaya_lain' => null,
         'rekening_id' => '',
         'financial_plan_id' => '',
-        'keterangan' => null
+        'keterangan' => null,
+        'total' => ''
     ];
 
 
@@ -65,39 +66,29 @@ class CreateStock extends Component
             $this->addError('form.kode', 'Code already listed please TopUp');
             return $this->render();
         }
-        $total = $this->form['harga_beli'] * $this->form['lot'] * 100;
+        $this->form['total'] = $this->form['harga_beli'] * $this->form['lot'] * 100;
         $rekening = Rekening::findOrFail($this->form['rekening_id']);
-        if ($total > $rekening->saldo_sekarang) {
+        if ($this->form['total'] > $rekening->saldo_sekarang) {
             $this->form['harga_beli'] = $frontJumlah;
             $this->addError('form.rekening_id', 'Balance In Pocket Not Enough ');
             return $this->render();
         }
 
-        $rekening->saldo_sekarang -= $total;
+        $rekening->saldo_sekarang -= $this->form['total'];
         $rekening->save();
 
         $financialplan = FinancialPlan::findOrFail($this->form['financial_plan_id']);
-        $financialplan->jumlah += $total;
+        $financialplan->jumlah += $this->form['total'];
         $financialplan->save();
         Transaction::create([
             'user_id' => auth()->id(),
             'jenisuang_id' => 2,
-            'jumlah' => $total,
+            'jumlah' => $this->form['total'],
             'rekening_id' => $this->form['rekening_id'],
             'keterangan' => 'Beli Stock ' . $this->form['kode'],
             'category_id' => Category::firstWhere('nama', 'Investment')->id,
         ]);
-        Stock::create([
-            'user_id' => auth()->id(),
-            'kode' => $this->form['kode'],
-            'lot' => $this->form['lot'],
-            'harga_beli' => $this->form['harga_beli'],
-            'biaya_lain' => $this->form['biaya_lain'],
-            'rekening_id' => $this->form['rekening_id'],
-            'financial_plan_id' => $this->form['financial_plan_id'],
-            'keterangan' => $this->form['keterangan'],
-            'total' => $total
-        ]);
+        Stock::create($this->form + ['user_id' => auth()->id()]);
 
         session()->flash('success', 'Stock have been saved');
         return redirect(route('stock'));
