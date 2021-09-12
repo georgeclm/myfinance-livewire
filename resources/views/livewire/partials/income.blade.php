@@ -28,7 +28,8 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body text-white">Total {{ now()->format('F') }} Income</div>
+                <div class="modal-body text-white">Total {{ now()->format('F') }} Income (Sell Investment Not
+                    Included)</div>
             </div>
         </div>
     </div>
