@@ -53,7 +53,7 @@
                     </div>
                     <div class="card-body">
                         @foreach ($categories as $category)
-                            @if ($category->persen() != 0)
+                            @if ($category->persen() != 0 && $category->nama != 'Investment')
                                 <h4 class="small font-weight-bold text-white">
                                     {{ $category->nama }}<span
                                         class="float-right">{{ $category->persen() }}%</span>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="card-body">
                         @foreach ($category_masuks as $category)
-                            @if ($category->persen() != 0)
+                            @if ($category->persen() != 0 && $category->nama != 'Sell Investment')
                                 <h4 class="small font-weight-bold text-white">
                                     {{ $category->nama }}<span
                                         class="float-right">{{ $category->persen() }}%</span>
