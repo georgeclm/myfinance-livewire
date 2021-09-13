@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BankController;
 use App\Http\Livewire\Cicilan;
 use App\Http\Livewire\Financialplan;
 use Illuminate\Support\Facades\Route;
@@ -53,37 +54,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/transactions/{id}', TransactionDetail::class)->name('transaction.detail');
 });
 
-
-
-// From My Finance
-Route::middleware('auth')->group(function () {
-    // Route::resource('transactions', TransactionController::class);
-    // Route::resource('investations', InvestationController::class);
-    // Route::resource('stocks', StockController::class);
-    // Route::resource('p2ps', P2PController::class);
-    Route::put('p2ps/{p2p}/tujuan', [P2PController::class, 'updateTujuan'])->name('p2ps.update.tujuan');
-    Route::post('p2ps/{p2p}/sell', [P2PController::class, 'sell'])->name('p2ps.sell');
-    // Route::resource('cicilans', CicilanController::class);
-    Route::put('stocks/{stock}/tujuan', [StockController::class, 'updateTujuan'])->name('stocks.update.tujuan');
-    Route::post('stocks/{stock}/jual', [StockController::class, 'jual'])->name('stocks.jual');
-    // Route::resource('financialplans', FinancialPlanController::class)->except('destroy');
-    Route::post('financialplans/danadarurat', [FinancialPlanController::class, 'storeDanaDarurat'])->name('financialplans.danadarurat');
-    Route::post('financialplans/{financialplan}/danadarurat', [FinancialPlanController::class, 'updateDanaDarurat'])->name('financialplans.danadarurat.update');
-    Route::post('financialplans/danabelibarang', [FinancialPlanController::class, 'storeDanaMembeliBarang'])->name('financialplans.danabelibarang');
-    Route::post('financialplans/{financialplan}/danabelibarang', [FinancialPlanController::class, 'updateDanaMembeliBarang'])->name('financialplans.danabelibarang.update');
-    Route::post('financialplans/danamenabung', [FinancialPlanController::class, 'storeDanaMenabung'])->name('financialplans.danamenabung');
-    Route::post('financialplans/{financialplan}/danamenabung', [FinancialPlanController::class, 'updateDanaMenabung'])->name('financialplans.danamenabung.update');
-    Route::get('financialplans/{financialplan}/destroy', [FinancialPlanController::class, 'destroy'])->name('financialplans.destroy');
-    // Route::resource('rekenings', RekeningController::class)->except('destroy');
-    Route::get('rekenings/{id}/restore', [RekeningController::class, 'restore'])->name('rekenings.restore');
-    Route::post('rekenings/{rekening}/adjust', [RekeningController::class, 'adjust'])->name('rekenings.adjust');
-    Route::get('rekenings/{rekening}/destroy', [RekeningController::class, 'destroy'])->name('rekenings.destroy');
-    Route::get('jenisuangs/{jenisuang}', [JenisuangController::class, 'show'])->name('jenisuangs.show');
-    // Route::resource('utangs', UtangController::class);
-    // Route::resource('utangtemans', UtangtemanController::class);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('category_masuks', CategoryMasukController::class);
-    // Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::get('categories/{category}/remove', [CategoryController::class, 'remove'])->name('categories.remove');
-    Route::get('category_masuks/{category}/remove', [CategoryMasukController::class, 'remove'])->name('category_masuks.remove');
-});
+Route::get('ajax-autocomplete-search', [BankController::class, 'selectSearch']);

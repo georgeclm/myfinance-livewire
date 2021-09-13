@@ -1,4 +1,4 @@
-<div class="modal fade" wire:ignore id="addRekening" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" wire:ignore id="addRekening" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="bg-black modal-content">
@@ -12,7 +12,7 @@
                 <form id="rekening" wire:submit.prevent="submit">
                     <div class="form-group">
                         <select
-                            class="border-0 form-control form-control-user form-block @error('form.jenis_id') is-invalid @enderror"
+                            class="theselect border-0 form-control form-control-user form-block @error('form.jenis_id') is-invalid @enderror"
                             wire:model.defer="form.jenis_id" name="jenis_id" style="padding: 0.5rem !important"
                             required>
                             <option value="" selected disabled hidden>Choose Type</option>
@@ -37,11 +37,27 @@
                             </span>
                         @enderror
                     </div>
+                    <div class="form-group" id="thebank">
+                        <select wire:model.defer="form.nama_bank"
+                            class="livesearch border-0 form-control form-control-user @error('form.nama_bank') is-invalid @enderror"
+                            style="width: 100%; " name="nama_bank" id="nama_bank" required>
+                        </select>
+                        @error('form.nama_bank')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                     <div class="form-group">
-                        <input type="text"
-                            class="border-0 form-control form-control-user @error('form.nama_bank') is-invalid @enderror"
-                            wire:model.defer="form.nama_bank" name="nama_bank" required id="nama_bank"
-                            placeholder="Nama Bank" disabled>
+                        <select
+                            class="border-0 form-control form-control-user form-block @error('form.nama_bank') is-invalid @enderror"
+                            wire:model.defer="form.nama_bank" id="ewallet" name="ewallet"
+                            style="padding: 0.5rem !important" required disabled>
+                            <option value="" selected>Select Provider</option>
+                            @foreach (App\Models\Bank::where('code', '9999')->get() as $ewallet)
+                                <option value="{{ $ewallet->nama }}">{{ $ewallet->nama }}</option>
+                            @endforeach
+                        </select>
                         @error('form.nama_bank')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -92,15 +108,41 @@
 </div>
 @section('script')
     <script>
+        $('.livesearch').select2({
+            placeholder: 'Select bank',
+            ajax: {
+                url: '/ajax-autocomplete-search',
+                dataType: 'json',
+                delay: 250,
+                processResults: function(data) {
+                    return {
+                        results: $.map(data, function(item) {
+                            return {
+                                text: item.nama,
+                                id: item.nama
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+        $('.livesearch').on('change', function(e) {
+            var data = $('.livesearch').select2("val");
+            @this.set('form.nama_bank', data);
+        });
         $(document).ready(function() {
             $(".dropdown-toggle").dropdown();
+            $('#thebank').hide('slow');
+            $('#ewallet').hide('slow');
         });
         // $(document).ready(function() {
         //     $('#1').DataTable();
         //     $('#2').DataTable();
         //     $('#3').DataTable();
         // });
-        $('select').on('change', function(e) {
+
+        $('.theselect').on('change', function(e) {
             var optionSelected = $("option:selected", this);
             var valueSelected = this.value;
             $('#nama-akun').prop('disabled', false);
@@ -108,21 +150,32 @@
             $('#saldo_mengendap').prop('disabled', false);
             $('#saldo_sekarang').prop('disabled', false);
             $('#keterangan').prop('disabled', false);
+            $('#ewallet').prop('disabled', false);
             if (valueSelected == 1) {
                 $('#nama_bank').prop('disabled', true);
+                $('#thebank').hide('slow');
+                $('#ewallet').hide('slow');
+                $('#ewallet').prop('required', false);
                 $('#nama_bank').prop('required', false);
                 $('#saldo_mengendap').prop('disabled', true);
                 $('#saldo_mengendap').prop('required', false);
             } else if (valueSelected == 2) {
                 $('#nama_bank').prop('disabled', false);
+                $('#thebank').show('slow');
+                $('#ewallet').hide('slow');
+                $('#ewallet').prop('required', false);
                 $('#nama_bank').prop('required', true);
                 $('#saldo_mengendap').prop('disabled', false);
                 $('#saldo_mengendap').prop('required', true);
             } else {
                 $('#nama_bank').prop('disabled', false);
-                $('#nama_bank').prop('required', true);
+                $('#thebank').hide('slow');
+                $('#ewallet').show('slow');
+                $('#nama_bank').prop('required', false);
                 $('#saldo_mengendap').prop('disabled', true);
                 $('#saldo_mengendap').prop('required', false);
+                $('#ewallet').prop('disabled', false);
+                $('#ewallet').prop('required', true);
             }
         });
     </script>

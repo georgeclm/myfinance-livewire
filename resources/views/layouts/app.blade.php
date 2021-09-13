@@ -90,6 +90,56 @@
             font-weight: 800;
         }
 
+        .select2-search {
+            background-color: rgb(61, 61, 61) !important;
+            /* border: 0 !important; */
+            /* padding: 0.5rem !important */
+        }
+
+        .select2-search input {
+            background-color: rgb(61, 61, 61) !important;
+            border: 0 !important;
+            padding: 0.5rem !important
+        }
+
+        .select2-results {
+            background-color: rgb(33, 33, 33) !important;
+            border: 0 !important;
+            color: white !important;
+            padding: 0.5rem !important
+        }
+
+        .select2-choice {
+            background-color: rgb(33, 33, 33) !important;
+            border: 0 !important;
+            padding: 0.5rem !important
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: rgb(33, 33, 33) !important;
+            border: 0 !important;
+            /* padding: 0.5rem !important */
+        }
+
+        .select2-search--dropdown {
+            background-color: rgb(33, 33, 33) !important;
+            padding: 0.5rem !important
+        }
+
+        .select2-search__field {
+            background-color: rgb(33, 33, 33) !important;
+            padding: 0.5rem !important
+        }
+
+        .select2 {
+            background-color: rgb(33, 33, 33) !important;
+            padding: 0.5rem !important
+        }
+
+        .select2 .select2-selection__rendered {
+            color: rgb(170, 170, 170) !important;
+        }
+
     </style>
     @livewireStyles
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
@@ -139,6 +189,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
         integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ=="
         crossorigin="anonymous" data-turbolinks-track="true"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
     <script src="{{ asset('js/sb-admin-2.min.js') }}" data-turbolinks-track="true"></script>
     {{-- <script src="{{ asset('js/Chart.min.js') }}" data-turbolinks-track="true"></script>
     <script src="{{ asset('js/demo/chart-area-demo.js') }}" data-turbolinks-track="true"></script>
@@ -155,6 +208,7 @@
         data-turbolinks-track="true"></script>
     <script>
         $('#new-user').modal('show');
+
         @auth
             @if (!auth()->user()->rekenings->isEmpty() &&
                 Route::current()->uri != 'transactions')
