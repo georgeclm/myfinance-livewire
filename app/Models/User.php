@@ -83,6 +83,7 @@ class User extends Authenticatable implements JWTSubject
             $date_range1 = explode(" / ", $daterange);
             $return = $return->where('created_at', '>=', $date_range1[0]);
             $return = $return->where('created_at', '<=', $date_range1[1]);
+            return $return->get();
         }
         return $return->whereMonth('created_at', now()->month)->orderBy('created_at', 'desc');
 
