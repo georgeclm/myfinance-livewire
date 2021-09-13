@@ -6,6 +6,7 @@ use Livewire\Component;
 
 class Balance extends Component
 {
+    public $daterange;
     public function render()
     {
         return view('livewire.partials.balance');

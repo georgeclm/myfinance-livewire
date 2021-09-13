@@ -10,7 +10,7 @@
                         </a>
                     </div>
                     <div class="h7 mb-0 @if (Auth::user()->saldoperbulan() >= 1000000000) small @endif font-weight-bold text-primary">Rp.
-                        {{ number_format(Auth::user()->saldoperbulan(), 0, ',', '.') }}
+                        {{ number_format(Auth::user()->saldoperbulan($daterange), 0, ',', '.') }}
                     </div>
                 </div>
                 <div class="col-auto">

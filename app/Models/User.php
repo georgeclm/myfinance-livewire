@@ -170,9 +170,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->transactions($daterange)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
     }
-    public function saldoperbulan()
+    public function saldoperbulan($daterange = null)
     {
-        return $this->uangmasuk() - $this->uangkeluar();
+        return $this->uangmasuk($daterange) - $this->uangkeluar($daterange);
     }
     public function saldo()
     {
