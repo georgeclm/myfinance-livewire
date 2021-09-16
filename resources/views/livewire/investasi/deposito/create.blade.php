@@ -23,7 +23,7 @@
         </script>
     @endif
 
-    <div class="modal fade" wire:ignore.self id="p2p" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" wire:ignore id="p2p" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-black  modal-content">
@@ -35,11 +35,22 @@
                 </div>
                 <div class="modal-body">
                     <form id="addStock" wire:submit.prevent="submit">
-                        <div class="form-group">
+                        <div class="form-group" id="thebank">
+                            <select wire:model.defer="form.nama_bank"
+                                class="livesearch border-0 form-control form-control-user @error('form.nama_bank') is-invalid @enderror"
+                                style="width: 100%; " name="nama_bank" id="nama_bank" required>
+                            </select>
+                            @error('form.nama_bank')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        {{-- <div class="form-group">
                             <input type="text" wire:model.defer="form.nama_bank"
                                 class="border-0 form-control form-control-user " name="nama_bank" placeholder="Bank Name"
                                 required>
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <input type="text" wire:model.defer="form.nama_deposito"
                                 class="border-0 form-control form-control-user " name="nama_deposito"
@@ -121,3 +132,39 @@
         </div>
     </div>
 </div>
+@section('script')
+    <script>
+        $(function() {
+            $('input[name="jatuh_tempo"]').daterangepicker({
+                singleDatePicker: true,
+                "locale": {
+                    "format": "YYYY-MM-DD",
+                    "separator": " / ",
+                },
+            });
+        });
+        $('.livesearch').select2({
+            placeholder: 'Select bank',
+            ajax: {
+                url: '/ajax-autocomplete-search',
+                dataType: 'json',
+                delay: 250,
+                processResults: function(data) {
+                    return {
+                        results: $.map(data, function(item) {
+                            return {
+                                text: item.nama,
+                                id: item.nama
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+        $('.livesearch').on('change', function(e) {
+            var data = $('.livesearch').select2("val");
+            @this.set('form.nama_bank', data);
+        });
+    </script>
+@endsection

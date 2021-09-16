@@ -94,16 +94,3 @@
     @livewire('investasi.deposito.create')
     {{-- @livewire('investasi.p2p.previous') --}}
 </div>
-@section('script')
-    <script>
-        $(function() {
-            $('input[name="jatuh_tempo"]').daterangepicker({
-                singleDatePicker: true,
-                "locale": {
-                    "format": "YYYY-MM-DD",
-                    "separator": " / ",
-                },
-            });
-        });
-    </script>
-@endsection
