@@ -25,7 +25,7 @@
             </a>
         @empty
             <h6 class="dropdown-header bg-black border-0 text-center">
-                Tidak ada Notifikasi
+                No Notification
             </h6>
         @endforelse
 

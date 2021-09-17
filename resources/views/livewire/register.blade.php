@@ -34,7 +34,7 @@
                                 @enderror
                             </div>
                             <div class="form-group row mobile small-when-0 ">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                <div class="col-sm-6 mb-sm-0 p-0 pr-1 mb-3-when-small">
                                     <input type="password"
                                         class="border-0 form-control form-control-user @error('form.password') is-invalid @enderror"
                                         wire:model="form.password" id="myInput" name="password" required
@@ -45,7 +45,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6 mb-3">
+                                <div class="col-sm-6 p-0 mb-3-when-small">
                                     <input type="password" class="border-0 form-control form-control-user"
                                         wire:model="form.password_confirmation" name="password_confirmation" required
                                         autocomplete="new-password" id="myInput2" placeholder="Repeat Password">

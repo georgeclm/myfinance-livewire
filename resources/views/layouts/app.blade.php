@@ -61,6 +61,10 @@
         }
 
         @media screen and (max-width: 768px) {
+            .mb-3-when-small {
+                margin-bottom: 1rem;
+            }
+
             .small-when-0 {
                 padding: 0 !important;
             }
