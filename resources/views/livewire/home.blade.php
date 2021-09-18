@@ -101,6 +101,20 @@
                 </div>
             </div>
         @endif
+        @if (auth()->user()->all_transactions->count() != 0)
+            <div class="col-xl-8 col-lg-7 small-when-0">
+                <div class="bg-dark card shadow mb-4 border-0">
+                    <div class="bg-gray-100 card-header py-3 border-0">
+                        <h6 class="m-0 font-weight-bold text-primary">Income vs Spending Chart</h6>
+                    </div>
+                    <div class="card-body small-when-0"><br>
+                        <div class="chart-area">
+                            <canvas id="myAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         @if ($new_user == 1)
             <div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -125,3 +139,184 @@
     </div>
     <!-- /.container-fluid -->
 </div>
+@section('script')
+    <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
+    <script>
+        var x = window.matchMedia("(max-width: 700px)");
+        if (x.matches) {
+            var size = 10;
+        } else {
+            var size = 12;
+        }
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        (Chart.defaults.global.defaultFontFamily = "Nunito"),
+        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = "#858796";
+
+        function number_format(number, decimals, dec_point, thousands_sep) {
+            // *     example: number_format(1234.56, 2, ',', ' ');
+            // *     return: '1 234,56'
+            number = (number + "").replace(",", "").replace(" ", "");
+            var n = !isFinite(+number) ? 0 : +number,
+                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                sep = typeof thousands_sep === "undefined" ? "." : thousands_sep,
+                dec = typeof dec_point === "undefined" ? "," : dec_point,
+                s = "",
+                toFixedFix = function(n, prec) {
+                    var k = Math.pow(10, prec);
+                    return "" + Math.round(n * k) / k;
+                };
+            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+            s = (prec ? toFixedFix(n, prec) : "" + Math.round(n)).split(".");
+            if (s[0].length > 3) {
+                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+            }
+            if ((s[1] || "").length < prec) {
+                s[1] = s[1] || "";
+                s[1] += new Array(prec - s[1].length + 1).join("0");
+            }
+            return s.join(dec);
+        }
+
+        // Area Chart Example
+        var ctx = document.getElementById("myAreaChart");
+        var x = window.matchMedia("(max-width: 700px)");
+
+        var myLineChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [
+                    "{{ substr(
+    now()->subMonth(4)->format('F'),
+    0,
+    3,
+) }}",
+                    "{{ substr(
+    now()->subMonth(3)->format('F'),
+    0,
+    3,
+) }}",
+                    "{{ substr(
+    now()->subMonth(2)->format('F'),
+    0,
+    3,
+) }}",
+                    "{{ substr(
+    now()->subMonth(1)->format('F'),
+    0,
+    3,
+) }}",
+                    "{{ substr(now()->format('F'), 0, 3) }}",
+                ],
+                datasets: [{
+                        label: "Spending",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(78, 115, 223, 0.05)",
+                        borderColor: "#e74a3b",
+                        pointRadius: 3,
+                        pointBackgroundColor: "#e74a3b",
+                        pointBorderColor: "#e74a3b",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "#e74a3b",
+                        pointHoverBorderColor: "#e74a3b",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: [
+                            "{{ auth()->user()->uangkeluar_by_month(4) }}",
+                            "{{ auth()->user()->uangkeluar_by_month(3) }}",
+                            "{{ auth()->user()->uangkeluar_by_month(2) }}",
+                            "{{ auth()->user()->uangkeluar_by_month(1) }}",
+                            "{{ auth()->user()->uangkeluar(null) }}",
+                        ],
+                    },
+                    {
+                        label: "Income",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(78, 115, 223, 0.05)",
+                        borderColor: "#1cc88a",
+                        pointRadius: 3,
+                        pointBackgroundColor: "#1cc88a",
+                        pointBorderColor: "#1cc88a",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "#1cc88a",
+                        pointHoverBorderColor: "#1cc88a",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: [
+                            "{{ auth()->user()->uangmasuk_by_month(4) }}",
+                            "{{ auth()->user()->uangmasuk_by_month(3) }}",
+                            "{{ auth()->user()->uangmasuk_by_month(2) }}",
+                            "{{ auth()->user()->uangmasuk_by_month(1) }}",
+                            "{{ auth()->user()->uangmasuk(null) }}",
+                        ],
+                    }
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: "date",
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false,
+                        },
+                        ticks: {
+                            maxTicksLimit: 7,
+                        },
+                    }, ],
+                    yAxes: [{
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            fontSize: size,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return "Rp." + number_format(value);
+                            },
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2],
+                        },
+                    }, ],
+                },
+                legend: {
+                    display: false,
+                },
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    titleMarginBottom: 10,
+                    titleFontColor: "#6e707e",
+                    titleFontSize: 14,
+                    borderColor: "#dddfeb",
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    intersect: false,
+                    mode: "index",
+                    caretPadding: 10,
+                    callbacks: {
+                        label: function(tooltipItem, chart) {
+                            var datasetLabel =
+                                chart.datasets[tooltipItem.datasetIndex].label || "";
+                            return (
+                                datasetLabel +
+                                ": Rp." +
+                                number_format(tooltipItem.yLabel)
+                            );
+                        },
+                    },
+                },
+            },
+        });
+    </script>
+
+@endsection

@@ -76,6 +76,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Rekening::class)->where('user_id', $this->id);
     }
+    public function all_transactions()
+    {
+        return $this->hasMany(Transaction::class)->where('user_id', $this->id);
+    }
     public function transactions($daterange = null)
     {
         $return = $this->hasMany(Transaction::class)->where('user_id', $this->id);
@@ -166,6 +170,14 @@ class User extends Authenticatable implements JWTSubject
     public function uangmasuk($daterange = null)
     {
         return $this->transactions($daterange)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
+    }
+    public function uangmasuk_by_month($month = null)
+    {
+        return $this->hasMany(Transaction::class)->whereMonth('created_at', now()->subMonth($month)->month)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
+    }
+    public function uangkeluar_by_month($month = null)
+    {
+        return $this->hasMany(Transaction::class)->whereMonth('created_at', now()->subMonth($month)->month)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
     }
     public function uangkeluar($daterange = null)
     {
