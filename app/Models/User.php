@@ -220,4 +220,41 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->saldo() + $this->total_investments() - $this->totalutang() + $this->totalutangteman();
     }
+    public function asset()
+    {
+        return $this->saldo() + $this->total_investments();
+    }
+    public function saldo_persen()
+    {
+        return round($this->saldo() / $this->asset() * 100);
+    }
+    public function stock_persen()
+    {
+        if ($this->stocks->count() != 0) {
+            return round($this->total_stocks() / $this->asset() * 100);
+        }
+        return 0;
+    }
+    public function mutualfund_persen()
+    {
+        if ($this->mutual_funds->count() != 0) {
+            return round($this->total_mutual_funds() / $this->asset() * 100);
+        }
+        return 0;
+    }
+    public function deposito_persen()
+    {
+        if ($this->depositos->count() != 0) {
+            return round($this->total_depositos() / $this->asset() * 100);
+        }
+        return 0;
+    }
+    public function p2p_persen()
+    {
+        if ($this->p2ps()->count() != 0) {
+
+            return round($this->total_p2ps() / $this->asset() * 100);
+        }
+        return 0;
+    }
 }

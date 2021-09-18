@@ -115,6 +115,23 @@
                 </div>
             </div>
         @endif
+        @if (!auth()->user()->rekenings->isEmpty())
+            <div class="col-xl-4 col-lg-5 small-when-0">
+                <div class="bg-dark card shadow mb-4 border-0">
+                    <!-- Card Header - Dropdown -->
+                    <div class="bg-gray-100 card-header py-3 border-0">
+                        <h6 class="m-0 font-weight-bold text-primary">Asset Allocation</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4">
+                            <canvas id="myPieChart"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        @endif
         @if ($new_user == 1)
             <div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -142,6 +159,8 @@
 @section('script')
     <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
     <script>
+        @if (auth()->user()->all_transactions->count() != 0)
+
         var x = window.matchMedia("(max-width: 700px)");
         if (x.matches) {
             var size = 10;
@@ -317,6 +336,49 @@
                 },
             },
         });
+        @endif
+
+        // Pie Chart Example
+        @if (!auth()->user()->rekenings->isEmpty())
+
+            var ctx = document.getElementById("myPieChart");
+            var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+            labels: ["Deposito", "Mutual Funds (Reksadana)", "Stock", "P2P", 'Cash'],
+            datasets: [{
+            data: ["{{ auth()->user()->deposito_persen() }}",
+            "{{ auth()->user()->mutualfund_persen() }}",
+            "{{ auth()->user()->stock_persen() }}",
+            "{{ auth()->user()->p2p_persen() }}",
+            "{{ auth()->user()->saldo_persen() }}"
+            ],
+            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
+            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#e02d1b'],
+            hoverBorderColor: "rgba(234, 236, 244, 1)",
+            borderWidth: [0, 0, 0, 0, 0]
+            }],
+            },
+            options: {
+            maintainAspectRatio: false,
+            tooltips: {
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            borderColor: '#dddfeb',
+            borderWidth: 1,
+            xPadding: 15,
+            yPadding: 15,
+            displayColors: false,
+            caretPadding: 10,
+            },
+            legend: {
+            display: true,
+            position: 'bottom',
+            },
+            cutoutPercentage: 80,
+            },
+            });
+        @endif
     </script>
 
 @endsection

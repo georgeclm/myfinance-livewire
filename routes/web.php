@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\BankController;
 use App\Http\Livewire\Cicilan;
 use App\Http\Livewire\Financialplan;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +18,8 @@ use App\Http\Livewire\Transaction;
 use App\Http\Livewire\Transaction\Detail as TransactionDetail;
 use App\Http\Livewire\Utang;
 use App\Http\Livewire\Utangteman;
+use App\Models\Bank;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,4 +55,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/transactions/{id}', TransactionDetail::class)->name('transaction.detail');
 });
 
-Route::get('ajax-autocomplete-search', [BankController::class, 'selectSearch']);
+Route::get('ajax-autocomplete-search', function (Request $request) {
+    $banks = [];
+
+    if ($request->has('q')) {
+        $search = $request->q;
+        $banks = Bank::where('code', '!=', '9999')->select("id", "nama")
+            ->where('nama', 'LIKE', "%$search%")
+            ->get();
+    }
+    return response()->json($banks);
+});
