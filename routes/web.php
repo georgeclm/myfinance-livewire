@@ -1,23 +1,25 @@
 <?php
 
-use App\Http\Livewire\Cicilan;
-use App\Http\Livewire\Financialplan;
+use App\Http\Livewire\{
+    Cicilan,
+    Financialplan,
+    Home,
+    Investasi,
+    Investasi\Deposito,
+    Investasi\P2p,
+    Investasi\Stock,
+    Login,
+    MutualFund,
+    Register,
+    Rekening,
+    Rekening\Detail,
+    Setting,
+    Transaction,
+    Transaction\Detail as TransactionDetail,
+    Utang,
+    Utangteman
+};
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\Home;
-use App\Http\Livewire\Investasi;
-use App\Http\Livewire\Investasi\Deposito;
-use App\Http\Livewire\Investasi\P2p;
-use App\Http\Livewire\Investasi\Stock;
-use App\Http\Livewire\Login;
-use App\Http\Livewire\MutualFund;
-use App\Http\Livewire\Register;
-use App\Http\Livewire\Rekening;
-use App\Http\Livewire\Rekening\Detail;
-use App\Http\Livewire\Setting;
-use App\Http\Livewire\Transaction;
-use App\Http\Livewire\Transaction\Detail as TransactionDetail;
-use App\Http\Livewire\Utang;
-use App\Http\Livewire\Utangteman;
 use App\Models\Bank;
 use Illuminate\Http\Request;
 
