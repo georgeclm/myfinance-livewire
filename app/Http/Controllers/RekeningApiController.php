@@ -27,7 +27,7 @@ class RekeningApiController extends Controller
         ]);
         // request need user_id
         $success = Rekening::create(request()->all());
-        if ($success) {
+        if ($success != null) {
             return response()->json(['success' => true, 'message' => 'Pocket have been created'], 200);
         }
         return response()->json(['success' => false, 'message' => 'ERROR'], 500);

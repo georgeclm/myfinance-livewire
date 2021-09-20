@@ -30,7 +30,7 @@ class UserApiController extends Controller
     public function jenis()
     {
         $jeniss = Jenis::with('user_rekenings')->get();
-        if ($jeniss) {
+        if ($jeniss != null) {
             return response()->json([
                 'success' => true,
                 'jeniss' => $jeniss

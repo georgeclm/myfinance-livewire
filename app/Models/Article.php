@@ -11,10 +11,10 @@ class Article extends Model
     //table name
     protected $table = 'articles';
 
-    public function ArticleType()
-    {
-        return $this->hasOne(ArticleType::class, 'id', 'type_id');
-    }
+    // public function ArticleType()
+    // {
+    //     return $this->hasOne(ArticleType::class, 'id', 'type_id');
+    // }
     public function getRecommended()
     {
         return $this->where(['is_recommend' => 1])->orderBy('id', 'DESC')->limit(3)->get();

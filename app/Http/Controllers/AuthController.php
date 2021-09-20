@@ -54,16 +54,16 @@ class AuthController extends Controller
     }
     public function logout(Request $request)
     {
-        if (!auth()->logout()) {
-            return response()->json([
-                'message' => 'Token is required',
-                'success' => false,
-            ], 422);
-        }
-        return response()->json([
-            'success' => true,
-            'message' => 'User logged out successfully'
-        ]);
+        // if (!auth()->logout()) {
+        //     return response()->json([
+        //         'message' => 'Token is required',
+        //         'success' => false,
+        //     ], 422);
+        // }
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'User logged out successfully'
+        // ]);
         try {
             JWTAuth::invalidate(JWTAuth::parseToken($request->token));
             return response()->json([
@@ -88,10 +88,10 @@ class AuthController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         // add isProfileUpdated....
         $isProfileUpdated = false;
-        if ($user->isPicUpdated == 1 && $user->isEmailUpdated) {
-            $isProfileUpdated = true;
-        }
-        $user->isProfileUpdated = $isProfileUpdated;
+        // if ($user->isPicUpdated == 1 && $user->isEmailUpdated) {
+        //     $isProfileUpdated = true;
+        // }
+        // $user->isProfileUpdated = $isProfileUpdated;
 
         return $user;
     }
@@ -107,9 +107,9 @@ class AuthController extends Controller
             ]);
         }
 
-        unset($data['token']);
+        // unset($data['token']);
 
-        $updatedUser = User::where('id', $user->id)->update($data);
+        // $updatedUser = User::where('id', $user->id)->update($data);
         $user =  User::find($user->id);
 
         return response()->json([

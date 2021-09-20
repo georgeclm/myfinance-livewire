@@ -11,7 +11,7 @@ class CategoryApiController extends Controller
     public function index()
     {
         $categories = Category::where('user_id', null)->orWhere('user_id', auth()->id())->get();
-        if ($categories) {
+        if ($categories != null) {
             return response()->json([
                 'success' => true,
                 'categories' => $categories
@@ -22,7 +22,7 @@ class CategoryApiController extends Controller
     public function indexMasuk()
     {
         $categories = CategoryMasuk::where('user_id', null)->orWhere('user_id', auth()->id())->get();
-        if ($categories) {
+        if ($categories != null) {
             return response()->json([
                 'success' => true,
                 'categories' => $categories
@@ -32,7 +32,7 @@ class CategoryApiController extends Controller
     }
     public function detail(Category $category)
     {
-        if ($category) {
+        if ($category != null) {
             return response()->json([
                 'success' => true,
                 'name' => $category->nama,
@@ -44,7 +44,7 @@ class CategoryApiController extends Controller
     }
     public function detailMasuk(CategoryMasuk $categoryMasuk)
     {
-        if ($categoryMasuk) {
+        if ($categoryMasuk != null) {
             return response()->json([
                 'success' => true,
                 'name' => $categoryMasuk->nama,

@@ -42,5 +42,6 @@ class DailyRepetition extends Command
         $controller->checkCicilanDaily();
 
         $this->info('This Worked');
+        return 1;
     }
 }
