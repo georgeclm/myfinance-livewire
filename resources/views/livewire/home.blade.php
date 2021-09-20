@@ -41,6 +41,37 @@
     </div>
 
     <div class="row mobile">
+        @if (auth()->user()->all_transactions->count() != 0)
+            <div class="col-xl-8 col-lg-7 small-when-0">
+                <div class="bg-dark card shadow mb-4 border-0">
+                    <div class="bg-gray-100 card-header py-3 border-0">
+                        <h6 class="m-0 font-weight-bold text-primary">Income vs Spending Chart</h6>
+                    </div>
+                    <div class="card-body small-when-0"><br>
+                        <div class="chart-area">
+                            <canvas id="myAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+        @if (!auth()->user()->rekenings->isEmpty())
+            <div class="col-xl-4 col-lg-5 small-when-0">
+                <div class="bg-dark card shadow mb-4 border-0">
+                    <!-- Card Header - Dropdown -->
+                    <div class="bg-gray-100 card-header py-3 border-0">
+                        <h6 class="m-0 font-weight-bold text-primary">Asset Allocation</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4">
+                            <canvas id="myPieChart"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        @endif
         @if (auth()->user()->uangkeluar() != 0)
             <!-- Content Column -->
             <div class="small-when-0 col-lg-6 mb-4">
@@ -101,37 +132,7 @@
                 </div>
             </div>
         @endif
-        @if (auth()->user()->all_transactions->count() != 0)
-            <div class="col-xl-8 col-lg-7 small-when-0">
-                <div class="bg-dark card shadow mb-4 border-0">
-                    <div class="bg-gray-100 card-header py-3 border-0">
-                        <h6 class="m-0 font-weight-bold text-primary">Income vs Spending Chart</h6>
-                    </div>
-                    <div class="card-body small-when-0"><br>
-                        <div class="chart-area">
-                            <canvas id="myAreaChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-        @if (!auth()->user()->rekenings->isEmpty())
-            <div class="col-xl-4 col-lg-5 small-when-0">
-                <div class="bg-dark card shadow mb-4 border-0">
-                    <!-- Card Header - Dropdown -->
-                    <div class="bg-gray-100 card-header py-3 border-0">
-                        <h6 class="m-0 font-weight-bold text-primary">Asset Allocation</h6>
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        <div class="chart-pie pt-4">
-                            <canvas id="myPieChart"></canvas>
-                        </div>
 
-                    </div>
-                </div>
-            </div>
-        @endif
         @if ($new_user == 1)
             <div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
