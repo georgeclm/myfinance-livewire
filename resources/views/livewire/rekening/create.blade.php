@@ -111,7 +111,7 @@
         $('.livesearch').select2({
             placeholder: 'Select bank',
             ajax: {
-                url: '/ajax-autocomplete-search',
+                url: '/bank-search',
                 dataType: 'json',
                 delay: 250,
                 processResults: function(data) {

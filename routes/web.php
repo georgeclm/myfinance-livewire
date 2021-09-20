@@ -55,14 +55,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/transactions/{id}', TransactionDetail::class)->name('transaction.detail');
 });
 
-Route::get('ajax-autocomplete-search', function (Request $request) {
-    $banks = [];
-
-    if ($request->has('q')) {
-        $search = $request->q;
-        $banks = Bank::where('code', '!=', '9999')->select("id", "nama")
-            ->where('nama', 'LIKE', "%$search%")
-            ->get();
+Route::get('bank-search', function (Request $request) {
+    $search = false;
+    if ($request->has('q') && $request->input('q') !== '') {
+        $search = true;
     }
+    $banks = Bank::where('code', '!=', '9999')
+        ->when($search, function ($query) use ($request) {
+            $query->where('nama', 'LIKE', "%{$request->input('q')}%");
+        })
+        ->get();
     return response()->json($banks);
 });
