@@ -8,26 +8,11 @@ use Livewire\Component;
 class Change extends Component
 {
     public $deposito;
-    public $form = [
-        'nama_bank' => '',
-        'nama_deposito' => '',
-        'jumlah' => '',
-        'bunga' => '',
-        'rekening_id' => '',
-        'financial_plan_id' => '',
-        'keterangan' => null,
-        'jatuh_tempo' => ''
-    ];
+    public $form;
     public function mount()
     {
-        $this->form['nama_bank'] = $this->deposito->nama_bank;
-        $this->form['nama_deposito'] = $this->deposito->nama_deposito;
-        $this->form['bunga'] = $this->deposito->bunga;
+        $this->form = $this->deposito->toArray();
         $this->form['jumlah'] = 'Rp  ' . number_format($this->deposito->jumlah, 0, ',', '.');
-        $this->form['rekening_id'] = $this->deposito->rekening_id;
-        $this->form['financial_plan_id'] = $this->deposito->financial_plan_id;
-        $this->form['keterangan'] = $this->deposito->keterangan;
-        $this->form['jatuh_tempo'] = $this->deposito->jatuh_tempo;
     }
     public function rules()
     {

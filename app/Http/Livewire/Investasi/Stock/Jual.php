@@ -11,24 +11,13 @@ class Jual extends Component
 {
     public $stock;
     public $error;
-    public $form = [
-        'kode' => '',
-        'lot' => '',
-        'harga_beli' => '',
-        'biaya_lain' => null,
-        'rekening_id' => '',
-        'financial_plan_id' => '',
-        'keterangan' => null
-    ];
+    public $form;
 
 
     public function mount()
     {
-        $this->form['kode'] = $this->stock->kode;
-        $this->form['lot'] = $this->stock->lot;
+        $this->form = $this->stock->toArray();
         $this->form['harga_beli'] = 'Rp  ' . number_format($this->stock->harga_beli, 0, ',', '.');
-        $this->form['rekening_id'] = $this->stock->rekening_id;
-        $this->form['financial_plan_id'] = $this->stock->financial_plan_id;
     }
 
 

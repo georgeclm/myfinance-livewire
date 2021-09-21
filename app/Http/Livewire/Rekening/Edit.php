@@ -10,14 +10,7 @@ class Edit extends Component
 
     public $jeniss;
     public $rekening;
-    public $form = [
-        'jenis_id' => '',
-        'nama_akun' => '',
-        'nama_bank' => null,
-        'saldo_sekarang' => '',
-        'saldo_mengendap' => null,
-        'keterangan' => null,
-    ];
+    public $form;
 
     public function delete()
     {
@@ -51,14 +44,8 @@ class Edit extends Component
 
     public function mount()
     {
-        $this->form = [
-            'jenis_id' => $this->rekening->jenis_id,
-            'nama_akun' => $this->rekening->nama_akun,
-            'nama_bank' => $this->rekening->nama_bank,
-            'saldo_sekarang' => 'Rp ' . number_format($this->rekening->saldo_sekarang, 0, ',', '.'),
-            'saldo_mengendap' => $this->rekening->saldo_mengendap,
-            'keterangan' => $this->rekening->keterangan,
-        ];
+        $this->form = $this->rekening->toArray();
+        $this->form['saldo_sekarang'] = 'Rp ' . number_format($this->rekening->saldo_sekarang, 0, ',', '.');
     }
     public function render()
     {

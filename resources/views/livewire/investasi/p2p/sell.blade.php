@@ -1,4 +1,4 @@
-<div class="modal fade" wire:ignore id="sell-{{ $p2p->id }}" tabindex="-1" role="dialog"
+<div class="modal fade" wire:ignore.self id="sell-{{ $p2p->id }}" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="bg-black  modal-content">
@@ -30,7 +30,8 @@
                             type="text" name="jatuh_tempo" />
                     </div>
                     <div class="form-group">
-                        <select class="border-0 form-control form-control-user form-block "
+                        <select
+                            class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
                             wire:model="form.rekening_id" name="rekening_id" style="padding: 0.5rem !important"
                             required>
                             <option value="" selected disabled hidden>From Pocket</option>
@@ -38,6 +39,11 @@
                                 <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }}</option>
                             @endforeach
                         </select>
+                        @error('form.rekening_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <select class="border-0 form-control form-control-user form-block" disabled

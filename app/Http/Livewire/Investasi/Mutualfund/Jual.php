@@ -11,22 +11,11 @@ class Jual extends Component
 {
     public $mutual_fund;
     public $error;
-    public $form = [
-        'nama_reksadana' => '',
-        'unit' => '',
-        'harga_beli' => '',
-        'biaya_lain' => null,
-        'rekening_id' => '',
-        'financial_plan_id' => '',
-        'keterangan' => null
-    ];
+    public $form;
     public function mount()
     {
-        $this->form['nama_reksadana'] = $this->mutual_fund->nama_reksadana;
-        $this->form['unit'] = $this->mutual_fund->unit;
+        $this->form = $this->mutual_fund->toArray();
         $this->form['harga_beli'] = 'Rp  ' . number_format($this->mutual_fund->harga_beli, 0, ',', '.');
-        $this->form['rekening_id'] = $this->mutual_fund->rekening_id;
-        $this->form['financial_plan_id'] = $this->mutual_fund->financial_plan_id;
     }
 
     public function rules()

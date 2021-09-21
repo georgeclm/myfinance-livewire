@@ -10,24 +10,12 @@ use Livewire\Component;
 class Sell extends Component
 {
     public $p2p;
-    public $form = [
-        'nama_p2p' => '',
-        'jumlah' => '',
-        'harga_jual' => '',
-        'rekening_id' => '',
-        'financial_plan_id' => '',
-        'keterangan' => null,
-        'jatuh_tempo' => ''
-    ];
+    public $form;
     public function mount()
     {
-        $this->form['nama_p2p'] = $this->p2p->nama_p2p;
+        $this->form = $this->p2p->toArray();
         $this->form['jumlah'] = 'Rp  ' . number_format($this->p2p->jumlah, 0, ',', '.');
         $this->form['harga_jual'] = 'Rp  ' . number_format($this->p2p->harga_jual, 0, ',', '.');
-        $this->form['rekening_id'] = $this->p2p->rekening_id;
-        $this->form['financial_plan_id'] = $this->p2p->financial_plan_id;
-        $this->form['keterangan'] = $this->p2p->keterangan;
-        $this->form['jatuh_tempo'] = $this->p2p->jatuh_tempo;
     }
 
     public function rules()
