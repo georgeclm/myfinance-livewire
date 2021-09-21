@@ -12,7 +12,7 @@
             Notification
         </h6>
         @forelse ($notifications as $notification)
-            <a class="dropdown-item bg-black border-0 d-flex align-items-center" href="#">
+            <div class="dropdown-item bg-black border-0 d-flex align-items-center">
                 <div class="mr-3">
                     <div class="icon-circle bg-gray-100">
                         <i class="fas fa-file-alt text-white"></i>
@@ -22,7 +22,7 @@
                     <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
                     <span class="font-weight-bold text-white">{{ $notification->notification }}</span>
                 </div>
-            </a>
+            </div>
         @empty
             <h6 class="dropdown-header bg-black border-0 text-center">
                 No Notification

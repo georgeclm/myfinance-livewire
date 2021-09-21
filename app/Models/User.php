@@ -209,7 +209,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function cicil_notifications()
     {
-        return $this->hasMany(NotifCicilan::class)->where('user_id', $this->id);
+        return $this->hasMany(NotifCicilan::class)->where('user_id', $this->id)->latest();
     }
     public function total_notif()
     {

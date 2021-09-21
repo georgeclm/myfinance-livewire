@@ -70,11 +70,10 @@ class CicilanController extends Controller
                 ]);
                 NotifCicilan::create([
                     'user_id' => $cicilan->user_id,
-                    'notification' => 'Cicilan ' . $cicilan->nama . ' jalan dengan jumlah Rp. ' . number_format($cicilan->jumlah, 0, ',', '.'),
+                    'notification' => 'Repetition ' . $cicilan->nama . ' with total Rp. ' . number_format($cicilan->jumlah, 0, ',', '.'),
                     'check' => 0
                 ]);
             }
         }
     }
-
 }
