@@ -23,7 +23,7 @@
         </script>
     @endif
 
-    <div class="modal fade" wire:ignore.self id="stock" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" wire:ignore.self id="stock" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="bg-black  modal-content">
@@ -35,7 +35,18 @@
                 </div>
                 <div class="modal-body">
                     <form id="addStock" wire:submit.prevent="submit">
-                        <div class="form-group">
+                        <div class="form-group" wire:ignore>
+                            <select wire:model.defer="form.kode"
+                                class="livesearch border-0 form-control form-control-user @error('form.kode') is-invalid @enderror"
+                                style="width: 100%; " name="kode" required>
+                            </select>
+                            @error('form.kode')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        {{-- <div class="form-group">
                             <input type="text" maxlength="4"
                                 class="border-0 form-control form-control-user @error('form.kode') is-invalid @enderror"
                                 name="kode" wire:model.defer="form.kode" placeholder="Stock Code" required>
@@ -44,7 +55,7 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </div>
+                        </div> --}}
                         <div class="mb-3 hide-inputbtns input-group">
                             <input type="number" wire:model.defer="form.lot"
                                 class="border-0 form-control form-control-user @error('form.lot') is-invalid @enderror"
@@ -139,3 +150,30 @@
         </div>
     </div>
 </div>
+@section('script')
+    <script>
+        $('.livesearch').select2({
+            placeholder: 'Select Stock',
+            ajax: {
+                url: '/ticker-search',
+                dataType: 'json',
+                delay: 250,
+                processResults: function(data) {
+                    return {
+                        results: $.map(data, function(item) {
+                            return {
+                                text: item.nama + " - " + item.code,
+                                id: item.code
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+        $('.livesearch').on('change', function(e) {
+            var data = $('.livesearch').select2("val");
+            @this.set('form.kode', data);
+        });
+    </script>
+@endsection

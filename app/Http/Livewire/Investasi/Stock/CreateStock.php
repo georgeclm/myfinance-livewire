@@ -63,7 +63,9 @@ class CreateStock extends Component
         $stocks = Stock::where('user_id', auth()->id())->where('kode', $this->form['kode'])->get();
         if ($stocks->isNotEmpty()) {
             $this->form['harga_beli'] = $frontJumlah;
-            $this->addError('form.kode', 'Code already listed please TopUp');
+            $this->error = 'Code already listed please TopUp';
+            // $this->addError('form.kode', 'Code already listed please TopUp');
+            $this->dispatchBrowserEvent('contentChanged');
             return $this->render();
         }
         $this->form['total'] = $this->form['harga_beli'] * $this->form['lot'] * 100;

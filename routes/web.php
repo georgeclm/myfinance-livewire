@@ -21,6 +21,7 @@ use App\Http\Livewire\{
 };
 use Illuminate\Support\Facades\Route;
 use App\Models\Bank;
+use App\Models\Ticker;
 use Illuminate\Http\Request;
 
 /*
@@ -65,7 +66,17 @@ Route::get('bank-search', function (Request $request) {
     $banks = Bank::where('code', '!=', '9999')
         ->when($search, function ($query) use ($request) {
             $query->where('nama', 'LIKE', "%{$request->input('q')}%");
-        })
-        ->get();
+        })->get();
     return response()->json($banks);
+});
+Route::get('ticker-search', function (Request $request) {
+    $search = false;
+    if ($request->has('q') && $request->input('q') !== '') {
+        $search = true;
+    }
+    $tickers = Ticker::when($search, function ($query) use ($request) {
+        $query->where('nama', 'LIKE', "%{$request->input('q')}%")
+            ->orWhere('code', 'LIKE', "%{$request->input('q')}%");
+    })->get();
+    return response()->json($tickers);
 });
