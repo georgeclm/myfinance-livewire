@@ -40,8 +40,7 @@ class QuickAdd extends Component
     }
     public function mount()
     {
-        $this->jenisuangsSelect = Jenisuang::all();
-        $this->jenisuangsSelect = $this->jenisuangsSelect->whereIn('id', ['1', '2']);
+        $this->jenisuangsSelect = Jenisuang::whereIn('id', ['1', '2'])->get();
         $this->categories = Category::whereNotIn('nama', ['Adjustment', 'Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
         $this->categorymasuks = CategoryMasuk::whereNotIn('nama',  ['Adjustment', 'Sell Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
     }
