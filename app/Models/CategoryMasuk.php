@@ -33,8 +33,8 @@ class CategoryMasuk extends Model
     }
     public function persen()
     {
-        if (auth()->user()->uangmasuk() != 0) {
-            return round($this->userTransactionsByCategory->sum('jumlah') / auth()->user()->uangmasuk() * 100);
+        if (auth()->user()->uangmasuk->sum('jumlah') != 0) {
+            return round($this->userTransactionsByCategory->sum('jumlah') / auth()->user()->uangmasuk->sum('jumlah') * 100);
         }
         return 0;
     }

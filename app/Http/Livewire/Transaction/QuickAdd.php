@@ -13,9 +13,8 @@ use Livewire\Component;
 
 class QuickAdd extends Component
 {
-    public $jenisuangsSelect;
     public $categories;
-    public $categorymasuks;
+    public $category_masuks;
     public $error;
     public $form = [
         'user_id' => '',
@@ -30,19 +29,18 @@ class QuickAdd extends Component
     protected function rules()
     {
         return [
-            'form.jenisuang_id' => ['required', 'in:' . JenisUang::pluck('id')->implode(',')],
+            'form.jenisuang_id' => ['required', 'in:1,2'],
             'form.jumlah' => ['required', 'numeric'],
             'form.rekening_id' => ['required', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.keterangan' => 'nullable',
-            'form.category_id' => ['nullable', 'in:' . Category::pluck('id')->implode(',')],
-            'form.category_masuk_id' => ['nullable', 'in:' . CategoryMasuk::pluck('id')->implode(',')]
+            'form.category_id' => 'nullable',
+            'form.category_masuk_id' => 'nullable'
         ];
     }
     public function mount()
     {
-        $this->jenisuangsSelect = Jenisuang::whereIn('id', ['1', '2'])->get();
         $this->categories = Category::whereNotIn('nama', ['Adjustment', 'Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
-        $this->categorymasuks = CategoryMasuk::whereNotIn('nama',  ['Adjustment', 'Sell Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
+        $this->category_masuks = CategoryMasuk::whereNotIn('nama',  ['Adjustment', 'Sell Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
     }
     public function submit()
     {

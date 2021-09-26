@@ -19,28 +19,16 @@ class Jenisuang extends Model
     {
         return $this->hasMany(Cicilan::class)->where('user_id', auth()->id());
     }
-    public function user_transactions($q = null, $daterange = null)
+    public function user_transactions($daterange = null)
     {
         $return = $this->hasMany(Transaction::class)->where('user_id', auth()->id());
         if ($daterange != null) {
             $date_range1 = explode(" / ", $daterange);
             $return = $return->where('created_at', '>=', $date_range1[0]);
             $return = $return->where('created_at', '<=', $date_range1[1]);
-        } else {
-            switch ($q) {
-                case '0':
-                    $return =  $return->whereMonth('created_at', now()->month);
-                    break;
-                case '1':
-                    $return =  $return->whereMonth('created_at', now()->subMonth()->month);
-                    break;
-                default:
-                    $return = $return;
-                    break;
-            }
+            return $return->get();
         }
-
-        return $return->orderBy('created_at', 'desc')->get();
+        return $return->whereMonth('created_at', now()->month)->orderBy('created_at', 'desc');
     }
 
     public function all_transactions()

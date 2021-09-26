@@ -12,10 +12,10 @@ class Investation extends Model
     public function gettotalAttribute()
     {
         return [
-            'Stock' => auth()->user()->total_stocks(),
+            'Stock' => auth()->user()->total_stocks->sum('total'),
 
             'P2P' => auth()->user()->total_p2ps(),
-            'Mutual Funds (Reksadana)' => auth()->user()->total_mutual_funds(),
+            'Mutual Funds (Reksadana)' => auth()->user()->total_mutual_funds->sum('total'),
             'Deposito' => auth()->user()->total_depositos()
         ][$this->nama] ?? 0;
     }

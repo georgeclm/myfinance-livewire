@@ -3,7 +3,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">{{ $rekening->nama_akun }}</h1>
     </div>
-    <div class="row mobile">
+    {{-- <div class="row mobile">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="bg-gray-100 border-0 card shadow h-100 py-2 border-bottom-info">
                 <div class="h3 fw-bold text-info card-body">
@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     @foreach ($jenisuangs as $jenisuang)
         <!-- DataTales Example -->
         <div class="bg-dark border-0 card shadow mb-4">

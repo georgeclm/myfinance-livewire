@@ -21,8 +21,8 @@
                                     <i class="fas fa-question-circle"></i>
                                 </a>
                             </div>
-                            <div class="h7 mb-0 @if (Auth::user()->uangmasuk() >= 1000000000) small @endif font-weight-bold text-success">Rp.
-                                {{ number_format(Auth::user()->uangmasuk($daterange), 0, ',', '.') }}</div>
+                            <div class="h7 mb-0 @if (Auth::user()->uangmasuk($daterange)->sum('jumlah') >= 1000000000) small @endif font-weight-bold text-success">Rp.
+                                {{ number_format(Auth::user()->uangmasuk($daterange)->sum('jumlah'), 0, ',', '.') }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-money-bill-wave-alt fa-2x text-success"></i>
@@ -59,10 +59,10 @@
 
                             </div>
                             <div
-                                class="h7 mb-0 @if (Auth::user()->uangkeluar($daterange) >= 1000000000) small @endif
+                                class="h7 mb-0 @if (Auth::user()->uangkeluar($daterange)->sum('jumlah') >= 1000000000) small @endif
                                 font-weight-bold text-danger">
                                 Rp.
-                                {{ number_format(Auth::user()->uangkeluar($daterange), 0, ',', '.') }}
+                                {{ number_format(Auth::user()->uangkeluar($daterange)->sum('jumlah'), 0, ',', '.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -98,8 +98,8 @@
                                     <i class="fas fa-question-circle"></i>
                                 </a>
                             </div>
-                            <div class="h7 mb-0 @if (Auth::user()->saldoperbulan() >= 1000000000) small @endif font-weight-bold text-primary">Rp.
-                                {{ number_format(Auth::user()->saldoperbulan($daterange), 0, ',', '.') }}
+                            <div class="h7 mb-0 @if (Auth::user()->uangmasuk($daterange)->sum('jumlah') -Auth::user()->uangkeluar($daterange)->sum('jumlah') >= 1000000000) small @endif font-weight-bold text-primary">Rp.
+                                {{ number_format(Auth::user()->uangmasuk($daterange)->sum('jumlah') -Auth::user()->uangkeluar($daterange)->sum('jumlah'), 0, ',', '.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -145,7 +145,7 @@
                 <div class="table-responsive">
                     <div class="wrap-table100 " id="thetable">
                         <div class="table">
-                            @forelse ($jenisuang->user_transactions($q,$daterange)->take(5) as $transaction)
+                            @forelse ($jenisuang->user_transactions($daterange)->take(5) as $transaction)
                                 <div class="row">
                                     <div class="cell {{ $jenisuang->textColor() }}" data-title="Total">
                                         Rp. {{ number_format($transaction->jumlah, 0, ',', '.') }}
@@ -216,7 +216,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($jenisuang->user_transactions($q,$daterange)->take(5) as $transaction)
+                            @forelse ($jenisuang->user_transactions($daterange)->take(5) as $transaction)
                                 <tr>
                                     <td>Rp {{ number_format($transaction->jumlah, 0, ',', '.') }}</td>
                                     @if ($jenisuang->id == 4)
@@ -251,7 +251,7 @@
 
                         </tbody>
                     </table>
-                    @if ($jenisuang->user_transactions($q, $daterange)->count() > 5)
+                    @if ($jenisuang->user_transactions($daterange)->count() > 5)
                         <div class="text-end mt-3"><a href="/transactions/{{ $jenisuang->id }}">Show
                                 All</a></div>
                     @endif

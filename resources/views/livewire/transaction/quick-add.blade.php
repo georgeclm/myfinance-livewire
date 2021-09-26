@@ -40,9 +40,8 @@
                                 wire:model.defer="form.jenisuang_id" name="jenisuang_id"
                                 style="padding: 0.5rem !important" required id="jenisuang">
                                 <option value="" selected disabled hidden>Choose Type</option>
-                                @foreach ($jenisuangsSelect as $jenis)
-                                    <option value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
-                                @endforeach
+                                <option value="1">Income</option>
+                                <option value="2">Spending</option>
                             </select>
                             @error('form.jenisuang_id')
                                 <span class="invalid-feedback" role="alert">
@@ -83,7 +82,7 @@
                                 wire:model.defer="form.category_masuk_id" name="category_masuk_id"
                                 style="padding: 0.5rem !important" id="category_masuk_id">
                                 <option value='' selected disabled hidden>Choose Category</option>
-                                @foreach ($categorymasuks as $category)
+                                @foreach ($category_masuks as $category)
                                     <option value="{{ $category->id }}">{{ $category->nama }}</option>
                                 @endforeach
                             </select>

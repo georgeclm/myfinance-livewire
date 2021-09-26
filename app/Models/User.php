@@ -74,15 +74,15 @@ class User extends Authenticatable implements JWTSubject
     }
     public function rekenings()
     {
-        return $this->hasMany(Rekening::class)->where('user_id', $this->id);
+        return $this->hasMany(Rekening::class);
     }
     public function all_transactions()
     {
-        return $this->hasMany(Transaction::class)->where('user_id', $this->id);
+        return $this->hasMany(Transaction::class);
     }
     public function transactions($daterange = null)
     {
-        $return = $this->hasMany(Transaction::class)->where('user_id', $this->id);
+        $return = $this->hasMany(Transaction::class);
         if ($daterange != null) {
             $date_range1 = explode(" / ", $daterange);
             $return = $return->where('created_at', '>=', $date_range1[0]);
@@ -93,43 +93,43 @@ class User extends Authenticatable implements JWTSubject
     }
     public function utangs()
     {
-        return $this->hasMany(Utang::class)->where('user_id', $this->id)->where('lunas', 0)->orderBy('created_at', 'desc');
+        return $this->hasMany(Utang::class)->where('lunas', 0)->orderBy('created_at', 'desc');
     }
     public function utangtemans()
     {
-        return $this->hasMany(Utangteman::class)->where('user_id', $this->id)->where('lunas', 0);
+        return $this->hasMany(Utangteman::class)->where('lunas', 0);
     }
     public function financialplans()
     {
-        return $this->hasMany(FinancialPlan::class)->where('user_id', $this->id);
+        return $this->hasMany(FinancialPlan::class);
     }
     public function stocks()
     {
-        return $this->hasMany(Stock::class)->where('user_id', $this->id)->latest();
+        return $this->hasMany(Stock::class)->latest();
     }
     public function p2ps()
     {
-        return $this->hasMany(P2P::class)->where('user_id', $this->id)->latest();
+        return $this->hasMany(P2P::class)->latest();
     }
     public function mutual_funds()
     {
-        return $this->hasMany(MutualFund::class)->where('user_id', $this->id)->latest();
+        return $this->hasMany(MutualFund::class)->latest();
     }
     public function depositos()
     {
-        return $this->hasMany(Deposito::class)->where('user_id', $this->id)->latest();
+        return $this->hasMany(Deposito::class)->latest();
     }
     public function cicil_notifications()
     {
-        return $this->hasMany(NotifCicilan::class)->where('user_id', $this->id)->latest();
+        return $this->hasMany(NotifCicilan::class)->latest();
     }
     public function total_stocks()
     {
-        return $this->stocks()->withTrashed()->sum('total');
+        return $this->stocks()->withTrashed();
     }
     public function total_mutual_funds()
     {
-        return $this->mutual_funds()->withTrashed()->sum('total');
+        return $this->mutual_funds()->withTrashed();
     }
     public function total_depositos()
     {
@@ -158,11 +158,15 @@ class User extends Authenticatable implements JWTSubject
 
     public function total_investments()
     {
-        return $this->total_stocks() + $this->total_p2ps() + $this->total_mutual_funds() + $this->total_depositos();
+        return $this->total_stocks->sum('total') + $this->total_p2ps() + $this->total_mutual_funds->sum('total') + $this->total_depositos();
     }
+    // public function uangmasuk($daterange = null)
+    // {
+    //     return $this->transactions($daterange)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
+    // }
     public function uangmasuk($daterange = null)
     {
-        return $this->transactions($daterange)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
+        return $this->transactions($daterange)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10');
     }
     public function uangmasuk_by_month($month = null)
     {
@@ -172,13 +176,17 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->all_transactions()->whereMonth('created_at', now()->subMonth($month)->month)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
     }
+    // public function uangkeluar($daterange = null)
+    // {
+    //     return $this->transactions($daterange)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
+    // }
     public function uangkeluar($daterange = null)
     {
-        return $this->transactions($daterange)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
+        return $this->transactions($daterange)->where('jenisuang_id', 2)->where('category_id', '!=', '10');
     }
-    public function saldoperbulan($daterange = null)
+    public function saldoperbulan()
     {
-        return $this->uangmasuk($daterange) - $this->uangkeluar($daterange);
+        return $this->uangmasuk->sum('jumlah') - $this->uangkeluar->sum('jumlah');
     }
     public function saldo()
     {
@@ -220,11 +228,11 @@ class User extends Authenticatable implements JWTSubject
     }
     public function stock_persen()
     {
-        return round($this->total_stocks() / $this->asset() * 100);
+        return round($this->total_stocks->sum('total') / $this->asset() * 100);
     }
     public function mutualfund_persen()
     {
-        return round($this->total_mutual_funds() / $this->asset() * 100);
+        return round($this->total_mutual_funds->sum('total') / $this->asset() * 100);
     }
     public function deposito_persen()
     {

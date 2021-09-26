@@ -12,10 +12,10 @@
 
                                         </div>
                                         <div
-                                            class="h7 mb-0 @if (Auth::user()->uangkeluar($daterange) >= 1000000000) small @endif
+                                            class="h7 mb-0 @if (Auth::user()->uangkeluar->sum('jumlah') >= 1000000000) small @endif
                                             font-weight-bold text-danger">
                                             Rp.
-                                            {{ number_format(Auth::user()->uangkeluar($daterange), 0, ',', '.') }}
+                                            {{ number_format(Auth::user()->uangkeluar->sum('jumlah'), 0, ',', '.') }}
                                         </div>
                                     </div>
                                     <div class="col-auto">

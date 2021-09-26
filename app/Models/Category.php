@@ -37,8 +37,8 @@ class Category extends Model
     }
     public function persen()
     {
-        if (auth()->user()->uangkeluar() != 0) {
-            return round($this->userTransactionsByCategory->sum('jumlah') / auth()->user()->uangkeluar() * 100);
+        if (auth()->user()->uangkeluar->sum('jumlah') != 0) {
+            return round($this->userTransactionsByCategory->sum('jumlah') / auth()->user()->uangkeluar->sum('jumlah') * 100);
         }
         return 0;
     }

@@ -72,7 +72,7 @@
                 </div>
             </div>
         @endif
-        @if (auth()->user()->uangkeluar() != 0)
+        @if (auth()->user()->uangkeluar->sum('jumlah') != 0)
             <!-- Content Column -->
             <div class="small-when-0 col-lg-6 mb-4">
                 <!-- Project Card Example -->
@@ -103,7 +103,7 @@
         @else
             @livewire('partials.no-data',['message' => 'Start Writting Records'])
         @endif
-        @if (auth()->user()->uangmasuk() != 0)
+        @if (auth()->user()->uangmasuk->sum('jumlah') != 0)
             <!-- Content Column -->
             <div class="col-lg-6 small-when-0  mb-4">
                 <!-- Project Card Example -->
@@ -160,6 +160,7 @@
 @section('script')
     <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
     <script>
+
         @if (auth()->user()->all_transactions->count() != 0)
 
         var x = window.matchMedia("(max-width: 700px)");
@@ -246,7 +247,7 @@
                             "{{ auth()->user()->uangkeluar_by_month(3) }}",
                             "{{ auth()->user()->uangkeluar_by_month(2) }}",
                             "{{ auth()->user()->uangkeluar_by_month(1) }}",
-                            "{{ auth()->user()->uangkeluar(null) }}",
+                            "{{ auth()->user()->uangkeluar->sum('jumlah') }}",
                         ],
                     },
                     {
@@ -267,7 +268,7 @@
                             "{{ auth()->user()->uangmasuk_by_month(3) }}",
                             "{{ auth()->user()->uangmasuk_by_month(2) }}",
                             "{{ auth()->user()->uangmasuk_by_month(1) }}",
-                            "{{ auth()->user()->uangmasuk(null) }}",
+                            "{{ auth()->user()->uangmasuk->sum('jumlah') }}",
                         ],
                     }
                 ],

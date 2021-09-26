@@ -9,12 +9,11 @@ class Transaction extends Component
 {
 
     public $jenisuangs;
-    public $q = 0;
     public $daterange = null;
 
     public function mount()
     {
-        $this->jenisuangs = Jenisuang::all();
+        $this->jenisuangs = Jenisuang::with('user_transactions')->get();
     }
     public function render()
     {
