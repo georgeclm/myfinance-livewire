@@ -22,7 +22,13 @@
                                 </a>
                             </div>
                             <div class="h7 mb-0 @if (Auth::user()->uangmasuk($daterange)->sum('jumlah') >= 1000000000) small @endif font-weight-bold text-success">Rp.
-                                {{ number_format(Auth::user()->uangmasuk($daterange)->sum('jumlah'), 0, ',', '.') }}</div>
+                                {{ number_format(
+    Auth::user()->uangmasuk($daterange)->sum('jumlah'),
+    0,
+    ',',
+    '.',
+) }}
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-money-bill-wave-alt fa-2x text-success"></i>
@@ -62,7 +68,12 @@
                                 class="h7 mb-0 @if (Auth::user()->uangkeluar($daterange)->sum('jumlah') >= 1000000000) small @endif
                                 font-weight-bold text-danger">
                                 Rp.
-                                {{ number_format(Auth::user()->uangkeluar($daterange)->sum('jumlah'), 0, ',', '.') }}
+                                {{ number_format(
+    Auth::user()->uangkeluar($daterange)->sum('jumlah'),
+    0,
+    ',',
+    '.',
+) }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -98,8 +109,18 @@
                                     <i class="fas fa-question-circle"></i>
                                 </a>
                             </div>
-                            <div class="h7 mb-0 @if (Auth::user()->uangmasuk($daterange)->sum('jumlah') -Auth::user()->uangkeluar($daterange)->sum('jumlah') >= 1000000000) small @endif font-weight-bold text-primary">Rp.
-                                {{ number_format(Auth::user()->uangmasuk($daterange)->sum('jumlah') -Auth::user()->uangkeluar($daterange)->sum('jumlah'), 0, ',', '.') }}
+                            <div
+                                class="h7 mb-0 @if (Auth::user()->uangmasuk($daterange)->sum('jumlah') -
+        Auth::user()->uangkeluar($daterange)->sum('jumlah') >=
+    1000000000) small @endif font-weight-bold text-primary">
+                                Rp.
+                                {{ number_format(
+    Auth::user()->uangmasuk($daterange)->sum('jumlah') -
+        Auth::user()->uangkeluar($daterange)->sum('jumlah'),
+    0,
+    ',',
+    '.',
+) }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -135,130 +156,53 @@
             @livewire('partials.newaccount')
         @endif
     </div>
-    @foreach ($jenisuangs as $jenisuang)
-        <!-- DataTales Example -->
-        <div class="bg-dark border-0 card shadow mb-4">
-            <div class="bg-gray-100 border-0 card-header py-3">
-                <h6 class="font-weight-bold text-primary">{{ $jenisuang->nama }}</h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <div class="wrap-table100 " id="thetable">
-                        <div class="table">
-                            @forelse ($jenisuang->user_transactions($daterange)->take(5) as $transaction)
-                                <div class="row">
-                                    <div class="cell {{ $jenisuang->textColor() }}" data-title="Total">
-                                        Rp. {{ number_format($transaction->jumlah, 0, ',', '.') }}
-                                    </div>
-                                    @if ($jenisuang->id == 4)
-                                        <div class="cell text-white" data-title="Debt Name">
-                                            {{ Str::limit($transaction->utang->keterangan, 15, $end = '...') ?? $transaction->utang->nama }}
-                                        </div>
-                                    @endif
-                                    @if ($jenisuang->id == 5)
-                                        <div class="cell text-white" data-title="Debt Name">
-                                            {{ Str::limit($transaction->utangteman->keterangan, 15, $end = '...') ?? $transaction->utangteman->nama }}
-                                        </div>
-                                    @endif
-                                    @if ($jenisuang->id == 1)
-                                        <div class="cell text-white" data-title="Category">
-                                            {{ $transaction->category_masuk->nama }}
-                                        </div>
-                                    @endif
-                                    @if ($jenisuang->id == 2)
-                                        <div class="cell text-white" data-title="Category">
-                                            {{ $transaction->category->nama }}
-                                        </div>
-                                    @endif
-                                    <div class="cell text-white" data-title="Pocket">
-                                        {{ isset($transaction->rekening) ? $transaction->rekening->nama_akun : 'Pocket deleted' }}
-                                    </div>
-                                    @if ($jenisuang->id == 3)
-                                        <div class="cell text-white" data-title="Pocket Destination">
-                                            {{ isset($transaction->rekening_tujuan) ? $transaction->rekening_tujuan->nama_akun : 'Pocket deleted' }}
-                                        </div>
-                                    @endif
-                                    <div class="cell text-white" data-title="Description">
-                                        {{ Str::limit($transaction->keterangan, 15, $end = '...') ?? '-' }}
-                                    </div>
-                                    <div class="cell text-white" data-title="Date">
-                                        {{ $transaction->created_at->format('l j F Y') }}
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="row">
-                                    <div class="cell">
-                                        Records Empty
-                                    </div>
-                                </div>
-                            @endforelse
-                        </div>
-                    </div>
-
-                    <table class="table table-bordered table-dark" id="dataTable{{ $jenisuang->id }}" width="100%"
-                        cellspacing="0">
-                        <thead>
-                            <tr class="{{ $jenisuang->color() }} text-light">
-                                <th>Total</th>
-                                @if (in_array($jenisuang->id, [4, 5]))
-                                    <th>Debt Name</th>
-                                @endif
-
-                                @if (in_array($jenisuang->id, [1, 2]))
-                                    <th>Category</th>
-                                @endif
-                                <th>Pocket</th>
-                                @if ($jenisuang->id == 3)
-                                    <th>Pocket Destination</th>
-                                @endif
-                                <th>Description</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($jenisuang->user_transactions($daterange)->take(5) as $transaction)
-                                <tr>
-                                    <td>Rp {{ number_format($transaction->jumlah, 0, ',', '.') }}</td>
-                                    @if ($jenisuang->id == 4)
-                                        <td>{{ Str::limit($transaction->utang->keterangan, 15, $end = '...') ?? $transaction->utang->nama }}
-                                        </td>
-                                    @endif
-                                    @if ($jenisuang->id == 5)
-                                        <td>{{ Str::limit($transaction->utangteman->keterangan, 15, $end = '...') ?? $transaction->utangteman->nama }}
-                                        </td>
-                                    @endif
-                                    @if ($jenisuang->id == 1)
-                                        <td>{{ $transaction->category_masuk->nama }}</td>
-                                    @endif
-                                    @if ($jenisuang->id == 2)
-                                        <td>{{ $transaction->category->nama }}</td>
-                                    @endif
-                                    <td>{{ isset($transaction->rekening) ? $transaction->rekening->nama_akun : 'Pocket deleted' }}
-                                    </td>
-                                    @if ($jenisuang->id == 3)
-                                        <td>{{ isset($transaction->rekening_tujuan) ? $transaction->rekening_tujuan->nama_akun : 'Pocket deleted' }}
-                                        </td>
-                                    @endif
-                                    <td>{{ Str::limit($transaction->keterangan, 15, $end = '...') ?? '-' }}</td>
-                                    <td>{{ $transaction->created_at->format('l j F Y') }}
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center">Records Empty</td>
-                                </tr>
-                            @endforelse
-
-                        </tbody>
-                    </table>
-                    @if ($jenisuang->user_transactions($daterange)->count() > 5)
-                        <div class="text-end mt-3"><a href="/transactions/{{ $jenisuang->id }}">Show
-                                All</a></div>
-                    @endif
-                </div>
-            </div>
+    <!-- DataTales Example -->
+    <div class="bg-dark border-0 card shadow mb-4">
+        <div class="bg-gray-100 border-0 card-header py-3">
+            <h6 class="font-weight-bold text-primary">Transaction</h6>
         </div>
-    @endforeach
+        <div class="card-body">
+            @forelse (auth()->user()->transactions($daterange) as $transaction)
+                <div class="pt-3 pb-0 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold {{ $transaction->jenisuang->textColor() }}">
+                        @if ($transaction->jenisuang_id == 1)
+                            {{ $transaction->category_masuk->nama }}
+                        @elseif($transaction->jenisuang_id == 2)
+                            {{ $transaction->category->nama }}
+                        @elseif ($transaction->jenisuang_id == 4)
+                            Pay Debt
+                            {{ Str::limit($transaction->utang->keterangan, 15, $end = '...') ?? $transaction->utang->nama }}
+                        @elseif ($transaction->jenisuang_id == 5)
+                            Friend Pay Debt
+                            {{ Str::limit($transaction->utangteman->keterangan, 15, $end = '...') ?? $transaction->utangteman->nama }}
+                        @elseif ($transaction->jenisuang_id == 3)
+                            Transfer
+                        @endif - Rp.
+                        {{ number_format($transaction->jumlah, 0, ',', '.') }}
+                    </h6>
+                </div>
+                <div class="text-white my-3 mx-0">
+                    <div class="d-flex ">
+                        <div class="flex-grow-1">
+                            {{ Str::limit($transaction->keterangan, 15, $end = '...') ?? '-' }}
+                            <br>
+                            {{ isset($transaction->rekening) ? $transaction->rekening->nama_akun : 'Pocket deleted' }}
+                            @if ($transaction->jenisuang_id == 3)
+                                to
+                                {{ isset($transaction->rekening_tujuan) ? $transaction->rekening_tujuan->nama_akun : 'Pocket deleted' }}
+                            @endif
+                        </div>
+                        <span class="mobile-small">{{ $transaction->created_at->format('l j F') }}</span>
+                    </div>
+                </div>
+                <hr class="bg-white my-1">
+            @empty
+                <div class="text-center font-weight-bold text-white-50">
+                    Empty
+                </div>
+            @endforelse
+        </div>
+    </div>
     @livewire('transaction.create',['jenisuangs' => $jenisuangs])
 </div>
 

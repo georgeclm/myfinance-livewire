@@ -26,9 +26,9 @@ class Jenisuang extends Model
             $date_range1 = explode(" / ", $daterange);
             $return = $return->where('created_at', '>=', $date_range1[0]);
             $return = $return->where('created_at', '<=', $date_range1[1]);
-            return $return->get();
+            return $return->latest()->get();
         }
-        return $return->whereMonth('created_at', now()->month)->orderBy('created_at', 'desc');
+        return $return->whereMonth('created_at', now()->month)->latest()->get();
     }
 
     public function all_transactions()
@@ -55,21 +55,5 @@ class Jenisuang extends Model
             '4' => 'text-warning',
             '5' => 'text-info'
         ][$this->id] ?? 'text-danger';
-    }
-
-    public function categoryTotal($q)
-    {
-        if ($q == '0') {
-            return $this->all_transactions->sum('jumlah');
-        }
-        return $this->all_transactions->where('category_id', $q)->sum('jumlah');
-    }
-
-    public function categoryMasukTotal($q)
-    {
-        if ($q == '0') {
-            return $this->all_transactions->sum('jumlah');
-        }
-        return $this->all_transactions->where('category_masuk_id', $q)->sum('jumlah');
     }
 }

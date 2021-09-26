@@ -13,7 +13,7 @@ class Transaction extends Component
 
     public function mount()
     {
-        $this->jenisuangs = Jenisuang::with('user_transactions')->get();
+        $this->jenisuangs = Jenisuang::all();
     }
     public function render()
     {

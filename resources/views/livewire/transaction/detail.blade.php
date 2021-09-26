@@ -15,8 +15,14 @@
                                     <i class="fas fa-question-circle"></i>
                                 </a>
                             </div>
-                            <div class="h7 mb-0 @if (Auth::user()->uangmasuk() >= 1000000000) small @endif font-weight-bold text-success">Rp.
-                                {{ number_format(Auth::user()->uangmasuk($daterange), 0, ',', '.') }}</div>
+                            <div class="h7 mb-0 @if (Auth::user()->uangmasuk($daterange)->sum('jumlah') >= 1000000000) small @endif font-weight-bold text-success">Rp.
+                                {{ number_format(
+    auth()->user()->uangmasuk($daterange)->sum('jumlah'),
+    0,
+    ',',
+    '.',
+) }}
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-money-bill-wave-alt fa-2x text-success"></i>
@@ -53,10 +59,15 @@
 
                             </div>
                             <div
-                                class="h7 mb-0 @if (Auth::user()->uangkeluar($daterange) >= 1000000000) small @endif
+                                class="h7 mb-0 @if (Auth::user()->uangkeluar($daterange)->sum('jumlah') >= 1000000000) small @endif
                                 font-weight-bold text-danger">
                                 Rp.
-                                {{ number_format(Auth::user()->uangkeluar($daterange), 0, ',', '.') }}
+                                {{ number_format(
+    Auth::user()->uangkeluar($daterange)->sum('jumlah'),
+    0,
+    ',',
+    '.',
+) }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -92,8 +103,18 @@
                                     <i class="fas fa-question-circle"></i>
                                 </a>
                             </div>
-                            <div class="h7 mb-0 @if (Auth::user()->saldoperbulan() >= 1000000000) small @endif font-weight-bold text-primary">Rp.
-                                {{ number_format(Auth::user()->saldoperbulan($daterange), 0, ',', '.') }}
+                            <div
+                                class="h7 mb-0 @if (Auth::user()->uangmasuk($daterange)->sum('jumlah') -
+        Auth::user()->uangkeluar($daterange)->sum('jumlah') >=
+    1000000000) small @endif font-weight-bold text-primary">
+                                Rp.
+                                {{ number_format(
+    Auth::user()->uangmasuk($daterange)->sum('jumlah') -
+        Auth::user()->uangkeluar($daterange)->sum('jumlah'),
+    0,
+    ',',
+    '.',
+) }}
                             </div>
                         </div>
                         <div class="col-auto">

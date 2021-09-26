@@ -61,6 +61,10 @@
         }
 
         @media screen and (max-width: 768px) {
+            .mobile-small {
+                font-size: 80%;
+            }
+
             .mb-3-when-small {
                 margin-bottom: 1rem;
             }

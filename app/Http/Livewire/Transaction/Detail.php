@@ -17,7 +17,6 @@ class Detail extends Component
     public $category_masuks;
     public $search = 0;
     public $search2 = 0;
-    public $q = 0;
     public $total;
 
     public function mount($id)
@@ -30,11 +29,11 @@ class Detail extends Component
     public function render()
     {
         if ($this->search) {
-            $this->transactions = $this->jenisuang->user_transactions($this->q, $this->daterange)->where('category_id', $this->search);
+            $this->transactions = $this->jenisuang->user_transactions($this->daterange)->where('category_id', $this->search);
         } else if ($this->search2) {
-            $this->transactions = $this->jenisuang->user_transactions($this->q, $this->daterange)->where('category_masuk_id', $this->search2);
+            $this->transactions = $this->jenisuang->user_transactions($this->daterange)->where('category_masuk_id', $this->search2);
         } else {
-            $this->transactions = $this->jenisuang->user_transactions($this->q, $this->daterange);
+            $this->transactions = $this->jenisuang->user_transactions($this->daterange);
         }
         $this->total = $this->transactions->sum('jumlah');
 
