@@ -23,10 +23,10 @@ class Investation extends Model
     public function route()
     {
         return [
-            'Stock' => 'stocks',
-            'P2P' => 'p2ps',
-            'Mutual Funds (Reksadana)' => 'mutualfunds',
+            'Stock' => 'stock',
+            'P2P' => 'p2p',
+            'Mutual Funds (Reksadana)' => 'mutualfund',
             'Deposito' => 'deposito'
-        ][$this->nama] ?? 'stocks';
+        ][$this->nama] ?? 'stock';
     }
 }

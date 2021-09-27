@@ -72,7 +72,7 @@
                         </form>
                         <hr style="border-color: white !important">
                         <div class="text-center">
-                            <a class="small text-white" href="/login">Already have an account?
+                            <a class="small text-white" href="{{ route('login') }}">Already have an account?
                                 Login!</a>
                         </div>
                     </div>

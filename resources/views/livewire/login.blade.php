@@ -26,9 +26,11 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="border-0 form-control form-control-user @error('form.password')
-                                                is-invalid @enderror" id="myInput" placeholder="Password"
-                                            name="password" required wire:model="form.password">
+                                        <input type="password"
+                                            class="border-0 form-control form-control-user @error('form.password')
+                                                is-invalid @enderror"
+                                            id="myInput" placeholder="Password" name="password" required
+                                            wire:model="form.password">
                                         @error('form.password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -50,7 +52,7 @@
                                 <hr style="border-color: white !important">
 
                                 <div class="text-center">
-                                    <a class="small text-white" href="/register">Create an
+                                    <a class="small text-white" href="{{ route('register') }}">Create an
                                         Account!</a>
                                 </div>
                             </div>

@@ -13,19 +13,19 @@
         <div class="col-lg-6 small-when-0 mb-3 this_small">
             <!-- Project Card Example -->
             <div class="d-flex align-items-center justify-content-between">
-                <a class="card bg-dark border-0" href="/frdebts" style="max-width: 69px; line-height: 80% !important">
+                <a class="card bg-dark border-0" href="{{ route('utangteman') }}" style="max-width: 69px; line-height: 80% !important">
                     <div class="card-body text-center p-2">
                         <i class="fas fa-fw fa-bomb"></i><br>
                         <small style="font-size: 10px">Friend&nbspDebt</small>
                     </div>
                 </a>
-                <a class="card bg-dark border-0" href="/debts" style="max-width: 69px; line-height: 80% !important">
+                <a class="card bg-dark border-0" href="{{ route('utang') }}" style="max-width: 69px; line-height: 80% !important">
                     <div class="card-body text-center p-2">
                         <i class="fas fa-fw fa-biohazard"></i><br>
                         <span style="font-size: 10px; " class="d-sm-inline">Your Debt</span>
                     </div>
                 </a>
-                <a class="card bg-dark border-0" href="/repetitions"
+                <a class="card bg-dark border-0" href="{{ route('cicilan') }}"
                     style="max-width: 69px; line-height: 80% !important; word-wrap:normal;">
                     <div class="card-body text-center p-2">
                         <i class="fas fa-fw fa-redo-alt"></i>
@@ -147,7 +147,7 @@
                         <div class="modal-body text-white">Start Create Your First Pocket to Use The App</div>
                         <div class="modal-footer border-0">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="/pockets">Pocket</a>
+                            <a class="btn btn-primary" href="{{ route('rekening') }}">Pocket</a>
                         </div>
                     </div>
                 </div>

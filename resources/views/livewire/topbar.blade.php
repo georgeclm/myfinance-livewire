@@ -47,7 +47,7 @@
                         My Website
                     </a>
                     <div class="this_small">
-                        <a class="dropdown-item text-white" href="/settings">
+                        <a class="dropdown-item text-white" href="{{ route('setting') }}">
                             <i class="fas fa-wrench fa-sm fa-fw mr-2 text-gray-400"></i>
                             Settings
                         </a>
@@ -65,12 +65,12 @@
     <nav class="navbar navbar-dark bg-black navbar-expand d-md-none d-lg-none d-xl-none fixed-bottom p-0">
         <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item" style="line-height: 80% !important; word-wrap:normal;">
-                <a href="/" class="nav-link  @if (Route::current()->uri == '/') active @endif"><i class="fas fa-fw fa-tachometer-alt"></i><br>
+                <a href="{{ route('home') }}" class="nav-link  @if (Route::current()->uri == '/') active @endif"><i class="fas fa-fw fa-tachometer-alt"></i><br>
                     <span style="font-size: 10px">Home</span>
                 </a>
             </li>
             <li class="nav-item" style="line-height: 80% !important; word-wrap:normal;">
-                <a href="/pockets" class="nav-link @if (Route::current()->uri == 'pockets') active @endif"><i class="fas fa-fw fa-wallet"></i><br>
+                <a href="{{ route('rekening') }}" class="nav-link @if (Route::current()->uri == 'pockets') active @endif"><i class="fas fa-fw fa-wallet"></i><br>
                     <span style="font-size: 10px">Pockets</span>
                 </a>
             </li>
@@ -83,24 +83,24 @@
 
                 </a>
                 <div class="dropdown-menu bg-dark border-0" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item text-white @if (Route::current()->uri == 'transactions') active @endif" href="/transactions">All</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/1') active @endif" href="/transactions/1">Income</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/2') active @endif" href="/transactions/2">Spending</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/3') active @endif" href="/transactions/3">Transfer</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/4') active @endif" href="/transactions/4">Your Debt</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/5') active @endif" href="/transactions/5">Your Friend
+                    <a class="dropdown-item text-white @if (Route::current()->uri == 'transactions') active @endif" href="{{ route('transaction') }}">All</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/1') active @endif" href="{{ route('transaction.detail',1) }}">Income</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/2') active @endif" href="{{ route('transaction.detail',2) }}">Spending</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/3') active @endif" href="{{ route('transaction.detail',3) }}">Transfer</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/4') active @endif" href="{{ route('transaction.detail',4) }}">Your Debt</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/5') active @endif" href="{{ route('transaction.detail',5) }}">Your Friend
                         Debt</a>
                 </div>
             </li>
             <li class="nav-item">
-                <a href="/financialplans" style="line-height: 80% !important; word-wrap:normal;"
+                <a href="{{ route('financialplan') }}" style="line-height: 80% !important; word-wrap:normal;"
                     class="nav-link @if (Route::current()->uri == 'financialplans') active @endif"><i class="fas fa-fw fa-clipboard-list"></i><br>
                     <span style="font-size: 10px">Plan</span>
 
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/investments" style="line-height: 80% !important; word-wrap:normal;"
+                <a href="{{ route('investasi') }}" style="line-height: 80% !important; word-wrap:normal;"
                     class="nav-link @if (Route::current()->uri == 'investments') active @endif"><i class="fas fa-fw fa-chart-line"></i><br>
                     <span style="font-size: 10px">Investment</span>
                 </a>

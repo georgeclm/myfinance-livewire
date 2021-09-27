@@ -111,7 +111,8 @@
                                             </button>
                                             <div class=" bg-dark border-0  dropdown-menu"
                                                 aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item text-white" href="/investments">Invest</a>
+                                                <a class="dropdown-item text-white"
+                                                    href="{{ route('investasi') }}">Invest</a>
                                                 <a data-toggle="modal"
                                                     data-target="#editmodal-{{ $financialplan->id }}"
                                                     class="dropdown-item text-white" href="#">Adjust</a>

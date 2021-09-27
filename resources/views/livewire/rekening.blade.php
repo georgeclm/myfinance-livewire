@@ -29,7 +29,8 @@
                     @livewire('rekening.adjust',['rekening' => $rekening])
                     <div class="py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary"><a
-                                href="/pockets/{{ $rekening->id }}">{{ $rekening->nama_akun }}</a> - Rp.
+                                href="{{ route('rekening.show', $rekening->id) }}">{{ $rekening->nama_akun }}</a> -
+                            Rp.
                             {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}
                         </h6>
                         <div class="dropdown no-arrow">
@@ -46,7 +47,8 @@
                                     class="dropdown-item text-white" href="javascript:void(0)">Delete</a>
                                 <a data-toggle="modal" data-target="#adjustmodal-{{ $rekening->id }}"
                                     class="dropdown-item text-white" href="javascript:void(0)">Adjust</a>
-                                <a class="dropdown-item text-white" href="/pockets/{{ $rekening->id }}">Mutation
+                                <a class="dropdown-item text-white"
+                                    href="{{ route('rekening.show', $rekening->id) }}">Mutation
                                 </a>
                             </div>
                         </div>
