@@ -21,13 +21,8 @@
                                     <i class="fas fa-question-circle"></i>
                                 </a>
                             </div>
-                            <div class="h7 mb-0 @if (Auth::user()->uangmasuk($daterange)->sum('jumlah') >= 1000000000) small @endif font-weight-bold text-success">Rp.
-                                {{ number_format(
-    Auth::user()->uangmasuk($daterange)->sum('jumlah'),
-    0,
-    ',',
-    '.',
-) }}
+                            <div class="h7 mb-0 @if ($income >= 1000000000) small @endif font-weight-bold text-success">Rp.
+                                {{ number_format($income,0,',','.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -65,15 +60,10 @@
 
                             </div>
                             <div
-                                class="h7 mb-0 @if (Auth::user()->uangkeluar($daterange)->sum('jumlah') >= 1000000000) small @endif
+                                class="h7 mb-0 @if ($spending >= 1000000000) small @endif
                                 font-weight-bold text-danger">
                                 Rp.
-                                {{ number_format(
-    Auth::user()->uangkeluar($daterange)->sum('jumlah'),
-    0,
-    ',',
-    '.',
-) }}
+                                {{ number_format($spending,0,',','.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -110,17 +100,9 @@
                                 </a>
                             </div>
                             <div
-                                class="h7 mb-0 @if (Auth::user()->uangmasuk($daterange)->sum('jumlah') -
-        Auth::user()->uangkeluar($daterange)->sum('jumlah') >=
-    1000000000) small @endif font-weight-bold text-primary">
+                                class="h7 mb-0 @if ($balance >= 1000000000) small @endif font-weight-bold text-primary">
                                 Rp.
-                                {{ number_format(
-    Auth::user()->uangmasuk($daterange)->sum('jumlah') -
-        Auth::user()->uangkeluar($daterange)->sum('jumlah'),
-    0,
-    ',',
-    '.',
-) }}
+                                {{ number_format($balance,0,',','.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -162,7 +144,7 @@
             <h6 class="font-weight-bold text-primary">Transaction</h6>
         </div>
         <div class="card-body">
-            @forelse (auth()->user()->transactions($daterange) as $transaction)
+            @forelse ($transactions as $transaction)
                 <div class="pt-3 pb-0 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold {{ $transaction->jenisuang->textColor() }}">
                         @if ($transaction->jenisuang_id == 1)
@@ -186,7 +168,7 @@
                         <div class="flex-grow-1">
                             {{ Str::limit($transaction->keterangan, 15, $end = '...') ?? '-' }}
                             <br>
-                            {{ isset($transaction->rekening) ? $transaction->rekening->nama_akun : 'Pocket deleted' }}
+                            {{ $transaction->rekening->nama_akun ?? 'Pocket deleted' }}
                             @if ($transaction->jenisuang_id == 3)
                                 to
                                 {{ isset($transaction->rekening_tujuan) ? $transaction->rekening_tujuan->nama_akun : 'Pocket deleted' }}

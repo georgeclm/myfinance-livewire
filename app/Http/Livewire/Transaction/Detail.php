@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Transaction;
 use App\Models\Category;
 use App\Models\CategoryMasuk;
 use App\Models\Jenisuang;
+use App\Models\Transaction;
 use Livewire\Component;
 
 class Detail extends Component
@@ -28,15 +29,33 @@ class Detail extends Component
 
     public function render()
     {
-        if ($this->search) {
-            $this->transactions = $this->jenisuang->user_transactions($this->daterange)->where('category_id', $this->search);
-        } else if ($this->search2) {
-            $this->transactions = $this->jenisuang->user_transactions($this->daterange)->where('category_masuk_id', $this->search2);
-        } else {
-            $this->transactions = $this->jenisuang->user_transactions($this->daterange);
-        }
-        $this->total = $this->transactions->sum('jumlah');
+        $this->transactions = Transaction::with(['rekening'])->where('user_id', auth()->id())->where('jenisuang_id', $this->jenisuang->id);
 
+        if ($this->daterange != null) {
+            $date_range1 = explode(" / ", $this->daterange);
+            $this->transactions = $this->transactions->where('created_at', '>=', $date_range1[0]);
+            $this->transactions = $this->transactions->where('created_at', '<=', $date_range1[1]);
+        }
+        $this->transactions = $this->transactions->latest()->get();
+        if ($this->search) {
+            $this->transactions = $this->transactions->where('category_id', $this->search);
+        } else if ($this->search2) {
+            $this->transactions = $this->transactions->where('category_masuk_id', $this->search2);
+        }
+        if ($this->jenisuang->id == 4) {
+            $this->transactions->load('utang');
+        }
+        if ($this->jenisuang->id == 5) {
+            $this->transactions->load('utangteman');
+        }
+        if ($this->jenisuang->id == 2) {
+            $this->transactions->load('category');
+        }
+        if ($this->jenisuang->id == 1) {
+            $this->transactions->load('category_masuk');
+        }
+        // dd($this->transactions);
+        $this->total = $this->transactions->sum('jumlah');
         return view('livewire.transaction.detail');
     }
 }

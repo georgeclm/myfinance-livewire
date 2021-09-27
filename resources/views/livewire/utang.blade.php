@@ -33,7 +33,7 @@
         @else
             @livewire('partials.no-data', ['message' => 'You dont have any debts'])
         @endif
-        @if (auth()->user()->rekenings->isEmpty())
+        @if (auth()->user()->rekenings()->count() == 0)
             @livewire('partials.newaccount')
         @endif
     </div>

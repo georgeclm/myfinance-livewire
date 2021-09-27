@@ -12,7 +12,7 @@ class Detail extends Component
 
     public $rekening;
     public $jenisuangs;
-    public $q = 0;
+    public $daterange = null;
 
     public function mount(Rekening $rekening)
     {
@@ -23,7 +23,13 @@ class Detail extends Component
 
     public function render()
     {
-        // dd($this->jenisuangs[0]->user_transactions($this->q));
-        return view('livewire.rekening.detail');
+        $transactions = Transaction::with(['rekening', 'jenisuang', 'category_masuk', 'category', 'utang', 'utangteman'])->where('user_id', auth()->id());
+        if ($this->daterange != null) {
+            $date_range1 = explode(" / ", $this->daterange);
+            $transactions = $transactions->where('created_at', '>=', $date_range1[0]);
+            $transactions = $transactions->where('created_at', '<=', $date_range1[1]);
+        }
+        $transactions = $transactions->where('rekening_id', $this->rekening->id)->orWhere('rekening_id2', $this->rekening->id)->latest()->get();
+        return view('livewire.rekening.detail', compact('transactions'));
     }
 }
