@@ -22,7 +22,7 @@
                                 </a>
                             </div>
                             <div class="h7 mb-0 @if ($income >= 1000000000) small @endif font-weight-bold text-success">Rp.
-                                {{ number_format($income,0,',','.') }}
+                                {{ number_format($income, 0, ',', '.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -63,7 +63,7 @@
                                 class="h7 mb-0 @if ($spending >= 1000000000) small @endif
                                 font-weight-bold text-danger">
                                 Rp.
-                                {{ number_format($spending,0,',','.') }}
+                                {{ number_format($spending, 0, ',', '.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -99,10 +99,9 @@
                                     <i class="fas fa-question-circle"></i>
                                 </a>
                             </div>
-                            <div
-                                class="h7 mb-0 @if ($balance >= 1000000000) small @endif font-weight-bold text-primary">
+                            <div class="h7 mb-0 @if ($balance >= 1000000000) small @endif font-weight-bold text-primary">
                                 Rp.
-                                {{ number_format($balance,0,',','.') }}
+                                {{ number_format($balance, 0, ',', '.') }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -147,19 +146,24 @@
             @forelse ($transactions as $transaction)
                 <div class="pt-3 pb-0 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold {{ $transaction->jenisuang->textColor() }}">
-                        @if ($transaction->jenisuang_id == 1)
-                            {{ $transaction->category_masuk->nama }}
-                        @elseif($transaction->jenisuang_id == 2)
-                            {{ $transaction->category->nama }}
-                        @elseif ($transaction->jenisuang_id == 4)
-                            Pay Debt
-                            {{ Str::limit($transaction->utang->keterangan, 15, $end = '...') ?? $transaction->utang->nama }}
-                        @elseif ($transaction->jenisuang_id == 5)
-                            Friend Pay Debt
-                            {{ Str::limit($transaction->utangteman->keterangan, 15, $end = '...') ?? $transaction->utangteman->nama }}
-                        @elseif ($transaction->jenisuang_id == 3)
-                            Transfer
-                        @endif - Rp.
+                        @switch($transaction->jenisuang_id)
+                            @case(1)
+                                {{ $transaction->category_masuk->nama }}
+                            @break
+                            @case(2)
+                                {{ $transaction->category->nama }}
+                            @break
+                            @case(3)
+                                Transfer
+                            @break
+                            @case(4)
+                                Pay Debt
+                                {{ Str::limit($transaction->utang->keterangan, 15, $end = '...') ?? $transaction->utang->nama }}
+                            @break
+                            @default
+                                Friend Pay Debt
+                                {{ Str::limit($transaction->utangteman->keterangan, 15, $end = '...') ?? $transaction->utangteman->nama }}
+                        @endswitch - Rp.
                         {{ number_format($transaction->jumlah, 0, ',', '.') }}
                     </h6>
                 </div>
@@ -178,18 +182,12 @@
                     </div>
                 </div>
                 <hr class="bg-white my-1">
-            @empty
-                <div class="text-center font-weight-bold text-white-50">
-                    Empty
-                </div>
-            @endforelse
+                @empty
+                    <div class="text-center font-weight-bold text-white-50">
+                        Empty
+                    </div>
+                @endforelse
+            </div>
         </div>
+        @livewire('transaction.create',['jenisuangs' => $jenisuangs])
     </div>
-    @livewire('transaction.create',['jenisuangs' => $jenisuangs])
-</div>
-
-@section('style')
-    <link href="{{ asset('datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/data-tables.css') }}" rel="stylesheet">
-
-@endsection

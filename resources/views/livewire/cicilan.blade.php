@@ -24,7 +24,8 @@
                 <div class="card-body">
                     @forelse ($jenisuang->cicilans->take(5) as $cicilan)
                         @livewire('cicilan.delete',['cicilan' => $cicilan])
-                        @livewire('cicilan.edit',['cicilan' => $cicilan,'jenisuangsSelect' => $jenisuangs])
+                        @livewire('cicilan.edit',['cicilan' => $cicilan,'jenisuangsSelect' => $jenisuangs,'categories'
+                        => $categories,'categorymasuks' => $categorymasuks])
                         <div class="py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-primary">{{ $cicilan->nama }} - Rp.
                                 {{ number_format($cicilan->jumlah, 0, ',', '.') }}
@@ -48,11 +49,24 @@
                         <div class="text-white my-3 mx-0">
                             <div class="d-flex ">
                                 <div class="flex-grow-1">
-                                    @if ($jenisuang->id == 1)
-                                        {{ $cicilan->category_masuk->nama }}
-                                    @elseif($jenisuang->id == 2)
-                                        {{ $cicilan->category->nama }}
-                                    @endif
+                                    @switch($cicilan->jenisuang_id)
+                                        @case(1)
+                                            {{ $cicilan->category_masuk->nama }}
+                                        @break
+                                        @case(2)
+                                            {{ $cicilan->category->nama }}
+                                        @break
+                                        @case(3)
+                                            Transfer
+                                        @break
+                                        @case(4)
+                                            Pay Debt
+                                            {{ Str::limit($cicilan->utang->keterangan, 15, $end = '...') ?? $cicilan->utang->nama }}
+                                        @break
+                                        @default
+                                            Friend Pay Debt
+                                            {{ Str::limit($cicilan->utangteman->keterangan, 15, $end = '...') ?? $cicilan->utangteman->nama }}
+                                    @endswitch
                                     <br>
                                     Date : {{ $cicilan->tanggal }}
                                 </div>
@@ -60,13 +74,14 @@
                             </div>
                         </div>
                         <hr class="bg-white my-1">
-                    @empty
-                        <div class="text-center font-weight-bold text-white-50">
-                            Empty
-                        </div>
-                    @endforelse
+                        @empty
+                            <div class="text-center font-weight-bold text-white-50">
+                                Empty
+                            </div>
+                        @endforelse
+                    </div>
                 </div>
-            </div>
-        @endforeach
-        @livewire('cicilan.create',['jenisuangs' => $jenisuangs])
-    </div>
+            @endforeach
+            @livewire('cicilan.create',['jenisuangs' => $jenisuangs,'categories' => $categories,'categorymasuks' =>
+            $categorymasuks])
+        </div>

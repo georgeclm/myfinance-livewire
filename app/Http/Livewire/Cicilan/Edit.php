@@ -29,14 +29,12 @@ class Edit extends Component
             'form.keterangan' => 'nullable',
             'form.utang_id' => ['nullable', 'in:' . auth()->user()->utangs->pluck('id')->implode(',')],
             'form.utangteman_id' => ['nullable', 'in:' . auth()->user()->utangtemans->pluck('id')->implode(',')],
-            'form.category_id' => ['nullable', 'in:' . Category::pluck('id')->implode(',')],
-            'form.category_masuk_id' => ['nullable', 'in:' . CategoryMasuk::pluck('id')->implode(',')]
+            'form.category_id' => 'nullable',
+            'form.category_masuk_id' => 'nullable',
         ];
     }
     public function mount()
     {
-        $this->categories = Category::whereNotIn('nama', ['Adjustment', 'Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
-        $this->categorymasuks = CategoryMasuk::whereNotIn('nama',  ['Adjustment', 'Sell Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
         $this->form = $this->cicilan->toArray();
         $this->form['jumlah'] = 'Rp  ' . number_format($this->cicilan->jumlah, 0, ',', '.');
     }

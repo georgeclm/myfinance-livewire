@@ -42,15 +42,15 @@ class Create extends Component
             'form.nama' => 'required',
             'form.tanggal' => ['required', 'numeric'],
             'form.bulan' => ['required', 'numeric'],
-            'form.jenisuang_id' => ['required', 'in:' . Jenisuang::pluck('id')->implode(',')],
+            'form.jenisuang_id' => 'required',
             'form.jumlah' => ['required', 'numeric'],
             'form.rekening_id' => ['required', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.rekening_id2' => ['nullable', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.keterangan' => 'nullable',
             'form.utang_id' => ['nullable', 'in:' . auth()->user()->utangs->pluck('id')->implode(',')],
             'form.utangteman_id' => ['nullable', 'in:' . auth()->user()->utangtemans->pluck('id')->implode(',')],
-            'form.category_id' => ['nullable', 'in:' . Category::pluck('id')->implode(',')],
-            'form.category_masuk_id' => ['nullable', 'in:' . CategoryMasuk::pluck('id')->implode(',')]
+            'form.category_id' => 'nullable',
+            'form.category_masuk_id' => 'nullable'
         ];
     }
     public function mount()
@@ -71,8 +71,6 @@ class Create extends Component
                 return $e->id  == 3;
             });
         }
-        $this->categories = Category::whereNotIn('nama', ['Adjustment', 'Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
-        $this->categorymasuks = CategoryMasuk::whereNotIn('nama',  ['Adjustment', 'Sell Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
     }
 
 
