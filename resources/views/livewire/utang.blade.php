@@ -40,14 +40,14 @@
     <!-- DataTales Example -->
     <div class="bg-dark border-0 card shadow mb-4">
         <div class="bg-gray-100 border-0 card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Your Debt</h6>
+            <h6 class="m-0 font-weight-bold text-danger">Your Debt</h6>
         </div>
         <div class="card-body">
             @forelse (auth()->user()->utangs as $utang)
                 @livewire('utang.edit',['utang'=> $utang])
 
                 <div class="py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
+                    <h6 class="m-0 font-weight-bold text-danger">
                         {{ $utang->nama }} - Rp.
                         {{ number_format($utang->jumlah, 0, ',', '.') }}
                     </h6>
@@ -61,7 +61,8 @@
                     <div class="d-flex ">
                         <div class="flex-grow-1">
                             {{ $utang->created_at->format('l j F Y') }}
-                            {{-- {{ $utang->keterangan ?? '-' }} --}}
+                            <br>
+                            {{ $utang->keterangan ?? '-' }}
                         </div>
 
                     </div>

@@ -21,10 +21,10 @@
         <div class="bg-gray-100 border-0 card-header py-3">
             <div class="row align-items-baseline">
                 <div class="col-md-5">
-                    <h6 class="font-weight-bold text-primary">{{ $jenisuang->nama }}</h6>
+                    <h6 class="font-weight-bold {{ $jenisuang->textColor() }}">{{ $jenisuang->nama }}</h6>
                 </div>
                 <div class="col-md-5 my-2">
-                    <h6 class="font-weight-bold text-primary">Rp.
+                    <h6 class="font-weight-bold {{ $jenisuang->textColor() }}">Rp.
                         {{ number_format($total, 0, ',', '.') }}
                     </h6>
                 </div>
