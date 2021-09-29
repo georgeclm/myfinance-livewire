@@ -41,7 +41,7 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body text-white">Total {{ now()->format('F') }} Income (Sell Investment Not
+                        <div class="modal-body text-white">Total Income and Total Gain In All Investment Based on Daterange. (Sell Investment Not
                             Included)</div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body text-white">Total {{ now()->format('F') }} Spending
+                        <div class="modal-body text-white">Total Spending and Total Loss In All Investment Based on Daterange.
                             (Investment is not included)</div>
                     </div>
                 </div>

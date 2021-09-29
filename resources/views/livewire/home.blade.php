@@ -34,9 +34,122 @@
                 </a>
             </div>
         </div>
-        @livewire('partials.income')
-        @livewire('partials.spending')
-        @livewire('partials.balance')
+        <div class="small-when-0 col-xl-3 col-md-6 mb-4">
+            <div class="bg-gray-100 card border-left-success border-0 shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Income
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#incomeModal">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </div>
+                            <div class="h7 mb-0 @if ($income >= 1000000000) small @endif font-weight-bold text-success">Rp.
+                                {{ number_format($income, 0, ',', '.') }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-money-bill-wave-alt fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="incomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="bg-dark modal-content">
+                        <div class="border-0 modal-header">
+                            <h5 class="modal-title text-white">Income</h5>
+                            <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-white">Total {{ now()->format('F') }} Income and Total Gain In All Investment.
+                            (Sell Investment Not Included)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="small-when-0 col-xl-3 col-md-6 mb-4">
+            <div class="bg-gray-100 card border-0 border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Spending
+                                <a href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#spendingModal">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+
+                            </div>
+                            <div
+                                class="h7 mb-0 @if ($spending >= 1000000000) small @endif
+                                font-weight-bold text-danger">
+                                Rp.
+                                {{ number_format($spending, 0, ',', '.') }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-funnel-dollar fa-2x text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="spendingModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="bg-dark modal-content">
+                        <div class="border-0 modal-header">
+                            <h5 class="modal-title text-white">Spending</h5>
+                            <button class="close text-white" type="button" data-dismiss="modal"
+                                aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-white">Total {{ now()->format('F') }} Spending and Total Loss In All Investment.
+                            (Investment is not included)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="small-when-0 col-xl-3 col-md-6 mb-4">
+            <div class="bg-gray-100 card border-left-primary border-0 shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Balance
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#balanceModal">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </div>
+                            <div class="h7 mb-0 @if ($balance >= 1000000000) small @endif font-weight-bold text-primary">Rp.
+                                {{ number_format($balance, 0, ',', '.') }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-coins fa-2x text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="balanceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="bg-dark modal-content">
+                        <div class="border-0 modal-header">
+                            <h5 class="modal-title text-white">Balance</h5>
+                            <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-white">Income - Spending</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @livewire('partials.balancewithasset')
     </div>
 
@@ -72,7 +185,7 @@
                 </div>
             </div>
         @endif
-        @if (auth()->user()->uangkeluar->sum('jumlah') != 0)
+        @if ($spending != 0)
             <!-- Content Column -->
             <div class="small-when-0 col-lg-6 mb-4">
                 <!-- Project Card Example -->
@@ -103,7 +216,7 @@
         @else
             @livewire('partials.no-data',['message' => 'Start Writting Records'])
         @endif
-        @if (auth()->user()->uangmasuk->sum('jumlah') != 0)
+        @if ($income != 0)
             <!-- Content Column -->
             <div class="col-lg-6 small-when-0  mb-4">
                 <!-- Project Card Example -->
@@ -247,7 +360,7 @@
                             "{{ auth()->user()->uangkeluar_by_month(3) }}",
                             "{{ auth()->user()->uangkeluar_by_month(2) }}",
                             "{{ auth()->user()->uangkeluar_by_month(1) }}",
-                            "{{ auth()->user()->uangkeluar->sum('jumlah') }}",
+                            "{{ $spending }}",
                         ],
                     },
                     {
@@ -268,7 +381,7 @@
                             "{{ auth()->user()->uangmasuk_by_month(3) }}",
                             "{{ auth()->user()->uangmasuk_by_month(2) }}",
                             "{{ auth()->user()->uangmasuk_by_month(1) }}",
-                            "{{ auth()->user()->uangmasuk->sum('jumlah') }}",
+                            "{{ $income }}",
                         ],
                     }
                 ],
