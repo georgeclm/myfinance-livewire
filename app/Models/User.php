@@ -137,11 +137,11 @@ class User extends Authenticatable implements JWTSubject
     }
     public function total_stocks_gain_or_loss()
     {
-        return $this->stocks()->withTrashed()->sum('gain_or_loss');
+        return $this->stocks()->withTrashed()->sum('gain_or_loss') + $this->previous_stock;
     }
     public function total_mutual_fund_gain_or_loss()
     {
-        return $this->mutual_funds()->withTrashed()->sum('gain_or_loss');
+        return $this->mutual_funds()->withTrashed()->sum('gain_or_loss') + $this->previous_reksadana;
     }
     public function total_p2ps()
     {
@@ -153,7 +153,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function total_depositos_gain_or_loss()
     {
-        return $this->depositos()->onlyTrashed()->sum('gain_or_loss');
+        return $this->depositos()->onlyTrashed()->sum('gain_or_loss') + $this->previous_deposito;
     }
 
     public function total_investments()

@@ -3,6 +3,12 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Mutual Funds</h1>
+        @if (is_null(auth()->user()->previous_reksadana))
+            <a href="#" data-toggle="modal" data-target="#previous_reksadana"
+                class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+                    class="fas fa-plus fa-sm text-white-50"></i>
+                Previous Earning?</a>
+        @endif
         @if (auth()->user()->rekenings->isNotEmpty() &&
     auth()->user()->financialplans->isNotEmpty())
             <a href="#" data-toggle="modal" data-target="#stock"
@@ -95,4 +101,5 @@
         @endforelse
     </div>
     @livewire('investasi.mutualfund.create-mutual-fund')
+    @livewire('investasi.mutualfund.previous')
 </div>

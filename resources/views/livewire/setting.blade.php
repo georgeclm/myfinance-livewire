@@ -66,7 +66,7 @@
             </div>
 
         </div>
-        <div class="col-lg-6 small-when-0 ">
+        <div class="col-lg-3 small-when-0 ">
             <div class="bg-dark border-0 card shadow mb-4">
                 <div
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -74,9 +74,9 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <form wire:submit.prevent="submit">
+                    <form wire:submit.prevent="submitp2p">
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model.defer="jumlah" type-currency="IDR" inputmode="numeric" type="text"
+                            <input wire:model.defer="p2pjumlah" type-currency="IDR" inputmode="numeric" type="text"
                                 name="jumlah" required placeholder="Total Earnings"
                                 class="form-control form-control-user @error('jumlah') is-invalid @enderror">
                             @error('jumlah')
@@ -87,21 +87,80 @@
                         </div>
                         <input type="submit" class="btn btn-primary" value="Update" />
                     </form>
-                    {{-- @foreach ($category_masuks as $category)
-                            <li class="bg-black list-group-item d-flex align-items-center">
-                                <div class="w-100 text-success">
-                                    <i
-                                        class="fas {{ $category->icon() }} text-success mx-2"></i>{{ $category->nama }}
-                                </div>
-                                 @if ($category->user_id != null)
-                                                    <a href="{{ route('category_masuks.remove', $category) }}">
-                                                        <span class="badge badge-success badge-pill">x</span></a>
-                                                @endif
-                            </li>
-                        @endforeach --}}
                 </div>
             </div>
-
+        </div>
+        <div class="col-lg-3 small-when-0 ">
+            <div class="bg-dark border-0 card shadow mb-4">
+                <div
+                    class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Previous Stock Earnings</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <form wire:submit.prevent="submitstock">
+                        <div class="mb-3 hide-inputbtns input-group">
+                            <input wire:model.defer="stockjumlah" type-currency="IDR" inputmode="numeric" type="text"
+                                name="jumlah" required placeholder="Total Earnings"
+                                class="form-control form-control-user @error('jumlah') is-invalid @enderror">
+                            @error('jumlah')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Update" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 small-when-0 ">
+            <div class="bg-dark border-0 card shadow mb-4">
+                <div
+                    class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Previous Deposito Earnings</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <form wire:submit.prevent="submitdeposito">
+                        <div class="mb-3 hide-inputbtns input-group">
+                            <input wire:model.defer="depositojumlah" type-currency="IDR" inputmode="numeric" type="text"
+                                name="jumlah" required placeholder="Total Earnings"
+                                class="form-control form-control-user @error('jumlah') is-invalid @enderror">
+                            @error('jumlah')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Update" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 small-when-0 ">
+            <div class="bg-dark border-0 card shadow mb-4">
+                <div
+                    class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Previous Mutual Fund Earnings</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <form wire:submit.prevent="submitreksadana">
+                        <div class="mb-3 hide-inputbtns input-group">
+                            <input wire:model.defer="reksadanajumlah" type-currency="IDR" inputmode="numeric"
+                                type="text" name="jumlah" required placeholder="Total Earnings"
+                                class="form-control form-control-user @error('jumlah') is-invalid @enderror">
+                            @error('jumlah')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Update" />
+                    </form>
+                </div>
+            </div>
         </div>
 
     </div>
