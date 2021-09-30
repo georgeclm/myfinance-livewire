@@ -57,7 +57,8 @@
                                 <option value='' selected disabled hidden>Debt Who</option>
                                 @foreach (auth()->user()->utangs as $utang)
                                     <option value="{{ $utang->id }}">
-                                        {{ $utang->nama }}, {{ Str::limit($utang->keterangan, 15, $end = '...') }}
+                                        {{ $utang->nama }},
+                                        {{ Str::limit($utang->keterangan, 15, $end = '...') ?? '-' }}
                                     </option>
                                 @endforeach
                             </select>
@@ -75,7 +76,8 @@
                                 <option value='' selected disabled hidden>Debt Who</option>
                                 @foreach (auth()->user()->utangtemans as $utang)
                                     <option value="{{ $utang->id }}">
-                                        {{ $utang->nama }}, {{ Str::limit($utang->keterangan, 15, $end = '...') }}
+                                        {{ $utang->nama }},
+                                        {{ Str::limit($utang->keterangan, 15, $end = '...') ?? '-' }}
                                     </option>
                                 @endforeach
                             </select>
@@ -85,7 +87,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-3 hide-inputbtns input-group">
+                        <div class="mb-3 hide-inputbtns input-group" id="jumlah">
                             <input type="text" disabled type-currency="IDR" inputmode="numeric"
                                 class="border-0 form-control form-control-user @error('form.jumlah') is-invalid @enderror"
                                 wire:model.defer="form.jumlah" name="jumlah" required placeholder="Total">
@@ -128,7 +130,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <select disabled
+                            <select disabled id="rekening_id"
                                 class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
                                 wire:model.defer="form.rekening_id" name="rekening_id"
                                 style="padding: 0.5rem !important" required>
@@ -161,7 +163,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="text" disabled
+                            <input type="text" disabled id="keterangan"
                                 class="border-0 form-control form-control-user @error('form.keterangan') is-invalid @enderror"
                                 wire:model.defer="form.keterangan" name="keterangan" placeholder="Description">
                             @error('form.keterangan')
@@ -182,6 +184,14 @@
 </div>
 @section('script')
     <script>
+        $('#category_id').hide("slow");
+        $('#category_masuk_id').hide("slow");
+        $('#transfer').hide("slow");
+        $('#utang').hide("slow");
+        $('#utangteman').hide("slow");
+        $('#keterangan').hide("slow");
+        $('#rekening_id').hide("slow");
+        $('#jumlah').hide("slow");
         $('#jenisuang').on('change', function(e) {
             var optionSelected = $("option:selected", this);
             var valueSelected = this.value;
@@ -197,6 +207,9 @@
             $('#transfer').hide("slow");
             $('#utang').hide("slow");
             $('#utangteman').hide("slow");
+            $('#keterangan').show("slow");
+            $('#rekening_id').show("slow");
+            $('#jumlah').show("slow");
             if (valueSelected == 1) {
                 $('#category_masuk_id').show("slow");
                 $('#category_masuk_id').prop('required', true);

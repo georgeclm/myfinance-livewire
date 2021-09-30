@@ -220,6 +220,11 @@
         @auth
             @if (!auth()->user()->rekenings->isEmpty() &&
                 !in_array(Route::current()->uri, ['transactions', 'repetitions']))
+                $('#category_id').hide("slow");
+                $('#category_masuk_id').hide("slow");
+                $('#keterangan').hide("slow");
+                $('#rekening_id').hide("slow");
+                $('#jumlah').hide("slow");
                 $('#jenisuang').on('change', function(e) {
                 var optionSelected = $("option:selected", this);
                 var valueSelected = this.value;
@@ -229,6 +234,9 @@
                 $('#category_masuk_id').prop('required', false);
                 $('#category_id').hide("slow");
                 $('#category_masuk_id').hide("slow");
+                $('#keterangan').show("slow");
+                $('#rekening_id').show("slow");
+                $('#jumlah').show("slow");
                 if (valueSelected == 1) {
                 $('#category_masuk_id').show("slow");
                 $('#category_masuk_id').prop('required', true);
@@ -241,7 +249,7 @@
         @endauth
         $(function() {
             var start = moment().startOf('month');
-            var end = moment().endOf('month');
+            var end = moment().endOf('month').add(1, 'days');
             $('input[name="daterange"]').daterangepicker({
                 startDate: start,
                 endDate: end,
@@ -256,7 +264,7 @@
                     'Yesterday': [moment().subtract(1, 'days'), moment()],
                     'Last 7 Days': [moment().subtract(6, 'days'), moment().add(1, 'days')],
                     'Last 30 Days': [moment().subtract(29, 'days'), moment().add(1, 'days')],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'This Month': [moment().startOf('month'), moment().endOf('month').add(1, 'days')],
                     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
                         'month').endOf('month')]
                 }

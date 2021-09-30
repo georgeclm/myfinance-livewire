@@ -49,7 +49,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-3 hide-inputbtns input-group">
+                        <div class="mb-3 hide-inputbtns input-group" id="jumlah">
                             <input type="text" disabled type-currency="IDR"
                                 class="border-0 form-control form-control-user @error('form.jumlah') is-invalid @enderror"
                                 wire:model.defer="form.jumlah" inputmode="numeric" name="jumlah" required
@@ -93,7 +93,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <select disabled
+                            <select disabled id="rekening_id"
                                 class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
                                 wire:model.defer="form.rekening_id" name="rekening_id"
                                 style="padding: 0.5rem !important" required>
@@ -110,7 +110,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="text" disabled
+                            <input type="text" disabled id="keterangan"
                                 class="border-0 form-control form-control-user @error('form.keterangan') is-invalid @enderror"
                                 wire:model.defer="form.keterangan" name="keterangan" placeholder="Description">
                             @error('form.keterangan')
