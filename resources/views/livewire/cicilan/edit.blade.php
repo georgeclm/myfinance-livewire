@@ -62,7 +62,7 @@
                             @enderror
                         </div>
                         @if ($cicilan->utang_id != null)
-                            <div class="form-group" id="utang">
+                            <div class="form-group">
                                 <select
                                     class="border-0 form-control form-control-user form-block @error('form.utang_id') is-invalid @enderror"
                                     wire:model.defer="form.utang_id" name="utang_id" style="padding: 0.5rem !important">
@@ -82,7 +82,7 @@
                             </div>
                         @endif
                         @if ($cicilan->utangteman_id != null)
-                            <div class="form-group" id="utangteman">
+                            <div class="form-group">
                                 <select
                                     class="border-0 form-control form-control-user form-block @error('form.utang_id') is-invalid @enderror"
                                     wire:model.defer="form.utangteman_id" name="utangteman_id"
@@ -140,7 +140,7 @@
                                 <select
                                     class="border-0 form-control form-control-user form-block @error('form.category_id') is-invalid @enderror"
                                     wire:model.defer="form.category_id" name="category_id"
-                                    style="padding: 0.5rem !important" id="category_id">
+                                    style="padding: 0.5rem !important">
                                     <option value="" selected disabled hidden>Choose Category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->nama }}</option>
@@ -158,7 +158,7 @@
                                 <select
                                     class="border-0 form-control form-control-user form-block @error('form.category_masuk_id') is-invalid @enderror"
                                     wire:model.defer="form.category_masuk_id" name="category_masuk_id"
-                                    style="padding: 0.5rem !important" id="category_masuk_id">
+                                    style="padding: 0.5rem !important">
                                     <option value="" selected disabled hidden>Choose Category</option>
                                     @foreach ($categorymasuks as $category)
                                         <option value="{{ $category->id }}">{{ $category->nama }}</option>
