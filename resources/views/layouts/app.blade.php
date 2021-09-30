@@ -175,7 +175,7 @@
         </div>
         @if (!in_array(Route::current()->uri, ['login', 'register']))
             @if (!auth()->user()->rekenings->isEmpty() &&
-    Route::current()->uri != 'transactions')
+    !in_array(Route::current()->uri, ['transactions', 'repetitions']))
                 <a class="add-button rounded-circle" data-toggle="modal" data-target="#quickAdd" href="#">
                     <i class="fas fa-plus"></i>
                 </a>
@@ -219,7 +219,7 @@
 
         @auth
             @if (!auth()->user()->rekenings->isEmpty() &&
-                Route::current()->uri != 'transactions')
+                !in_array(Route::current()->uri, ['transactions', 'repetitions']))
                 $('#jenisuang').on('change', function(e) {
                 var optionSelected = $("option:selected", this);
                 var valueSelected = this.value;

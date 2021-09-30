@@ -49,7 +49,7 @@
                             <select
                                 class="border-0 form-control form-control-user form-block @error('form.jenisuang_id') is-invalid @enderror"
                                 wire:model.defer="form.jenisuang_id" name="jenisuang_id"
-                                style="padding: 0.5rem !important" required id="jenisuang" disabled>
+                                style="padding: 0.5rem !important" required disabled>
                                 @foreach ($jenisuangsSelect as $jenis)
                                     <option value="{{ $jenis->id }}" @if ($jenis->id == $cicilan->jenisuang_id) selected @endif>{{ $jenis->nama }}
                                     </option>
