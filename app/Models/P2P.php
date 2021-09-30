@@ -36,4 +36,9 @@ class P2P extends Model
         }
         return $result->whereMonth('deleted_at', now()->month)->get();
     }
+    public function totalGainOrLossMonth($month = null)
+    {
+        $result = $this->where('user_id', auth()->id())->onlyTrashed();
+        return $result->whereMonth('deleted_at', now()->subMonth($month)->month)->get();
+    }
 }
