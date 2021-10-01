@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\Cicilan;
 
-use App\Models\Category;
-use App\Models\CategoryMasuk;
 use App\Models\Rekening;
 use App\Models\Utang;
 use App\Models\Utangteman;
@@ -12,6 +10,7 @@ use Livewire\Component;
 class Edit extends Component
 {
     public $jenisuangsSelect;
+    public $frontJumlah;
     public $categories;
     public $categorymasuks;
     public $error;
@@ -33,6 +32,14 @@ class Edit extends Component
             'form.category_masuk_id' => 'nullable',
         ];
     }
+
+    public function callError($msg)
+    {
+        $this->form['jumlah'] = $this->frontJumlah;
+        $this->error = $msg;
+        $this->dispatchBrowserEvent('contentChanged');
+    }
+
     public function mount()
     {
         $this->form = $this->cicilan->toArray();
@@ -41,14 +48,12 @@ class Edit extends Component
     public function submit()
     {
 
-        $frontJumlah = $this->form['jumlah'];
+        $this->frontJumlah = $this->form['jumlah'];
         $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
         $this->validate();
         // dd($this->form);
         if ($this->form['tanggal'] > 31 || $this->form['tanggal'] < 1) {
-            $this->form['jumlah'] = $frontJumlah;
-            $this->error = 'Date must be between 1 to 31';
-            $this->dispatchBrowserEvent('contentChanged');
+            $this->callError('Date must be between 1 to 31');
             return $this->render();
         }
         // dd($this->form);
@@ -57,45 +62,33 @@ class Edit extends Component
         if ($this->form['jenisuang_id'] == 1) {
         } else if ($this->form['jenisuang_id'] == 2) {
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Total is more than the curent pocket balance';
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->callError('Total is more than the curent pocket balance');
                 return $this->render();
             }
         } else if ($this->form['jenisuang_id'] == 4) {
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Total is more than the curent pocket balance';
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->callError('Total is more than the curent pocket balance');
                 return $this->render();
             }
             $utang = Utang::findOrFail($this->form['utang_id']);
             if ($utang->jumlah < $this->form['jumlah'] * $this->form['bulan']) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Pay More than the debt';
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->callError('Pay More than the debt');
                 return $this->render();
             }
         } else if ($this->form['jenisuang_id'] == 5) {
             $utang = Utangteman::findOrFail($this->form['utangteman_id']);
             if ($utang->jumlah < $this->form['jumlah'] * $this->form['bulan']) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Pay More than the debt';
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->callError('Pay More than the debt');
                 return $this->render();
             }
         } else {
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->dispatchBrowserEvent('contentChanged');
-                $this->error = 'Total is more than the curent pocket balance';
+                $this->callError('Total is more than the curent pocket balance');
                 return $this->render();
             }
             $rekening2 = Rekening::findOrFail($this->form['rekening_id2']);
             if ($rekening1 == $rekening2) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->dispatchBrowserEvent('contentChanged');
-                $this->error = 'Cant Transfer to the same pocket';
+                $this->callError('Cant Transfer to the same pocket');
                 return $this->render();
             }
         }

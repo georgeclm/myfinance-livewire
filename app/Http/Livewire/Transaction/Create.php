@@ -15,6 +15,7 @@ class Create extends Component
 {
 
     public $jenisuangsSelect;
+    public $frontJumlah;
     public $categories;
     public $categorymasuks;
     public $jenisuangs;
@@ -71,6 +72,12 @@ class Create extends Component
         $this->categorymasuks = CategoryMasuk::whereNotIn('nama',  ['Adjustment', 'Sell Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
     }
 
+    public function callError($msg)
+    {
+        $this->form['jumlah'] = $this->frontJumlah;
+        $this->error = $msg;
+        $this->dispatchBrowserEvent('contentChanged');
+    }
 
     public function submit()
     {
@@ -93,11 +100,10 @@ class Create extends Component
             $this->form['category_masuk_id'] = null;
         }
         $this->form['user_id'] = auth()->id();
-        $frontJumlah = $this->form['jumlah'];
+        $this->frontJumlah = $this->form['jumlah'];
         $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
         if ($this->form['jumlah'] == '0') {
-            $this->error = 'Total cannot be 0';
-            $this->dispatchBrowserEvent('contentChanged');
+            $this->callError('Total cannot be 0');
             return $this->render();
         }
         $this->validate();
@@ -107,25 +113,19 @@ class Create extends Component
             $rekening1->save();
         } else if ($this->form['jenisuang_id'] == 2) {
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Total is more than the curent pocket balance';
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->callError('Total is more than the curent pocket balance');
                 return $this->render();
             }
             $rekening1->saldo_sekarang -= $this->form['jumlah'];
             $rekening1->save();
         } else if ($this->form['jenisuang_id'] == 4) {
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Total is more than the curent pocket balance';
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->callError('Total is more than the curent pocket balance');
                 return $this->render();
             }
             $utang = Utang::findOrFail($this->form['utang_id']);
             if ($utang->jumlah < $this->form['jumlah']) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Pay More than the debt';
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->callError('Pay More than the debt');
                 return $this->render();
             }
             $utang->jumlah -= $this->form['jumlah'];
@@ -136,12 +136,9 @@ class Create extends Component
             $rekening1->saldo_sekarang -= $this->form['jumlah'];
             $rekening1->save();
         } else if ($this->form['jenisuang_id'] == 5) {
-
             $utang = Utangteman::findOrFail($this->form['utangteman_id']);
             if ($utang->jumlah < $this->form['jumlah']) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Pay More than the debt';
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->callError('Pay More than the debt');
                 return $this->render();
             }
             $utang->jumlah -= $this->form['jumlah'];
@@ -153,20 +150,14 @@ class Create extends Component
             $rekening1->save();
         } else {
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Total is more than the curent pocket balance';
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->callError('Total is more than the curent pocket balance');
                 return $this->render();
             }
             $rekening2 = Rekening::findOrFail($this->form['rekening_id2']);
-
             if ($rekening1 == $rekening2) {
-                $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Cant Transfer to the same pocket';
-                $this->dispatchBrowserEvent('contentChanged');
+                $this->callError('Cant Transfer to the same pocket');
                 return $this->render();
             }
-
             $rekening1->saldo_sekarang -= $this->form['jumlah'];
             $rekening2->saldo_sekarang += $this->form['jumlah'];
             $rekening1->save();
