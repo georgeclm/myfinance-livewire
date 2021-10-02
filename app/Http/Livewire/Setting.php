@@ -8,6 +8,10 @@ use Livewire\Component;
 
 class Setting extends Component
 {
+    public $updatep2p = 'disabled';
+    public $updatestock = 'disabled';
+    public $updatedeposito = 'disabled';
+    public $updatemutualfund = 'disabled';
     public $categories;
     public $category_masuks;
     public $p2pjumlah;
@@ -24,6 +28,24 @@ class Setting extends Component
         $this->categories = Category::where('user_id', null)->orWhere('user_id', auth()->id())->get();
         $this->category_masuks = CategoryMasuk::where('user_id', null)->orWhere('user_id', auth()->id())->get();
     }
+    public function updating($name, $value)
+    {
+        switch ($name) {
+            case 'p2pjumlah':
+                $this->updatep2p = '';
+                break;
+            case 'stockjumlah':
+                $this->updatestock = '';
+                break;
+            case 'depositojumlah':
+                $this->updatedeposito = '';
+                break;
+            default:
+                $this->updatemutualfund = '';
+                break;
+        }
+    }
+
     public function submitp2p()
     {
         $this->p2pjumlah = str_replace('.', '', substr($this->p2pjumlah, 4));

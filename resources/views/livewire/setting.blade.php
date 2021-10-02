@@ -26,10 +26,6 @@
                                     <i
                                         class="fas {{ $category->icon() }} text-danger mx-2"></i>{{ $category->nama }}
                                 </div>
-                                {{-- @if ($category->user_id != null)
-                                                    <a href="{{ route('categories.remove', $category) }}">
-                                                        <span class="badge badge-danger badge-pill text-end">x</span></a>
-                                                @endif --}}
                             </li>
                         @endforeach
                     </ul>
@@ -55,10 +51,6 @@
                                     <i
                                         class="fas {{ $category->icon() }} text-success mx-2"></i>{{ $category->nama }}
                                 </div>
-                                {{-- @if ($category->user_id != null)
-                                                    <a href="{{ route('category_masuks.remove', $category) }}">
-                                                        <span class="badge badge-success badge-pill">x</span></a>
-                                                @endif --}}
                             </li>
                         @endforeach
                     </ul>
@@ -76,16 +68,11 @@
                 <div class="card-body">
                     <form wire:submit.prevent="submitp2p">
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model.defer="p2pjumlah" type-currency="IDR" inputmode="numeric" type="text"
+                            <input wire:model="p2pjumlah" type-currency="IDR" inputmode="numeric" type="text"
                                 name="jumlah" required placeholder="Total Earnings"
-                                class="form-control form-control-user @error('jumlah') is-invalid @enderror">
-                            @error('jumlah')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                class="form-control form-control-user">
                         </div>
-                        <input type="submit" class="btn btn-primary" value="Update" />
+                        <button type="submit" class="btn btn-primary" {{ $this->updatep2p }}>Update</button>
                     </form>
                 </div>
             </div>
@@ -100,16 +87,11 @@
                 <div class="card-body">
                     <form wire:submit.prevent="submitstock">
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model.defer="stockjumlah" type-currency="IDR" inputmode="numeric" type="text"
+                            <input wire:model="stockjumlah" type-currency="IDR" inputmode="numeric" type="text"
                                 name="jumlah" required placeholder="Total Earnings"
-                                class="form-control form-control-user @error('jumlah') is-invalid @enderror">
-                            @error('jumlah')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                class="form-control form-control-user">
                         </div>
-                        <input type="submit" class="btn btn-primary" value="Update" />
+                        <button type="submit" class="btn btn-primary" {{ $this->updatestock }}>Update</button>
                     </form>
                 </div>
             </div>
@@ -124,16 +106,11 @@
                 <div class="card-body">
                     <form wire:submit.prevent="submitdeposito">
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model.defer="depositojumlah" type-currency="IDR" inputmode="numeric" type="text"
+                            <input wire:model="depositojumlah" type-currency="IDR" inputmode="numeric" type="text"
                                 name="jumlah" required placeholder="Total Earnings"
-                                class="form-control form-control-user @error('jumlah') is-invalid @enderror">
-                            @error('jumlah')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                class="form-control form-control-user">
                         </div>
-                        <input type="submit" class="btn btn-primary" value="Update" />
+                        <button type="submit" class="btn btn-primary" {{ $this->updatedeposito }}>Update</button>
                     </form>
                 </div>
             </div>
@@ -148,16 +125,11 @@
                 <div class="card-body">
                     <form wire:submit.prevent="submitreksadana">
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model.defer="reksadanajumlah" type-currency="IDR" inputmode="numeric"
-                                type="text" name="jumlah" required placeholder="Total Earnings"
-                                class="form-control form-control-user @error('jumlah') is-invalid @enderror">
-                            @error('jumlah')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <input wire:model="reksadanajumlah" type-currency="IDR" inputmode="numeric" type="text"
+                                name="jumlah" required placeholder="Total Earnings"
+                                class="form-control form-control-user">
                         </div>
-                        <input type="submit" class="btn btn-primary" value="Update" />
+                        <button type="submit" class="btn btn-primary" {{ $this->updatemutualfund }}>Update</button>
                     </form>
                 </div>
             </div>
