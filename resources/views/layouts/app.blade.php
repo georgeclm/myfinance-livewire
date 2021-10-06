@@ -33,6 +33,28 @@
 
     @yield('style')
     <style>
+        ::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            background-color: rgb(33, 33, 33);
+
+        }
+
+        ::-webkit-scrollbar
+        {
+            width: 8px;
+            background-color: rgb(33, 33, 33);
+
+        }
+
+        ::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            background-color: rgb(170, 170, 170);
+
+        }
         input[type="text"][disabled],
         input[type="number"][disabled],
         select[disabled],
