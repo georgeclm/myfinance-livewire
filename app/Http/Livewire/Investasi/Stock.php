@@ -10,7 +10,7 @@ class Stock extends Component
     public $stocks;
     public function mount()
     {
-        $this->stocks = ModelsStock::where('user_id', auth()->id())->where('lot', '!=', 0)->get();
+        $this->stocks = ModelsStock::where('user_id', auth()->id())->where('lot', '!=', 0)->latest()->get();
     }
     public function render()
     {

@@ -28,6 +28,8 @@ class Transaction extends Component
             $date_range1 = explode(" / ", $this->daterange);
             $transactions = $transactions->where('created_at', '>=', $date_range1[0]);
             $transactions = $transactions->where('created_at', '<=', $date_range1[1]);
+        } else {
+            $transactions = $transactions->whereMonth('created_at', now()->month);
         }
         $transactions = $transactions->latest()->get();
         $income = $transactions->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
@@ -36,28 +38,28 @@ class Transaction extends Component
         $totalStockGainOrLoss = $stock->totalGainOrLoss($this->daterange)->sum('gain_or_loss');
         if ($totalStockGainOrLoss > 0) {
             $income += $totalStockGainOrLoss;
-        }else{
+        } else {
             $spending -= $totalStockGainOrLoss;
         }
         $p2p = new P2P();
         $totalP2pGain = $p2p->totalGainOrLoss($this->daterange)->sum('gain_or_loss');
         if ($totalP2pGain > 0) {
             $income += $totalP2pGain;
-        }else{
+        } else {
             $spending -= $totalP2pGain;
         }
         $mutualFund = new MutualFund();
         $totalMutualFundGain = $mutualFund->totalGainOrLoss($this->daterange)->sum('gain_or_loss');
         if ($totalMutualFundGain > 0) {
             $income -= $totalMutualFundGain;
-        }else{
+        } else {
             $spending -= $totalMutualFundGain;
         }
         $deposito = new Deposito();
         $totalDepositoGain = $deposito->totalGainOrLoss($this->daterange)->sum('gain_or_loss');
         if ($totalDepositoGain > 0) {
             $income += $totalDepositoGain;
-        }else{
+        } else {
             $spending -= $totalDepositoGain;
         }
         $balance = $income - $spending;

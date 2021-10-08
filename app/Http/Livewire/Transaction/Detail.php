@@ -35,6 +35,8 @@ class Detail extends Component
             $date_range1 = explode(" / ", $this->daterange);
             $this->transactions = $this->transactions->where('created_at', '>=', $date_range1[0]);
             $this->transactions = $this->transactions->where('created_at', '<=', $date_range1[1]);
+        } else {
+            $this->transactions = $this->transactions->whereMonth('created_at', now()->month);
         }
         $this->transactions = $this->transactions->latest()->get();
         if ($this->search) {

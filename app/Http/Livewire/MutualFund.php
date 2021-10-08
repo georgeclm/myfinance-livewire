@@ -10,7 +10,7 @@ class MutualFund extends Component
     public $mutual_funds;
     public function mount()
     {
-        $this->mutual_funds = ModelsMutualFund::where('user_id', auth()->id())->where('unit', '!=', 0)->get();
+        $this->mutual_funds = ModelsMutualFund::where('user_id', auth()->id())->where('unit', '!=', 0)->latest()->get();
     }
     public function render()
     {

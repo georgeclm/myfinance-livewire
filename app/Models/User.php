@@ -93,11 +93,11 @@ class User extends Authenticatable implements JWTSubject
     }
     public function utangs()
     {
-        return $this->hasMany(Utang::class)->where('lunas', 0)->orderBy('created_at', 'desc');
+        return $this->hasMany(Utang::class)->where('lunas', 0)->latest();
     }
     public function utangtemans()
     {
-        return $this->hasMany(Utangteman::class)->where('lunas', 0);
+        return $this->hasMany(Utangteman::class)->where('lunas', 0)->latest();
     }
     public function financialplans()
     {
@@ -105,7 +105,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function stocks()
     {
-        return $this->hasMany(Stock::class)->latest();
+        return $this->hasMany(Stock::class);
     }
     public function p2ps()
     {
@@ -113,7 +113,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function mutual_funds()
     {
-        return $this->hasMany(MutualFund::class)->latest();
+        return $this->hasMany(MutualFund::class);
     }
     public function depositos()
     {

@@ -11,7 +11,7 @@ class Utangteman extends Component
 
     public function mount()
     {
-        $this->utangs = ModelsUtangteman::where('user_id', auth()->id())->where('lunas', 0)->get();
+        $this->utangs = ModelsUtangteman::where('user_id', auth()->id())->where('lunas', 0)->latest()->get();
     }
 
     public function render()
