@@ -51,7 +51,7 @@ class Transaction extends Component
         $mutualFund = new MutualFund();
         $totalMutualFundGain = $mutualFund->totalGainOrLoss($this->daterange)->sum('gain_or_loss');
         if ($totalMutualFundGain > 0) {
-            $income -= $totalMutualFundGain;
+            $income += $totalMutualFundGain;
         } else {
             $spending -= $totalMutualFundGain;
         }

@@ -54,7 +54,7 @@ class Home extends Component
         $mutualFund = new MutualFund();
         $totalMutualFundGain = $mutualFund->totalGainOrLoss()->sum('gain_or_loss');
         if ($totalMutualFundGain > 0) {
-            $income -= $totalMutualFundGain;
+            $income += $totalMutualFundGain;
         } else {
             $spending -= $totalMutualFundGain;
         }
@@ -87,7 +87,7 @@ class Home extends Component
             }
             $totalMutualFundGain = $mutualFund->totalGainOrLossMonth($i)->sum('gain_or_loss');
             if ($totalMutualFundGain > 0) {
-                $prevIncome[$i] -= $totalMutualFundGain;
+                $prevIncome[$i] += $totalMutualFundGain;
             } else {
                 $prevSpending[$i] -= $totalMutualFundGain;
             }
