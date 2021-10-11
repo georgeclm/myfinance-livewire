@@ -26,6 +26,7 @@ class Topup extends Component
         $this->form['nama_reksadana'] = $this->mutual_fund->nama_reksadana;
         $this->form['rekening_id'] = $this->mutual_fund->rekening_id;
         $this->form['financial_plan_id'] = $this->mutual_fund->financial_plan_id;
+        $this->form['harga_beli'] = 'Rp  ' . number_format($this->mutual_fund->harga_beli, 0, ',', '.');
     }
     public function rules()
     {

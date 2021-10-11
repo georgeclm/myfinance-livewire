@@ -54,7 +54,7 @@
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
                             <input wire:model.defer="form.harga_beli" type-currency="IDR" inputmode="numeric"
-                                type="text" required placeholder="Sell Price"
+                                type="text" required placeholder="Sell Price (NAV)"
                                 class="border-0 form-control form-control-user ">
                             <div class="input-group-append">
                                 <span class="input-group-text">Per Unit</span>
