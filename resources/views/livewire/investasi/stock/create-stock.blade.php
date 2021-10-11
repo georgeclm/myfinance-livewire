@@ -132,8 +132,7 @@
                         <div class="form-group">
                             <input type="text"
                                 class="border-0 form-control form-control-user @error('form.keterangan') is-invalid @enderror"
-                                name="keterangan" wire:model.defer="form.keterangan" id="keterangan"
-                                placeholder="Description">
+                                name="keterangan" wire:model.defer="form.keterangan" placeholder="Description">
                             @error('form.keterangan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

@@ -67,8 +67,7 @@
                     </div>
                     <div class="form-group">
                         <input type="text" class="border-0 form-control form-control-user " disabled
-                            wire:model.defer="form.keterangan" name="keterangan" id="keterangan"
-                            placeholder="Description">
+                            wire:model.defer="form.keterangan" name="keterangan" placeholder="Description">
                     </div>
                 </form>
             </div>
