@@ -48,6 +48,11 @@
                                     <button type="submit" class="btn btn-dark btn-user btn-block">
                                         Login
                                     </button>
+                                    <hr>
+                                    <a href="{{ route('google.login') }}"
+                                        class="btn btn-google btn-user btn-block border-0">
+                                        <i class="fab fa-google fa-fw"></i> Sign In With Google
+                                    </a>
                                 </form>
                                 <hr style="border-color: white !important">
 

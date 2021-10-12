@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Bank;
 use App\Models\Ticker;
 use Illuminate\Http\Request;
+use App\Http\Controllers\GoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,3 +81,5 @@ Route::get('ticker-search', function (Request $request) {
     })->get();
     return response()->json($tickers);
 });
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
