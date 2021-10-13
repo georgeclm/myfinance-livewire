@@ -7,7 +7,7 @@
         data-turbolinks-track="true">
     </script>
     @livewireScripts
-
+    <meta name="google-site-verification" content="6KrY7l9rhFc8hI1ofqAJ1l6oyMto4xPpvxundNwI2vg" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset('img/logoicon.ico') }}" />
@@ -33,28 +33,26 @@
 
     @yield('style')
     <style>
-        ::-webkit-scrollbar-track
-        {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             background-color: rgb(33, 33, 33);
 
         }
 
-        ::-webkit-scrollbar
-        {
+        ::-webkit-scrollbar {
             width: 8px;
             background-color: rgb(33, 33, 33);
 
         }
 
-        ::-webkit-scrollbar-thumb
-        {
+        ::-webkit-scrollbar-thumb {
             border-radius: 10px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
             background-color: rgb(170, 170, 170);
 
         }
+
         input[type="text"][disabled],
         input[type="number"][disabled],
         select[disabled],
