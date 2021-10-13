@@ -21,6 +21,9 @@ class Edit extends Component
 
     public function submit()
     {
+        if ($this->form['saldo_mengendap'] == '') {
+            $this->form['saldo_mengendap'] = null;
+        }
         if ($this->form['saldo_mengendap'] != null) {
             $this->form['saldo_mengendap'] = str_replace('.', '', substr($this->form['saldo_mengendap'], 4));
         }
@@ -45,7 +48,8 @@ class Edit extends Component
     public function mount()
     {
         $this->form = $this->rekening->toArray();
-        $this->form['saldo_sekarang'] = 'Rp ' . number_format($this->rekening->saldo_sekarang, 0, ',', '.');
+        $this->form['saldo_sekarang'] = 'Rp  ' . number_format($this->rekening->saldo_sekarang, 0, ',', '.');
+        $this->form['saldo_mengendap'] = 'Rp  ' . number_format($this->rekening->saldo_mengendap, 0, ',', '.');
     }
     public function render()
     {
