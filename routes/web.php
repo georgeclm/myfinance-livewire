@@ -71,14 +71,17 @@ Route::get('bank-search', function (Request $request) {
     return response()->json($banks);
 });
 Route::get('ticker-search', function (Request $request) {
-    $search = false;
     if ($request->has('q') && $request->input('q') !== '') {
-        $search = true;
+        $tickers1 = Ticker::where('code', 'LIKE', "%{$request->input('q')}%")->get();
+        $tickers2 = Ticker::where('nama', 'LIKE', "%{$request->input('q')}%")->get();
+        $tickers = $tickers1->merge($tickers2);
+    } else {
+        $tickers = Ticker::all();
     }
-    $tickers = Ticker::when($search, function ($query) use ($request) {
-        $query->where('nama', 'LIKE', "%{$request->input('q')}%")
-            ->orWhere('code', 'LIKE', "%{$request->input('q')}%");
-    })->get();
+    // $tickers = Ticker::when($search, function ($query) use ($request) {
+    //     $query->where('code', 'LIKE', "%{$request->input('q')}%")
+    //         ->orWhere('nama', 'LIKE', "%{$request->input('q')}%");
+    // })->get();
     return response()->json($tickers);
 });
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
