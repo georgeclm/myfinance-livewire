@@ -62,6 +62,28 @@
                                 <div class="text-center font-weight-bold text-white">
                                     {{ $financialplan->produk }}
                                 </div>
+                                <h4 class="small font-weight-bold text-white">
+                                    {{ $financialplan->nama }}
+                                    <span class="float-right">
+                                        <div class="dropdown ml-2">
+                                            <button class="btn btn-secondary" type="button" id="dropdownMenuButton"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-caret-down"></i>
+                                            </button>
+                                            <div class=" bg-dark border-0  dropdown-menu"
+                                                aria-labelledby="dropdownMenuButton">
+                                                <a data-toggle="modal"
+                                                    data-target="#editmodal-{{ $financialplan->id }}"
+                                                    class="dropdown-item text-white" href="#">Adjust</a>
+                                                {{-- <a class="dropdown-item text-white" href="#">Detail
+                                                                </a> --}}
+                                                {{-- <a data-toggle="modal"
+                                                                    data-target="#deletemodal-{{ $financialplan->id }}"
+                                                                    class="dropdown-item text-white" href="#">Hapus</a> --}}
+                                            </div>
+                                        </div>
+                                    </span>
+                                </h4>
                                 <div class="progress mb-1">
                                     <div role="progressbar" style="width: {{ $financialplan->persen() }}%"
                                         aria-valuenow="{{ $financialplan->persen() }}" aria-valuemin="0"
@@ -94,9 +116,9 @@
                 </div>
                 <div class="card-body p-2">
                     @forelse (auth()->user()->financialplans as $financialplan)
+                        @livewire($financialplan->edit(),['financialplan'=> $financialplan])
                         @if ($financialplan->jumlah < $financialplan->target)
                             {{-- @include('financialplan.delete') --}}
-                            @livewire($financialplan->edit(),['financialplan'=> $financialplan])
                             <div class="pt-4 rounded mb-3">
                                 <div class="text-center font-weight-bold text-white">
                                     {{ $financialplan->produk }}
