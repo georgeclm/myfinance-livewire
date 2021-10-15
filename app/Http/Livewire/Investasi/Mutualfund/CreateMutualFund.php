@@ -34,14 +34,18 @@ class CreateMutualFund extends Component
     }
     public function submit()
     {
-        // dd($this->form);
         $frontJumlah = $this->form['harga_beli'];
         $this->form['harga_beli'] = str_replace('.', '', substr($this->form['harga_beli'], 4));
+        $frontTotal = $this->form['total'];
+        $this->form['total'] = str_replace('.', '', substr($this->form['total'], 4));
+        $this->form['unit'] = round($this->form['total'] / $this->form['harga_beli'], 4);
+
         $this->validate();
-        $this->form['total'] = $this->form['harga_beli'] * $this->form['unit'];
+        // dd($this->form);
         $rekening = Rekening::findOrFail($this->form['rekening_id']);
         if ($this->form['total'] > $rekening->saldo_sekarang) {
             $this->form['harga_beli'] = $frontJumlah;
+            $this->form['total'] = $frontTotal;
             $this->addError('form.rekening_id', 'Balance In Pocket Not Enough ');
             return $this->render();
         }

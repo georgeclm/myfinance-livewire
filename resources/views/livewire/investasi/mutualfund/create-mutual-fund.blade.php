@@ -33,7 +33,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text-white">
                     <form id="addStock" wire:submit.prevent="submit">
                         <div class="form-group">
                             <input type="text"
@@ -45,9 +45,9 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-3 hide-inputbtns input-group">
+                        {{-- <div class="mb-3 hide-inputbtns input-group">
                             <input type="number" wire:model.defer="form.unit"
-                                class="border-0 form-control form-control-user @error('form.unit') is-invalid @enderror"
+                                class="total border-0 form-control form-control-user @error('form.unit') is-invalid @enderror"
                                 placeholder="Total" required>
                             <div class="input-group-append">
                                 <span class="input-group-text" id="basic-addon2">unit</span>
@@ -57,15 +57,25 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </div>
+                        </div> --}}
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input type="text" name="harga_beli" required placeholder="Buy Price (NAV)"
+                            <input type="text" name="buyprice" required placeholder="Buy Price (NAV)"
                                 inputmode="numeric" type-currency="IDR" wire:model.defer="form.harga_beli"
                                 class="border-0 form-control form-control-user @error('form.harga_beli') is-invalid @enderror">
                             <div class="input-group-append">
                                 <span class="input-group-text">Per Unit</span>
                             </div>
                             @error('form.harga_beli')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="mb-3 hide-inputbtns input-group">
+                            <input type="text" name="total" required placeholder="Purchase Amount" inputmode="numeric"
+                                type-currency="IDR" wire:model.defer="form.total"
+                                class="border-0 form-control form-control-user @error('form.total') is-invalid @enderror">
+                            @error('form.total')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -129,6 +139,9 @@
                             @enderror
                         </div>
                     </form>
+                    <b> Unit Estimation</b>
+                    <span class="float-right"> <span id="myText"></span> Unit</span>
+                    <hr>
                 </div>
                 <div class="modal-footer border-0">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>

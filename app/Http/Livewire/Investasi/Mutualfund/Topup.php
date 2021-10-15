@@ -19,7 +19,8 @@ class Topup extends Component
         'biaya_lain' => null,
         'rekening_id' => '',
         'financial_plan_id' => '',
-        'keterangan' => null
+        'keterangan' => null,
+        'total' => ''
     ];
     public function mount()
     {
@@ -40,28 +41,31 @@ class Topup extends Component
     {
         $frontJumlah = $this->form['harga_beli'];
         $this->form['harga_beli'] = str_replace('.', '', substr($this->form['harga_beli'], 4));
+        $frontTotal = $this->form['total'];
+        $this->form['total'] = str_replace('.', '', substr($this->form['total'], 4));
+        $this->form['unit'] = round($this->form['total'] / $this->form['harga_beli'], 4);
         $this->validate();
 
         $rekening = Rekening::findOrFail($this->form['rekening_id']);
-        $total = $this->form['harga_beli'] * $this->form['unit'];
 
-        if ($total > $rekening->saldo_sekarang) {
+        if ($this->form['total'] > $rekening->saldo_sekarang) {
             $this->form['harga_beli'] = $frontJumlah;
+            $this->form['total'] = $frontTotal;
             $this->addError('form.rekening_id', 'Balance In Pocket Not Enough');
             return $this->render();
         }
 
-        $rekening->saldo_sekarang -= $total;
+        $rekening->saldo_sekarang -= $this->form['total'];
         $rekening->save();
 
         $financialplan = FinancialPlan::findOrFail($this->mutual_fund->financial_plan_id);
-        $financialplan->jumlah += $total;
+        $financialplan->jumlah += $this->form['total'];
         $financialplan->save();
 
         Transaction::create([
             'user_id' => auth()->id(),
             'jenisuang_id' => 2,
-            'jumlah' => $total,
+            'jumlah' => $this->form['total'],
             'rekening_id' => $this->form['rekening_id'],
             'keterangan' => 'Buy ' . $this->mutual_fund->nama_reksadana,
             'category_id' => Category::firstWhere('nama', 'Investment')->id,
@@ -73,7 +77,7 @@ class Topup extends Component
             'harga_beli' => $avgprice,
             'unit' => $total_unit,
             'keterangan' => $this->form['keterangan'],
-            'total' => $total + $this->mutual_fund->total
+            'total' => $this->form['total'] + $this->mutual_fund->total
         ]);
         session()->flash('success', 'TopUp Successful');
         return redirect(route('mutualfund'));

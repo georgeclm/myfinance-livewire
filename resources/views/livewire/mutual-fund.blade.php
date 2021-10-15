@@ -103,3 +103,48 @@
     @livewire('investasi.mutualfund.create-mutual-fund')
     @livewire('investasi.mutualfund.previous')
 </div>
+@section('script')
+    <script>
+        var unit = 0;
+        var total = 0;
+        var buyprice = 0;
+        $('input[name=total]').on('input', function(e) {
+            total = $('input[name=total]').val().replace(/[^0-9]+/g, '');
+            count();
+        });
+        $('input[name=buyprice]').on('input', function(e) {
+            buyprice = $('input[name=buyprice]').val().replace(/[^0-9]+/g, '');
+            count();
+        });
+
+        function count() {
+            if (!isNaN(total) && !isNaN(buyprice)) {
+                unit = total / buyprice;
+                document.getElementById("myText").innerHTML = unit.toFixed(4);
+            }
+        }
+        @foreach ($mutual_funds as $mutual_fund)
+            var unit = 0;
+            var total = 0;
+            var buyprice{{ $mutual_fund->id }} = {{ $mutual_fund->harga_beli }};
+            $('input[name=total-{{ $mutual_fund->id }}]').on('input', function(e) {
+            total = $('input[name=total-{{ $mutual_fund->id }}]').val().replace(
+            /[^0-9]+/g, '');
+            count{{ $mutual_fund->id }}();
+            });
+            $('input[name=buyprice-{{ $mutual_fund->id }}]').on('input', function(e) {
+            buyprice{{ $mutual_fund->id }} = $('input[name=buyprice-{{ $mutual_fund->id }}]').val()
+            .replace(/[^0-9]+/g, '');
+            count{{ $mutual_fund->id }}();
+            });
+
+            function count{{ $mutual_fund->id }}() {
+            if (!isNaN(total) && !isNaN(buyprice{{ $mutual_fund->id }})) {
+            unit = total / buyprice{{ $mutual_fund->id }};
+            document.getElementById("myText-{{ $mutual_fund->id }}").innerHTML = unit
+            .toFixed(4);
+            }
+            }
+        @endforeach
+    </script>
+@endsection

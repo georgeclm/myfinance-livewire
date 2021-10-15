@@ -33,27 +33,38 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text-white">
                     <form id="formtopup-{{ $mutual_fund->id }}" wire:submit.prevent="submit">
                         <div class="form-group">
                             <input type="text" class="border-0 form-control form-control-user"
                                 wire:model="form.nama_reksadana" placeholder="mutual_fund Code" disabled>
                         </div>
-                        <div class="mb-3 hide-inputbtns input-group">
+                        {{-- <div class="mb-3 hide-inputbtns input-group">
                             <input type="number" class="border-0 form-control form-control-user"
                                 wire:model.defer="form.unit" placeholder="Total" required>
                             <div class="input-group-append">
                                 <span class="input-group-text">unit</span>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="mb-3 hide-inputbtns input-group">
                             <input wire:model.defer="form.harga_beli" type-currency="IDR" inputmode="numeric"
-                                type="text" required placeholder="Buy Price (NAV)"
-                                class="border-0 form-control form-control-user ">
+                                type="text" name="buyprice-{{ $mutual_fund->id }}" required
+                                placeholder="Buy Price (NAV)" class="border-0 form-control form-control-user ">
                             <div class="input-group-append">
                                 <span class="input-group-text">Per Unit</span>
                             </div>
 
+                        </div>
+                        <div class="mb-3 hide-inputbtns input-group">
+                            <input type="text" name="total-{{ $mutual_fund->id }}" required
+                                placeholder="Purchase Amount" inputmode="numeric" type-currency="IDR"
+                                wire:model.defer="form.total"
+                                class="border-0 form-control form-control-user @error('form.total') is-invalid @enderror">
+                            @error('form.total')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <select wire:model.defer="form.rekening_id"
@@ -92,6 +103,9 @@
                                 class="border-0 form-control form-control-user" disabled placeholder="Description">
                         </div>
                     </form>
+                    <b> Unit Estimation</b>
+                    <span class="float-right"> <span id="myText-{{ $mutual_fund->id }}"></span> Unit</span>
+                    <hr>
                 </div>
                 <div class="modal-footer border-0">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
