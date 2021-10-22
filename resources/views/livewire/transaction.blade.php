@@ -175,10 +175,11 @@
                             {{ $transaction->rekening->nama_akun ?? 'Pocket deleted' }}
                             @if ($transaction->jenisuang_id == 3)
                                 to
-                                {{ isset($transaction->rekening_tujuan) ? $transaction->rekening_tujuan->nama_akun : 'Pocket deleted' }}
+                                {{ $transaction->rekening_tujuan->nama_akun ?? 'Pocket deleted' }}
                             @endif
                         </div>
-                        <span class="mobile-small">{{ $transaction->created_at->format('l j F') }}</span>
+
+                        <span class="mobile-small">{{ ($transaction->created_at->toDateString() == now()->toDateString()) ?  'Today' : $transaction->created_at->format('l j F') }}</span>
                     </div>
                 </div>
                 <hr class="bg-white my-1">
