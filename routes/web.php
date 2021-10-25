@@ -24,6 +24,7 @@ use App\Models\Bank;
 use App\Models\Ticker;
 use Illuminate\Http\Request;
 use App\Http\Controllers\GoogleController;
+use App\Http\Livewire\Investasi\Stock\History;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/financialplans', Financialplan::class)->name('financialplan');
     Route::get('/investments', Investasi::class)->name('investasi');
     Route::get('/stocks', Stock::class)->name('stock');
+    Route::get('/stocks/history', History::class)->name('stocks.history');
     Route::get('/p2ps', P2p::class)->name('p2p');
     Route::get('/settings', Setting::class)->name('setting');
     Route::get('/mutualfunds', MutualFund::class)->name('mutualfund');

@@ -19,7 +19,13 @@
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
             <!-- Nav Item - Alerts -->
-            {{-- <livewire:alert-center /> --}}
+            @if (in_array(Route::current()->uri, ['stocks']))
+                <li class="nav-item">
+                    <a class="nav-link"  href="{{ route('stocks.history') }}">
+                        <i class="fas fa-file-alt"></i>
+                    </a>
+                </li>
+            @endif
             @livewire('partials.alert-center')
 
             <!-- Nav Item - User Information -->

@@ -90,7 +90,7 @@
                                 {{ isset($transaction->rekening_tujuan) ? $transaction->rekening_tujuan->nama_akun : 'Pocket deleted' }}
                             @endif
                         </div>
-                        <span class="mobile-small">{{ $transaction->created_at->format('l j F') }}</span>
+                        <span class="mobile-small">{{ $transaction->created_at->format('l j M') }}</span>
                     </div>
                 </div>
                 <hr class="bg-white my-1">

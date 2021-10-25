@@ -89,7 +89,7 @@
                             Amount : Rp. {{ number_format($p2p->jumlah, 0, ',', '.') }}<br />
                             {{ $p2p->jatuh_tempo->diffForHumans() }}
                         </div>
-                        {{ number_format($p2p->bunga, 1, ',', '.') }} %
+                        +{{ number_format($p2p->bunga, 1, ',', '.') }} %
                     </div>
                 </div>
             </div>
