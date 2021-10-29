@@ -9,6 +9,7 @@ use App\Models\Rekening;
 use App\Models\Transaction;
 use App\Models\Utang;
 use App\Models\Utangteman;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Create extends Component
@@ -99,6 +100,7 @@ class Create extends Component
         if ($this->form['category_masuk_id'] == '') {
             $this->form['category_masuk_id'] = null;
         }
+        $msg = 'Transaction have been saved';
         $this->form['user_id'] = auth()->id();
         $this->frontJumlah = $this->form['jumlah'];
         $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
@@ -115,6 +117,9 @@ class Create extends Component
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
                 $this->callError('Total is more than the curent pocket balance');
                 return $this->render();
+            }
+            if ($this->form['jumlah'] > Auth::user()->total_with_assets() / 10) {
+                $msg = 'You just spent more than you can afford';
             }
             $rekening1->saldo_sekarang -= $this->form['jumlah'];
             $rekening1->save();
@@ -165,7 +170,7 @@ class Create extends Component
         }
 
         Transaction::create($this->form);
-        session()->flash('success', 'Transaction have been saved');
+        session()->flash('success', $msg);
         return redirect(route('transaction'));
     }
     public function render()

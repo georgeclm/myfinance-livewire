@@ -9,6 +9,7 @@ use App\Models\Rekening;
 use App\Models\Transaction;
 use App\Models\Utang;
 use App\Models\Utangteman;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class QuickAdd extends Component
@@ -54,6 +55,8 @@ class QuickAdd extends Component
         if ($this->form['category_masuk_id'] == '') {
             $this->form['category_masuk_id'] = null;
         }
+        $msg = 'Transaction have been saved';
+
         $this->form['user_id'] = auth()->id();
 
         $frontJumlah = $this->form['jumlah'];
@@ -76,12 +79,15 @@ class QuickAdd extends Component
                 $this->dispatchBrowserEvent('contentChanged');
                 return $this->render();
             }
+            if ($this->form['jumlah'] > Auth::user()->total_with_assets() / 10) {
+                $msg = 'You just spent more than you can afford';
+            }
             $rekening1->saldo_sekarang -= $this->form['jumlah'];
             $rekening1->save();
         }
 
         Transaction::create($this->form);
-        session()->flash('success', 'Transaction have been saved');
+        session()->flash('success', $msg);
         return redirect(route('transaction'));
     }
     public function render()
