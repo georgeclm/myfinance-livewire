@@ -64,7 +64,9 @@ Route::middleware('auth')->group(function () {
 Route::get('brick/access-token', [BrickController::class, 'getAccessToken']);
 Route::get('brick/institution-list', [BrickController::class, 'getInstitutionList']);
 Route::get('brick/create-bank', [BrickController::class, 'brickWidget'])->name('create.bankacc');
-Route::post('brick/store-bank', [BrickController::class, 'storeBankAcc'])->name('store.bankacc');
+Route::middleware(['cors'])->group(function () {
+    Route::post('brick/store-bank', [BrickController::class, 'storeBankAcc'])->name('store.bankacc');
+});
 Route::get('bank-search', function (Request $request) {
     $search = false;
     if ($request->has('q') && $request->input('q') !== '') {

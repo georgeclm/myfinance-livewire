@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Brick\Brick;
+use App\Models\Brick as ModelsBrick;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -25,12 +26,20 @@ class BrickController extends Controller
     {
         $accessToken = $this->getAccessToken();
         // dd($accessToken);
-        $url = "https://cdn.onebrick.io/sandbox-widget/v1/?accessToken=" . $accessToken . "&redirect_url=https://epafroditusgeorge.com/brick/store-bank";
+        $url = "https://cdn.onebrick.io/sandbox-widget/?accessToken=" . $accessToken . "&redirect_url=https://epafroditusgeorge.com/brick/store-bank";
         return Redirect::to($url);
     }
-    public function storeBankAcc()
+    public function storeBankAcc(Request $request)
     {
-        dd(request()->all());
-        return response()->json(['success' => true, 'message' => 'Pocket have been created'], 200);
+        // $res = json_encode($request->all());
+        // $json = json_decode($request, true);
+        // $accessToken = $res[0]->accessToken;
+        // $res = json_decode($request);
+        ModelsBrick::create([
+            'response' => json_encode($request->all())
+        ]);
+        // dd('test');
+        // return redirect()->route('home');
+        return "https://epafroditusgeorge.com";
     }
 }
