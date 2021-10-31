@@ -30,7 +30,7 @@ class Create extends Component
             'form.nama_bank' => 'required',
             'form.nama_deposito' => 'required',
             'form.jumlah' => ['required', 'numeric'],
-            'form.bunga' => ['required', 'numeric'],
+            'form.bunga' => 'required',
             'form.rekening_id' => ['required', 'numeric', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',')],
             'form.keterangan' => 'nullable',
@@ -52,7 +52,8 @@ class Create extends Component
 
         if ($this->form['jumlah'] > $rekening->saldo_sekarang) {
             $this->form['jumlah'] = $frontJumlah;
-            $this->addError('form.rekening_id', 'Balance Not Enough');
+            $this->error = 'Balance Not Enough';
+            $this->dispatchBrowserEvent('contentChanged');
             return $this->render();
         }
 

@@ -59,7 +59,8 @@
                         <div class="mb-3 hide-inputbtns input-group">
                             <input type="number"
                                 class="border-0 form-control form-control-user @error('form.bunga') is-invalid @enderror"
-                                name="bunga" placeholder="Interest" wire:model.defer="form.bunga" required>
+                                name="bunga" placeholder="Interest (Base On Your Time Not Annual)"
+                                wire:model.defer="form.bunga" required step="0.01">
                             <div class="input-group-append">
                                 <span class="input-group-text" id="basic-addon2">%</span>
                             </div>
@@ -87,7 +88,7 @@
                         <div class="form-group">
                             <input wire:model.defer="form.jatuh_tempo"
                                 onchange="this.dispatchEvent(new InputEvent('input'))" class="border-0 form-control"
-                                type="text" name="jatuh_tempo" />
+                                type="text" name="jatuh_tempo" readonly />
                         </div>
                         <div class="form-group">
                             <select
