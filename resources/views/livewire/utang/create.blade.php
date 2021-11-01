@@ -26,7 +26,8 @@
                             required>
                             <option value="" selected disabled hidden>For Pocket</option>
                             @foreach (auth()->user()->rekenings as $rekening)
-                                <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }}</option>
+                                <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }} - Rp.
+                                    {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
                             @endforeach
                         </select>
                         @error('form.rekening_id')

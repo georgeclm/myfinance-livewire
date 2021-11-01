@@ -61,7 +61,8 @@
                                 style="padding: 0.5rem !important" disabled>
                                 @foreach (auth()->user()->rekenings as $rekening)
                                     <option value="{{ $rekening->id }}">
-                                        {{ $rekening->nama_akun }}</option>
+                                        {{ $rekening->nama_akun }} - Rp.
+                                        {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -90,7 +91,8 @@
                 </div>
                 <div class="modal-footer border-0">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="btn btn-primary" form="formchange-{{ $stock->id }}" value="Update" />
+                    <input type="submit" class="btn btn-primary" form="formchange-{{ $stock->id }}"
+                        value="Update" />
                 </div>
             </div>
         </div>

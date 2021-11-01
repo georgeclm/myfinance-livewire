@@ -136,7 +136,8 @@
                                 style="padding: 0.5rem !important" required>
                                 <option value="" selected disabled hidden>Choose Pocket</option>
                                 @foreach (auth()->user()->rekenings as $rekening)
-                                    <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }}</option>
+                                    <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }} - Rp.
+                                        {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
                                 @endforeach
                             </select>
                             @error('form.rekening_id')
@@ -152,7 +153,8 @@
                                 style="padding: 0.5rem !important" id="transfer">
                                 <option value='' selected disabled hidden>Choose Pocket Destination</option>
                                 @foreach (auth()->user()->rekenings as $rekening)
-                                    <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }}</option>
+                                    <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }} - Rp.
+                                        {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
                                 @endforeach
                             </select>
                             @error('form.rekening_id2')

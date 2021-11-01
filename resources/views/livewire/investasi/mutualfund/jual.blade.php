@@ -53,7 +53,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 hide-inputbtns input-group">
-                            <input wire:model.defer="form.harga_beli"  type-currency="IDR" inputmode="numeric"
+                            <input wire:model.defer="form.harga_beli" type-currency="IDR" inputmode="numeric"
                                 type="text" required placeholder="Sell Price (NAV)"
                                 class="border-0 form-control form-control-user ">
                             <div class="input-group-append">
@@ -67,7 +67,8 @@
                                 style="padding: 0.5rem !important">
                                 @foreach (auth()->user()->rekenings as $rekening)
                                     <option value="{{ $rekening->id }}">
-                                        {{ $rekening->nama_akun }}</option>
+                                        {{ $rekening->nama_akun }} - Rp.
+                                        {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
                                 @endforeach
                             </select>
                         </div>
