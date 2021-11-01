@@ -14,6 +14,6 @@ class BankSeeder extends Seeder
      */
     public function run()
     {
-        DB::unprepared("INSERT INTO banks (nama, code) VALUES ('KEB Hana','1000');");
+        DB::unprepared("INSERT INTO banks (nama, code) VALUES ('Other Bank','1111');");
     }
 }

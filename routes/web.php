@@ -76,6 +76,9 @@ Route::get('bank-search', function (Request $request) {
         ->when($search, function ($query) use ($request) {
             $query->where('nama', 'LIKE', "%{$request->input('q')}%");
         })->get();
+    if ($banks->isEmpty()) {
+        $banks = Bank::where('nama', 'Other Bank')->get();
+    }
     return response()->json($banks);
 });
 Route::get('ticker-search', function (Request $request) {
