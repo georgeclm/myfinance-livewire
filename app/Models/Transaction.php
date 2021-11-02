@@ -27,11 +27,15 @@ class Transaction extends Model
     }
     public function rekening()
     {
-        return $this->belongsTo(Rekening::class, 'rekening_id');
+        return $this->belongsTo(Rekening::class, 'rekening_id')->withDefault([
+            'nama_akun' => 'Pocket Deleted'
+        ]);
     }
     public function rekening_tujuan()
     {
-        return $this->belongsTo(Rekening::class, 'rekening_id2');
+        return $this->belongsTo(Rekening::class, 'rekening_id2')->withDefault([
+            'nama_akun' => 'Pocket Deleted'
+        ]);
     }
     public function utang()
     {

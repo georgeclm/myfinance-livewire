@@ -47,10 +47,10 @@
                         <div class="flex-grow-1">
                             {{ Str::limit($transaction->keterangan, 15, $end = '...') ?? '-' }}
                             <br>
-                            {{ $transaction->rekening->nama_akun ?? 'Pocket deleted' }}
+                            {{ $transaction->rekening->nama_akun }}
                             @if ($transaction->jenisuang_id == 3)
                                 to
-                                {{ isset($transaction->rekening_tujuan) ? $transaction->rekening_tujuan->nama_akun : 'Pocket deleted' }}
+                                {{ $transaction->rekening_tujuan->nama_akun }}
                             @endif
                         </div>
                         <span class="mobile-small">{{ $transaction->created_at->format('l j M') }}</span>
