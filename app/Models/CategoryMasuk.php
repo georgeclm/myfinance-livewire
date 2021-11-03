@@ -31,10 +31,10 @@ class CategoryMasuk extends Model
             '4' => 'fa-city',
         ][$this->id] ?? 'fa-random';
     }
-    public function persen()
+    public function persen($prev = 0)
     {
-        if (auth()->user()->uangmasuk->sum('jumlah') != 0) {
-            return round($this->userTransactionsByCategory->sum('jumlah') / auth()->user()->uangmasuk->sum('jumlah') * 100);
+        if (auth()->user()->uangmasuk->sum('jumlah') + $prev != 0) {
+            return round($this->userTransactionsByCategory->sum('jumlah') / (auth()->user()->uangmasuk->sum('jumlah') + $prev) * 100);
         }
         return 0;
     }

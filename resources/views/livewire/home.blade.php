@@ -197,19 +197,31 @@
                     </div>
                     <div class="card-body">
                         @foreach ($categories as $category)
-                            @if ($category->persen() != 0 && $category->nama != 'Investment')
+                            @if ($category->persen($spendingDiff) != 0 && $category->nama != 'Investment')
                                 <h4 class="small font-weight-bold text-white">
                                     {{ $category->nama }}<span
-                                        class="float-right">{{ $category->persen() }}%</span>
+                                        class="float-right">{{ $category->persen($spendingDiff) }}%</span>
                                 </h4>
                                 <div class="progress mb-4">
-                                    <div role="progressbar" style="width: {{ $category->persen() }}%"
-                                        aria-valuenow="{{ $category->persen() }}" aria-valuemin="0"
+                                    <div role="progressbar" style="width: {{ $category->persen($spendingDiff) }}%"
+                                        aria-valuenow="{{ $category->persen($spendingDiff) }}" aria-valuemin="0"
                                         aria-valuemax="100" class="progress-bar {{ $category->bgColor() }}">
                                     </div>
                                 </div>
                             @endif
                         @endforeach
+                        @if ($spendingDiff != 0)
+                            <h4 class="small font-weight-bold text-white">
+                                Loss From Investment<span
+                                    class="float-right">{{ $spendingDiffPercent }}%</span>
+                            </h4>
+                            <div class="progress mb-4">
+                                <div role="progressbar" style="width: {{ $spendingDiffPercent }}%"
+                                    aria-valuenow="{{ $spendingDiffPercent }}" aria-valuemin="0"
+                                    aria-valuemax="100" class="progress-bar bg-danger">
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -228,19 +240,31 @@
                     </div>
                     <div class="card-body">
                         @foreach ($category_masuks as $category)
-                            @if ($category->persen() != 0 && $category->nama != 'Sell Investment')
+                            @if ($category->persen($incomeDiff) != 0 && $category->nama != 'Sell Investment')
                                 <h4 class="small font-weight-bold text-white">
                                     {{ $category->nama }}<span
-                                        class="float-right">{{ $category->persen() }}%</span>
+                                        class="float-right">{{ $category->persen($incomeDiff) }}%</span>
                                 </h4>
                                 <div class="progress mb-4">
-                                    <div role="progressbar" style="width: {{ $category->persen() }}%"
-                                        aria-valuenow="{{ $category->persen() }}" aria-valuemin="0"
+                                    <div role="progressbar" style="width: {{ $category->persen($incomeDiff) }}%"
+                                        aria-valuenow="{{ $category->persen($incomeDiff) }}" aria-valuemin="0"
                                         aria-valuemax="100" class="progress-bar {{ $category->bgColor() }}">
                                     </div>
                                 </div>
                             @endif
                         @endforeach
+                        @if ($incomeDiff != 0)
+                            <h4 class="small font-weight-bold text-white">
+                                Gain From Investment<span
+                                    class="float-right">{{ $incomeDiffPercent }}%</span>
+                            </h4>
+                            <div class="progress mb-4">
+                                <div role="progressbar" style="width: {{ $incomeDiffPercent }}%"
+                                    aria-valuenow="{{ $incomeDiffPercent }}" aria-valuemin="0"
+                                    aria-valuemax="100" class="progress-bar bg-success">
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

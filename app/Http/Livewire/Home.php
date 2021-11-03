@@ -38,6 +38,8 @@ class Home extends Component
         $income = Auth::user()->uangmasuk->sum('jumlah');
         $spending = Auth::user()->uangkeluar->sum('jumlah');
         $stock = new Stock();
+        $incomeDiff = $income;
+        $spendingDiff = $spending;
         $totalStockGainOrLoss = $stock->totalGainOrLoss()->sum('gain_or_loss');
         if ($totalStockGainOrLoss > 0) {
             $income += $totalStockGainOrLoss;
@@ -66,10 +68,10 @@ class Home extends Component
             $spending -= $totalDepositoGain;
         }
         $balance = $income - $spending;
-        $stock = new Stock();
-        $p2p = new P2P();
-        $mutualFund = new MutualFund();
-        $deposito = new Deposito();
+        $incomeDiff = $income - $incomeDiff;
+        $spendingDiff = $spending - $spendingDiff;
+        $incomeDiffPercent = round($incomeDiff / (auth()->user()->uangmasuk->sum('jumlah') + $incomeDiff) * 100);
+        $spendingDiffPercent = round($spendingDiff / (auth()->user()->uangkeluar->sum('jumlah') + $spendingDiff) * 100);
         for ($i = 1; $i <= 4; $i++) {
             $prevIncome[$i] = Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
             $prevSpending[$i] = Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
@@ -98,7 +100,7 @@ class Home extends Component
                 $prevSpending[$i] -= $totalDepositoGain;
             }
         }
-        // dd($prevSpending);
-        return view('livewire.home', compact('income', 'spending', 'balance', 'prevIncome', 'prevSpending'));
+        // dd($incomeDiff);
+        return view('livewire.home', compact('income', 'spending', 'balance', 'prevIncome', 'prevSpending', 'incomeDiff','spendingDiff','spendingDiffPercent','incomeDiffPercent'));
     }
 }

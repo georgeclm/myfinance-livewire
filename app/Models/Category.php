@@ -35,10 +35,10 @@ class Category extends Model
             '6' => 'fa-coffee'
         ][$this->id] ?? 'fa-random';
     }
-    public function persen()
+    public function persen($prev = 0)
     {
-        if (auth()->user()->uangkeluar->sum('jumlah') != 0) {
-            return round($this->userTransactionsByCategory->sum('jumlah') / auth()->user()->uangkeluar->sum('jumlah') * 100);
+        if (auth()->user()->uangkeluar->sum('jumlah') + $prev != 0) {
+            return round($this->userTransactionsByCategory->sum('jumlah') / (auth()->user()->uangkeluar->sum('jumlah') + $prev) * 100);
         }
         return 0;
     }
