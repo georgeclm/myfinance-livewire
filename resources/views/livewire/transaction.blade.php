@@ -183,28 +183,42 @@
         </div>
         <div class="card-body">
             @forelse ($transactions as $transaction)
+                @livewire('transaction.refund',['transaction'=> $transaction])
+
                 <div class="pt-3 pb-0 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold {{ $transaction->jenisuang->textColor() }}">
-                        @switch($transaction->jenisuang_id)
-                            @case(1)
-                                {{ $transaction->category_masuk->nama }}
-                            @break
-                            @case(2)
-                                {{ $transaction->category->nama }}
-                            @break
-                            @case(3)
-                                Transfer
-                            @break
-                            @case(4)
-                                Pay Debt
-                                {{ Str::limit($transaction->utang->keterangan, 15, $end = '...') ?? $transaction->utang->nama }}
-                            @break
-                            @default
-                                Friend Pay Debt
-                                {{ Str::limit($transaction->utangteman->keterangan, 15, $end = '...') ?? $transaction->utangteman->nama }}
-                        @endswitch - Rp.
-                        {{ number_format($transaction->jumlah, 0, ',', '.') }}
-                    </h6>
+                    <div class="flex-grow-1">
+
+                        <h6 class="m-0 font-weight-bold {{ $transaction->jenisuang->textColor() }}">
+                            @switch($transaction->jenisuang_id)
+                                @case(1)
+                                    {{ $transaction->category_masuk->nama }}
+                                @break
+                                @case(2)
+                                    {{ $transaction->category->nama }}
+                                @break
+                                @case(3)
+                                    Transfer
+                                @break
+                                @case(4)
+                                    Pay Debt
+                                    {{ Str::limit($transaction->utang->keterangan, 15, $end = '...') ?? $transaction->utang->nama }}
+                                @break
+                                @default
+                                    Friend Pay Debt
+                                    {{ Str::limit($transaction->utangteman->keterangan, 15, $end = '...') ?? $transaction->utangteman->nama }}
+                            @endswitch - Rp.
+                            {{ number_format($transaction->jumlah, 0, ',', '.') }}
+                        </h6>
+                    </div>
+                    @if (in_array($transaction->jenisuang_id, [1, 2]))
+                        <a href="#" data-toggle="modal" data-target="#refund_{{ $transaction->id }}"
+                            class="btn btn-sm btn-warning btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </span>
+                            <span class="text only-big">Refund</span>
+                        </a>
+                    @endif
                 </div>
                 <div class="text-white my-3 mx-0">
                     <div class="d-flex ">
