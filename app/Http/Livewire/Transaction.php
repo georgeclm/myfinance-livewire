@@ -6,6 +6,7 @@ use App\Models\Deposito;
 use App\Models\Jenisuang;
 use App\Models\MutualFund;
 use App\Models\P2P;
+use App\Models\Rekening;
 use App\Models\Stock;
 use App\Models\Transaction as ModelsTransaction;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,8 @@ class Transaction extends Component
 
     public $jenisuangs;
     public $daterange = null;
+    public $error;
+
 
     public function mount()
     {
@@ -64,5 +67,27 @@ class Transaction extends Component
         }
         $balance = $income - $spending;
         return view('livewire.transaction', compact('income', 'spending', 'balance', 'transactions'));
+    }
+    public function revert($id)
+    {
+        $transaction = ModelsTransaction::findOrFail($id);
+        $rekening1 = Rekening::find($transaction->rekening_id);
+
+        if ($transaction->jenisuang_id == 1) {
+            if ($rekening1->saldo_sekarang < $transaction->jumlah) {
+                $this->error = 'Pocket doesnt have enough money';
+                $this->dispatchBrowserEvent('contentChanged');
+                return $this->render();
+            }
+            $rekening1->saldo_sekarang -= $transaction->jumlah;
+            $rekening1->save();
+        } else {
+            $rekening1->saldo_sekarang += $transaction->jumlah;
+            $rekening1->save();
+        }
+        $transaction->delete();
+        session()->flash('success', "Transaction have been reverted");
+
+        return redirect(route('transaction'));
     }
 }

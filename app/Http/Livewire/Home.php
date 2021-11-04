@@ -70,8 +70,9 @@ class Home extends Component
         $balance = $income - $spending;
         $incomeDiff = $income - $incomeDiff;
         $spendingDiff = $spending - $spendingDiff;
-        $incomeDiffPercent = round($incomeDiff / (auth()->user()->uangmasuk->sum('jumlah') + $incomeDiff) * 100);
-        $spendingDiffPercent = round($spendingDiff / (auth()->user()->uangkeluar->sum('jumlah') + $spendingDiff) * 100);
+
+        $incomeDiffPercent = (auth()->user()->uangmasuk->sum('jumlah') + $incomeDiff != 0) ?  round($incomeDiff / (auth()->user()->uangmasuk->sum('jumlah') + $incomeDiff) * 100) : 0;
+        $spendingDiffPercent = (auth()->user()->uangkeluar->sum('jumlah') + $spendingDiff != 0) ? round($spendingDiff / (auth()->user()->uangkeluar->sum('jumlah') + $spendingDiff) * 100) : 0;
         for ($i = 1; $i <= 4; $i++) {
             $prevIncome[$i] = Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
             $prevSpending[$i] = Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
@@ -101,6 +102,6 @@ class Home extends Component
             }
         }
         // dd($incomeDiff);
-        return view('livewire.home', compact('income', 'spending', 'balance', 'prevIncome', 'prevSpending', 'incomeDiff','spendingDiff','spendingDiffPercent','incomeDiffPercent'));
+        return view('livewire.home', compact('income', 'spending', 'balance', 'prevIncome', 'prevSpending', 'incomeDiff', 'spendingDiff', 'spendingDiffPercent', 'incomeDiffPercent'));
     }
 }

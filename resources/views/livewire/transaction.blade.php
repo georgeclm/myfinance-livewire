@@ -167,8 +167,9 @@
         <div class="small-when-0 col-xl-12 col-md-12 mb-4">
             <div class="bg-gray-100 border-0 card shadow h-100 py-2 border-bottom-warning">
                 <div class="h3 fw-bold text-info card-body text-center">
-                    <input wire:model="daterange" class="form-control picker_select" style="text-align:center;"
-                        type="text" readonly name="daterange" onchange="this.dispatchEvent(new InputEvent('input'))" />
+                    <input wire:model="daterange" class="form-control" type="text" readonly
+                        onchange="this.dispatchEvent(new InputEvent('input'))" style="text-align:center;"
+                        name="daterange" />
                 </div>
             </div>
         </div>
@@ -183,7 +184,27 @@
         </div>
         <div class="card-body">
             @forelse ($transactions as $transaction)
-                @livewire('transaction.refund',['transaction'=> $transaction])
+                <div class="modal fade" wire:ignore id="refund_{{ $transaction->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="bg-dark modal-content">
+                            <div class="border-0 modal-header">
+                                <h5 class="modal-title text-white">Revert The Transaction?</h5>
+                                <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-white">Transaction Will be Reverted and Rp.
+                                {{ number_format($transaction->jumlah, 0, ',', '.') }} will @if ($transaction->jenisuang_id == 2) be refunded to your pocket. @else be deducted from your pocket. @endif
+                            </div>
+                            <div class="modal-footer border-0">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <a class="btn btn-primary" href="javascript:void(0)"
+                                    wire:click="revert({{ $transaction->id }})">Revert</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="pt-3 pb-0 d-flex flex-row align-items-center justify-content-between">
                     <div class="flex-grow-1">
@@ -245,4 +266,27 @@
             </div>
         </div>
         @livewire('transaction.create',['jenisuangs' => $jenisuangs])
+        @if ($error)
+            <script>
+                window.addEventListener('contentChanged', event => {
+                    new Notify({
+                        status: 'error',
+                        title: 'Error',
+                        text: "{{ $error }}",
+                        effect: 'fade',
+                        speed: 300,
+                        customClass: null,
+                        customIcon: null,
+                        showIcon: true,
+                        showCloseButton: true,
+                        autoclose: true,
+                        autotimeout: 3000,
+                        gap: 20,
+                        distance: 20,
+                        type: 2,
+                        position: 'right top'
+                    })
+                });
+            </script>
+        @endif
     </div>

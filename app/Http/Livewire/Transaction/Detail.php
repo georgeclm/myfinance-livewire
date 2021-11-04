@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Transaction;
 use App\Models\Category;
 use App\Models\CategoryMasuk;
 use App\Models\Jenisuang;
+use App\Models\Rekening;
 use App\Models\Transaction;
 use Livewire\Component;
 
@@ -19,6 +20,7 @@ class Detail extends Component
     public $search = 0;
     public $search2 = 0;
     public $total;
+    public $error;
 
     public function mount($id)
     {
@@ -59,5 +61,27 @@ class Detail extends Component
         // dd($this->transactions);
         $this->total = $this->transactions->sum('jumlah');
         return view('livewire.transaction.detail');
+    }
+    public function revert($id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $rekening1 = Rekening::find($transaction->rekening_id);
+
+        if ($transaction->jenisuang_id == 1) {
+            if ($rekening1->saldo_sekarang < $transaction->jumlah) {
+                $this->error = 'Pocket doesnt have enough money';
+                $this->dispatchBrowserEvent('contentChanged');
+                return $this->render();
+            }
+            $rekening1->saldo_sekarang -= $transaction->jumlah;
+            $rekening1->save();
+        } else {
+            $rekening1->saldo_sekarang += $transaction->jumlah;
+            $rekening1->save();
+        }
+        $transaction->delete();
+        session()->flash('success', "Transaction have been reverted");
+
+        return redirect(route('transaction.detail', $this->jenisuang->id));
     }
 }
