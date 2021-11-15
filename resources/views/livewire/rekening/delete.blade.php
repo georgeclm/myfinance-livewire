@@ -10,9 +10,7 @@
             action cannot
             be undone </div>
         <div class="modal-footer border-0">
-            <button class="btn btn-secondary" type="button"
-                onclick="closeModal('delete-{{ $rekening->id }}')">Cancel</button>
-            <a class="btn btn-danger" href="javascript:void(0)" wire:click="delete">Delete</a>
+            <a class="btn btn-danger btn-block" href="javascript:void(0)" wire:click="delete">Delete</a>
         </div>
     </div>
 </div>

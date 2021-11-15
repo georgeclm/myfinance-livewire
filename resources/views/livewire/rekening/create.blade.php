@@ -96,8 +96,8 @@
             </form>
         </div>
         <div class="modal-footer border-0">
-            <button class="btn btn-secondary" onclick="closeModal('new-pocket')" type="button">Cancel</button>
-            <input type="submit" class="btn btn-primary" form="rekening" value="Add" />
+            {{-- <button class="btn btn-secondary" onclick="closeModal('new-pocket')" type="button">Cancel</button> --}}
+            <input type="submit" class="btn btn-block btn-success" form="rekening" value="Create" />
         </div>
     </div>
 </div>

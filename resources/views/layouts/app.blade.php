@@ -203,7 +203,6 @@
             z-index: 1000;
             visibility: hidden;
             opacity: 0;
-            padding-bottom: 45px !important;
 
             /*=== Effect 3 ===*/
             /* perspective: 1000px; */
@@ -215,7 +214,7 @@
             /* padding: 3rem 2rem 2rem; */
             border-radius: 1rem 1rem 0 0;
             transition: all .3s;
-
+            padding-bottom: 10px !important;
             /*=== Effect 1 ===*/
             transform: translateY(10%);
 
@@ -368,10 +367,14 @@
         /*=============== SHOW MODAL ===============*/
         var showModal = (modalContent) => {
             const modalContainer = document.getElementById(modalContent)
+            const bottomNav = document.getElementById('bottom-nav')
+            bottomNav.classList.add('d-none')
             modalContainer.classList.add('show-modal')
         }
         var closeModal = (modalContent) => {
             const modalContainer = document.getElementById(modalContent)
+            const bottomNav = document.getElementById('bottom-nav')
+            bottomNav.classList.remove('d-none')
             modalContainer.classList.remove('show-modal')
         }
         $('#new-user').modal('show');

@@ -49,9 +49,8 @@
                 </form>
             </div>
             <div class="modal-footer border-0">
-                <button class="btn btn-secondary" onclick="closeModal('adjust-{{ $rekening->id }}')"
-                    type="button">Cancel</button>
-                <input type="submit" class="btn btn-primary" form="{{ $rekening->id }}adjustform" value="Save" />
+                <input type="submit" class="btn btn-block btn-primary" form="{{ $rekening->id }}adjustform"
+                    value="Update" />
             </div>
         </div>
     </div>

@@ -21,7 +21,7 @@
             <!-- Nav Item - Alerts -->
             @if (in_array(Route::current()->uri, ['stocks']))
                 <li class="nav-item">
-                    <a class="nav-link"  href="{{ route('stocks.history') }}">
+                    <a class="nav-link" href="{{ route('stocks.history') }}">
                         <i class="fas fa-file-alt"></i>
                     </a>
                 </li>
@@ -68,15 +68,18 @@
 
         </ul>
     </nav>
-    <nav class="navbar navbar-dark bg-black navbar-expand d-md-none d-lg-none d-xl-none fixed-bottom p-0">
+    <nav class="navbar navbar-dark bg-black navbar-expand d-md-none d-lg-none d-xl-none fixed-bottom p-0"
+        id="bottom-nav">
         <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item" style="line-height: 80% !important; word-wrap:normal;">
-                <a href="{{ route('home') }}" class="nav-link  @if (Route::current()->uri == '/') active @endif"><i class="fas fa-fw fa-tachometer-alt"></i><br>
+                <a href="{{ route('home') }}" class="nav-link  @if (Route::current()->uri == '/') active @endif"><i
+                        class="fas fa-fw fa-tachometer-alt"></i><br>
                     <span style="font-size: 10px">Home</span>
                 </a>
             </li>
             <li class="nav-item" style="line-height: 80% !important; word-wrap:normal;">
-                <a href="{{ route('rekening') }}" class="nav-link @if (Route::current()->uri == 'pockets') active @endif"><i class="fas fa-fw fa-wallet"></i><br>
+                <a href="{{ route('rekening') }}" class="nav-link @if (Route::current()->uri == 'pockets') active @endif"><i
+                        class="fas fa-fw fa-wallet"></i><br>
                     <span style="font-size: 10px">Pockets</span>
                 </a>
             </li>
@@ -89,12 +92,18 @@
 
                 </a>
                 <div class="dropdown-menu bg-dark border-0" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item text-white @if (Route::current()->uri == 'transactions') active @endif" href="{{ route('transaction') }}">All</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/1') active @endif" href="{{ route('transaction.detail',1) }}">Income</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/2') active @endif" href="{{ route('transaction.detail',2) }}">Spending</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/3') active @endif" href="{{ route('transaction.detail',3) }}">Transfer</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/4') active @endif" href="{{ route('transaction.detail',4) }}">Your Debt</a>
-                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/5') active @endif" href="{{ route('transaction.detail',5) }}">Your Friend
+                    <a class="dropdown-item text-white @if (Route::current()->uri == 'transactions') active @endif"
+                        href="{{ route('transaction') }}">All</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/1') active @endif"
+                        href="{{ route('transaction.detail', 1) }}">Income</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/2') active @endif"
+                        href="{{ route('transaction.detail', 2) }}">Spending</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/3') active @endif"
+                        href="{{ route('transaction.detail', 3) }}">Transfer</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/4') active @endif"
+                        href="{{ route('transaction.detail', 4) }}">Your Debt</a>
+                    <a class="dropdown-item text-white @if (strrchr(url()->current(), 'o') == 'ons/5') active @endif"
+                        href="{{ route('transaction.detail', 5) }}">Your Friend
                         Debt</a>
                 </div>
             </li>

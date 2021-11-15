@@ -121,8 +121,7 @@
                 </form>
             </div>
             <div class="modal-footer border-0">
-                <button class="btn btn-secondary" type="button" onclick="closeModal('quickAdd')">Cancel</button>
-                <input type="submit" class="btn btn-primary" form="quick" value="Add" />
+                <input type="submit" class="btn btn-block btn-success" form="quick" value="Save" />
             </div>
         </div>
     </div>

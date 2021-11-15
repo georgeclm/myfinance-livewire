@@ -49,10 +49,7 @@
             </form>
         </div>
         <div class="modal-footer border-0">
-            <a class="btn btn-danger" href="javascript:void(0)" wire:click="delete">Delete</a>
-            <button class="btn btn-secondary" type="button"
-                onclick="closeModal('edit-{{ $rekening->id }}')">Cancel</button>
-            <input type="submit" class="btn btn-primary" form="{{ $rekening->id }}form" value="Edit" />
+            <input type="submit" class="btn btn-block btn-primary" form="{{ $rekening->id }}form" value="Edit" />
         </div>
     </div>
 </div>
