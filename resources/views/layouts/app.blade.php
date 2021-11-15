@@ -168,6 +168,136 @@
             color: rgb(170, 170, 170) !important;
         }
 
+        /*=============== MODAL ===============*/
+
+        .modaltest {
+            height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+
+        .modal__button {
+            display: inline-block;
+            background-color: hsl(240, 16%, 18%);
+            color: #FFF;
+            padding: 1rem 1.25rem;
+            border-radius: .5rem;
+            transition: .3s;
+        }
+
+        .modal__button:hover {
+            background-color: hsl(240, 16%, 12%);
+        }
+
+        .modal__container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: hsla(0, 0%, 1%, 0.664);
+            width: 100%;
+            height: 100%;
+            display: grid;
+            align-items: flex-end;
+            overflow: hidden;
+            transition: all .3s;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            padding-bottom: 45px !important;
+
+            /*=== Effect 3 ===*/
+            /* perspective: 1000px; */
+        }
+
+        .modal__content {
+            position: relative;
+            background-color: #FFF;
+            /* padding: 3rem 2rem 2rem; */
+            border-radius: 1rem 1rem 0 0;
+            transition: all .3s;
+
+            /*=== Effect 1 ===*/
+            transform: translateY(10%);
+
+            /*=== Effect 2 ===*/
+            /* transform: scale(.5) translateY(10%); */
+
+            /*=== Effect 3 ===*/
+            /* transform: rotateX(65deg) scale(.75) translateY(10%);
+  transform-origin: 50% 100%; */
+        }
+
+        .modal__img {
+            width: 150px;
+            margin-bottom: .75rem;
+        }
+
+        .modal__close {
+            display: inline-flex;
+            background-color: hsl(240, 16%, 18%);
+            border-radius: .25rem;
+            color: #FFF;
+            font-size: 1.5rem;
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            cursor: pointer;
+        }
+
+        .modal__title {
+            font-size: 1.5rem;
+            color: hsl(240, 8%, 15%);
+            font-weight: 500;
+        }
+
+        .modal__description {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal__button-width {
+            width: 90%;
+        }
+
+        .modal__button-link {
+            display: block;
+            margin: 1rem auto 0;
+            background-color: transparent;
+            color: hsl(240, 16%, 18%);
+            font-weight: 500;
+        }
+
+        /* Show modal */
+        .show-modal {
+            visibility: visible;
+            opacity: 1;
+
+        }
+
+        .show-modal .modal__content {
+            /*=== Effect 1 ===*/
+            transform: translateY(0);
+
+            /*=== Effect 2 ===*/
+            /* transform: scale(1) translateY(0); */
+
+            /*=== Effect 3 ===*/
+            /* transform: rotateX(0) scale(1) translateY(0); */
+        }
+
+        /*=============== BREAKPOINTS ===============*/
+        /* For small devices */
+        @media screen and (min-width: 576px) {
+            .modal__content {
+                margin: auto;
+                width: 500px;
+                border-radius: 1.25rem !important;
+            }
+
+            .modal__img {
+                width: 170px;
+            }
+        }
+
     </style>
     @livewireStyles
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
@@ -196,7 +326,7 @@
         @if (!in_array(Route::current()->uri, ['login', 'register']))
             @if (!auth()->user()->rekenings->isEmpty() &&
     !in_array(Route::current()->uri, ['transactions', 'repetitions']))
-                <a class="add-button rounded-circle" data-toggle="modal" data-target="#quickAdd" href="#">
+                <a class="add-button rounded-circle" onclick="showModal('quickAdd')" href="javascript:void(0)">
                     <i class="fas fa-plus"></i>
                 </a>
                 @livewire('transaction.quick-add')
@@ -235,6 +365,15 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
         data-turbolinks-track="true"></script>
     <script>
+        /*=============== SHOW MODAL ===============*/
+        var showModal = (modalContent) => {
+            const modalContainer = document.getElementById(modalContent)
+            modalContainer.classList.add('show-modal')
+        }
+        var closeModal = (modalContent) => {
+            const modalContainer = document.getElementById(modalContent)
+            modalContainer.classList.remove('show-modal')
+        }
         $('#new-user').modal('show');
 
         @auth
@@ -294,24 +433,29 @@
                     .format('YYYY-MM-DD'));
             });
         });
-        document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
-            element.addEventListener('keyup', function(e) {
-                let cursorPostion = this.selectionStart;
-                let value = parseInt(this.value.replace(/[^,\d]/g, ''));
-                let originalLenght = this.value.length;
-                if (isNaN(value)) {
-                    this.value = "";
-                } else {
-                    this.value = value.toLocaleString('id-ID', {
-                        currency: 'IDR',
-                        style: 'currency',
-                        minimumFractionDigits: 0
-                    });
-                    cursorPostion = this.value.length - originalLenght + cursorPostion;
-                    this.setSelectionRange(cursorPostion, cursorPostion);
-                }
+
+        function run() {
+
+            document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+                element.addEventListener('keyup', function(e) {
+                    let cursorPostion = this.selectionStart;
+                    let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+                    let originalLenght = this.value.length;
+                    if (isNaN(value)) {
+                        this.value = "";
+                    } else {
+                        this.value = value.toLocaleString('id-ID', {
+                            currency: 'IDR',
+                            style: 'currency',
+                            minimumFractionDigits: 0
+                        });
+                        cursorPostion = this.value.length - originalLenght + cursorPostion;
+                        this.setSelectionRange(cursorPostion, cursorPostion);
+                    }
+                });
             });
-        });
+        }
+        run();
 
         function myFunction() {
             var x = document.getElementById("myInput");

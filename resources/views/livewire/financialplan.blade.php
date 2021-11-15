@@ -181,3 +181,8 @@
     @livewire('financialplan.create-dana-menabung')
     @livewire('financialplan.create-dana-membeli-barang')
 </div>
+@section('script')
+    <script>
+        run();
+    </script>
+@endsection

@@ -1,13 +1,13 @@
 @section('title', 'Pockets - My Finance')
-
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Pockets</h1>
-        <a href="#" data-toggle="modal" data-target="#addRekening"
-            class="d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i>
-            Create Pocket</a>
+        <button onclick="showModal('new-pocket')" class="d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i>
+            Create Pocket</button>
     </div>
+
     <!-- Content Row -->
     <div class="row mobile">
         @livewire('partials.totalbalance')
@@ -29,7 +29,8 @@
                     @livewire('rekening.adjust',['rekening' => $rekening])
                     <div class="py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary"><a
-                                href="{{ route('rekening.show', $rekening->id) }}">{{ $rekening->nama_akun }}</a> -
+                                href="{{ route('rekening.show', $rekening->id) }}">{{ $rekening->nama_akun }}</a>
+                            -
                             Rp.
                             {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}
                         </h6>
@@ -41,12 +42,12 @@
                             </a>
                             <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
-                                <a data-toggle="modal" data-target="#editmodal-{{ $rekening->id }}"
-                                    class="dropdown-item text-white" href="javascript:void(0)">Edit</a>
-                                <a data-toggle="modal" data-target="#deletemodal-{{ $rekening->id }}"
-                                    class="dropdown-item text-white" href="javascript:void(0)">Delete</a>
-                                <a data-toggle="modal" data-target="#adjustmodal-{{ $rekening->id }}"
-                                    class="dropdown-item text-white" href="javascript:void(0)">Adjust</a>
+                                <a onclick="showModal('edit-{{ $rekening->id }}')" class="dropdown-item text-white"
+                                    href="javascript:void(0)">Edit</a>
+                                <a onclick="showModal('delete-{{ $rekening->id }}')" class="dropdown-item text-white"
+                                    href="javascript:void(0)">Delete</a>
+                                <a onclick="showModal('adjust-{{ $rekening->id }}')" class="dropdown-item text-white"
+                                    href="javascript:void(0)">Adjust</a>
                                 <a class="dropdown-item text-white"
                                     href="{{ route('rekening.show', $rekening->id) }}">Mutation
                                 </a>

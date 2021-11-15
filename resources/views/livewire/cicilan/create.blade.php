@@ -223,6 +223,7 @@
 </div>
 @section('script')
     <script>
+        run();
         $('#category_id').hide("slow");
         $('#category_masuk_id').hide("slow");
         $('#transfer').hide("slow");

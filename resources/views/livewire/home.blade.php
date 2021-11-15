@@ -299,6 +299,7 @@
     <script>
 
         @if (auth()->user()->all_transactions->count() != 0)
+        function thechart(){
 
         var x = window.matchMedia("(max-width: 700px)");
         if (x.matches) {
@@ -517,6 +518,8 @@
             cutoutPercentage: 80,
             },
             });
+        }
+        thechart();
         @endif
     </script>
 
