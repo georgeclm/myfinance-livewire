@@ -1,7 +1,7 @@
 @section('title', 'Transaction - My Finance')
-<div class="container-fluid">
+<div class="container-fluid small-when-0">
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Financial Records</h1>
         @if (!auth()->user()->rekenings->isEmpty())
             <button onclick="showModal('createTransaction')"
@@ -9,7 +9,7 @@
                     class="fas fa-download fa-sm text-white-50"></i> Add Transaction</button>
         @endif
     </div>
-    <div class="row mobile">
+    <div class="row px-2 ml-0">
         <div class="small-when-0 col-xl-3 col-md-6 mb-4">
             <div class="bg-gray-100 card border-left-success border-0 shadow h-100 py-2">
                 <div class="card-body">

@@ -1,14 +1,14 @@
 @section('title', 'Your Debt - My Finance')
-<div class="container-fluid">
+<div class="container-fluid small-when-0">
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Your Debt</h1>
         @if (auth()->user()->rekenings->isNotEmpty())
             <button onclick="showModal('create-debt')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
                     class="fas fa-download fa-sm text-white-50"></i> Add Your Debt</button>
         @endif
     </div>
-    <div class="row mobile">
+    <div class="row px-2 ml-0">
         @if (Auth::user()->totalutang() != 0)
             <!-- Income (Monthly) Card Example -->
             <div class="small-when-0 col-xl-3 col-md-6 mb-4">

@@ -1,7 +1,7 @@
 @section('title', 'Pockets - My Finance')
-<div class="container-fluid">
+<div class="container-fluid small-when-0">
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Pockets</h1>
         <button onclick="showModal('new-pocket')" class="d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
                 class="fas fa-download fa-sm text-white-50"></i>
@@ -9,19 +9,18 @@
     </div>
 
     <!-- Content Row -->
-    <div class="row mobile">
+    <div class="row px-2 ml-0">
         @livewire('partials.totalbalance')
         @livewire('partials.balancewithasset')
     </div>
 
     @foreach ($jeniss as $jenis)
 
-        <!-- DataTales Example -->
-        <div class="bg-dark border-0 card shadow mb-4">
+        <div class="bg-dark border-0 card shadow mb-4 small-when-0 ">
             <div class="bg-gray-100 border-0 card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">{{ $jenis->nama }}</h6>
             </div>
-            <div class="card-body">
+            <div class="card-body ">
                 @forelse ($jenis->user_rekenings as $rekening)
                     @livewire('rekening.edit',['rekening' => $rekening,'jeniss' =>
                     $jeniss])
@@ -30,8 +29,7 @@
                     <div class="py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary"><a
                                 href="{{ route('rekening.show', $rekening->id) }}">{{ $rekening->nama_akun }}</a>
-                            -
-                            Rp.
+                            - Rp.
                             {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}
                         </h6>
                         <div class="dropdown no-arrow">
@@ -66,6 +64,8 @@
                         </div>
                     </div>
                     <hr class="bg-white my-1">
+
+
                 @empty
                     <div class="text-center font-weight-bold text-white-50">
                         Empty

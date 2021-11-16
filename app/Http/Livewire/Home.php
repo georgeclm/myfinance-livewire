@@ -102,6 +102,8 @@ class Home extends Component
             }
         }
         // dd($incomeDiff);
+        $this->dispatchBrowserEvent('refresh-chart');
+
         return view('livewire.home', compact('income', 'spending', 'balance', 'prevIncome', 'prevSpending', 'incomeDiff', 'spendingDiff', 'spendingDiffPercent', 'incomeDiffPercent'));
     }
 }

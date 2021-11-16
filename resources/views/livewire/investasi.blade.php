@@ -1,7 +1,7 @@
 @section('title', 'Investments - My Finance')
-<div class="container-fluid">
+<div class="container-fluid small-when-0">
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Investment</h1>
         <a href="javascript:void(0)" class="d-sm-inline-block btn btn-primary shadow-sm">Rp.
             {{ number_format(Auth::user()->total_investments(), 0, ',', '.') }}</a>

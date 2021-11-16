@@ -1,7 +1,7 @@
     @section('title', 'Repetition - My Finance')
-    <div class="container-fluid">
+    <div class="container-fluid  small-when-0">
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-2 text-white">Repetition</h1>
             @if (!auth()->user()->rekenings->isEmpty())
                 <button onclick="showModal('create-cicilan')"

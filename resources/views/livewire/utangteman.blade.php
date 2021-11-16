@@ -1,7 +1,7 @@
     @section('title', 'Your Friend Debt - My Finance')
-    <div class="container-fluid">
+    <div class="container-fluid small-when-0">
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-2 text-white">Your Friends Debt </h1>
             @if (auth()->user()->rekenings->isNotEmpty())
                 <button onclick="showModal('create-friend-debt')"
@@ -9,7 +9,7 @@
                         class="fas fa-download fa-sm text-white-50"></i> Add Your Friends Debt </button>
             @endif
         </div>
-        <div class="row mobile">
+        <div class="row px-2 ml-0">
             <!-- Income (Monthly) Card Example -->
             @if (!$utangs->isEmpty())
                 <div class="small-when-0 col-xl-3 col-md-6 mb-4">

@@ -93,6 +93,10 @@
                 padding: 0 !important;
             }
 
+            .small-when-1 {
+                padding: 0.5rem !important;
+            }
+
             .only-big {
                 display: none !important;
             }

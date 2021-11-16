@@ -1,15 +1,15 @@
 @section('title', 'Home - My Finance')
 
-<div class="container-fluid">
+<div class="container-fluid  small-when-0">
     {{-- <h1>{{ $new_user }}</h1> --}}
     <!-- Page Heading -->
-    <div class=" d-sm-flex align-items-center justify-content-between mb-2">
+    <div class="text-center  d-sm-flex align-items-center justify-content-between mb-2">
         <h1 class="h3 mb-0 text-white">Dashboard</h1>
         {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                         class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
     </div>
     <!-- Content Row -->
-    <div class="row mobile">
+    <div class="row px-2 ml-0">
         <div class="col-lg-6 small-when-0 mb-3 this_small">
             <!-- Project Card Example -->
             <div class="d-flex align-items-center justify-content-between">
@@ -153,7 +153,7 @@
         @livewire('partials.balancewithasset')
     </div>
 
-    <div class="row mobile">
+    <div class="row px-2 ml-0">
         @if (auth()->user()->all_transactions->count() != 0)
             <div class="col-xl-8 col-lg-7 small-when-0">
                 <div class="bg-dark card shadow mb-4 border-0">
@@ -297,6 +297,9 @@
 @section('script')
     <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
     <script>
+        window.addEventListener('refresh-chart', event => {
+            thechart();
+        });
 
         @if (auth()->user()->all_transactions->count() != 0)
         function thechart(){
@@ -521,6 +524,7 @@
         }
         thechart();
         @endif
+
     </script>
 
 @endsection
