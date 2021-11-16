@@ -4,16 +4,15 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Deposito</h1>
         @if (is_null(auth()->user()->previous_deposito))
-            <a href="#" data-toggle="modal" data-target="#previous_deposito"
+            <button onclick="showModal('previous_deposito')"
                 class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
                     class="fas fa-plus fa-sm text-white-50"></i>
-                Previous Earning?</a>
+                Previous Earning?</button>
         @endif
         @if (auth()->user()->rekenings->isNotEmpty() &&
     auth()->user()->financialplans->isNotEmpty())
-            <a href="#" data-toggle="modal" data-target="#p2p"
-                class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Add Deposito</a>
+            <button onclick="showModal('p2p')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i> Add Deposito</button>
         @endif
     </div>
     <div class="row mobile">
@@ -75,10 +74,10 @@
                         </a>
                         <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
                             aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item text-white" data-toggle="modal"
-                                data-target="#change-{{ $deposito->id }}" href="#">Change Goal</a>
-                            <a class="dropdown-item text-white" data-toggle="modal"
-                                data-target="#sell-{{ $deposito->id }}" href="#">Sell</a>
+                            <button class="dropdown-item text-white"
+                                onclick="showModal('change-{{ $deposito->id }}')">Change Goal</button>
+                            <button class="dropdown-item text-white"
+                                onclick="showModal('sell-{{ $deposito->id }}')">Sell</button>
                         </div>
                     </div>
                 </div>

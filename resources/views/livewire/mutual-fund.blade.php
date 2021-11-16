@@ -4,16 +4,15 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Mutual Funds</h1>
         @if (is_null(auth()->user()->previous_reksadana))
-            <a href="#" data-toggle="modal" data-target="#previous_reksadana"
+            <button onclick="showModal('previous_reksadana')"
                 class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
                     class="fas fa-plus fa-sm text-white-50"></i>
-                Previous Earning?</a>
+                Previous Earning?</button>
         @endif
         @if (auth()->user()->rekenings->isNotEmpty() &&
     auth()->user()->financialplans->isNotEmpty())
-            <a href="#" data-toggle="modal" data-target="#stock"
-                class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Add Mutual Fund</a>
+            <button onclick="showModal('stock')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i> Add Mutual Fund</button>
         @endif
     </div>
 
@@ -77,12 +76,12 @@
                         </a>
                         <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
                             aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item text-white" data-toggle="modal"
-                                data-target="#topup-{{ $mutual_fund->id }}" href="#">Buy More</a>
-                            <a class="dropdown-item text-white" data-toggle="modal"
-                                data-target="#change-{{ $mutual_fund->id }}" href="#">Change Goal</a>
-                            <a class="dropdown-item text-white" data-toggle="modal"
-                                data-target="#jual-{{ $mutual_fund->id }}" href="#">Sell</a>
+                            <button class="dropdown-item text-white"
+                                onclick="showModal('topup-{{ $mutual_fund->id }}')">Buy More</button>
+                            <button class="dropdown-item text-white"
+                                onclick="showModal('change-{{ $mutual_fund->id }}')">Change Goal</button>
+                            <button class="dropdown-item text-white"
+                                onclick="showModal('jual-{{ $mutual_fund->id }}')">Sell</button>
                         </div>
                     </div>
                 </div>
@@ -105,6 +104,7 @@
 </div>
 @section('script')
     <script>
+        run();
         var unit = 0;
         var total = 0;
         var buyprice = 0;

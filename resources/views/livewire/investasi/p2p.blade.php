@@ -4,16 +4,14 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Peer to Peer</h1>
         @if (is_null(auth()->user()->previous_p2p))
-            <a href="#" data-toggle="modal" data-target="#previous_p2p"
-                class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+            <button onclick="showModal('previous_p2p')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
                     class="fas fa-plus fa-sm text-white-50"></i>
-                Previous Earning?</a>
+                Previous Earning?</button>
         @endif
         @if (auth()->user()->rekenings->isNotEmpty() &&
     auth()->user()->financialplans->isNotEmpty())
-            <a href="#" data-toggle="modal" data-target="#p2p"
-                class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Add P2P</a>
+            <button onclick="showModal('p2p')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i> Add P2P</button>
         @endif
     </div>
     <div class="row mobile">
@@ -75,10 +73,10 @@
                         </a>
                         <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
                             aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item text-white" data-toggle="modal"
-                                data-target="#change-{{ $p2p->id }}" href="#">Change Goal</a>
-                            <a class="dropdown-item text-white" data-toggle="modal"
-                                data-target="#sell-{{ $p2p->id }}" href="#">Sell</a>
+                            <button class="dropdown-item text-white"
+                                onclick="showModal('change-{{ $p2p->id }}')">Change Goal</button>
+                            <button class="dropdown-item text-white"
+                                onclick="showModal('sell-{{ $p2p->id }}')">Sell</button>
                         </div>
                     </div>
                 </div>
@@ -102,6 +100,7 @@
 </div>
 @section('script')
     <script>
+        run();
         $(function() {
             $('input[name="jatuh_tempo"]').daterangepicker({
                 singleDatePicker: true,

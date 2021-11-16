@@ -1,4 +1,4 @@
-<div class="modal__container" wire:ignore id="delete-{{ $rekening->id }}">
+<div class="modal__container" wire:ignore.self id="delete-{{ $rekening->id }}">
     <div class="bg-black modal__content">
         <div class="modal-header bg-gray-100 border-0">
             <h5 class="modal-title text-white" id="exampleModalLabel">Delete {{ $rekening->nama_akun }}</h5>

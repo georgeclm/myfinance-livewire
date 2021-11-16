@@ -16,15 +16,15 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <ul class="list-group">
-                        <a href="#" data-toggle="modal" data-target="#danaDarurat"
+                        <button onclick="showModal('danaDarurat')"
                             class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
                             <div class="w-100 text-white">
                                 <i class="fas fa-exclamation-circle text-warning mx-2"></i>Emergency
                                 Fund
                             </div>
                             <i class="fas fa-angle-right"></i>
-                        </a>
-                        <a href="#" data-toggle="modal" data-target="#DanaMembeliBarang"
+                        </button>
+                        <button onclick="showModal('DanaMembeliBarang')"
                             class="list-group-item list-group-item-action bg-black d-flex align-items-center">
                             <div class="w-100 text-white">
                                 <i class="fas fa-shopping-basket text-warning mx-2"></i>Fund for
@@ -32,21 +32,21 @@
                             </div>
                             <i class="fas fa-angle-right"></i>
 
-                        </a>
+                        </button>
                         {{-- <a href="#"
                                             class="list-group-item list-group-item-action bg-black d-flex align-items-center">
                                             <div class="w-100 text-white">
                                                 <i class="fas fa-umbrella-beach text-success mx-2"></i>Dana Liburan
                                             </div>
                                         </a> --}}
-                        <a href="#" data-toggle="modal" data-target="#DanaMenabung"
+                        <button onclick="showModal('DanaMenabung')"
                             class="list-group-item list-group-item-action bg-black d-flex align-items-center">
                             <div class="w-100 text-white">
                                 <i class="fas fa-piggy-bank text-primary mx-2"></i>Savings Fund
                             </div>
                             <i class="fas fa-angle-right"></i>
 
-                        </a>
+                        </button>
                     </ul>
                 </div>
             </div>
@@ -72,9 +72,8 @@
                                             </button>
                                             <div class=" bg-dark border-0  dropdown-menu"
                                                 aria-labelledby="dropdownMenuButton">
-                                                <a data-toggle="modal"
-                                                    data-target="#editmodal-{{ $financialplan->id }}"
-                                                    class="dropdown-item text-white" href="#">Adjust</a>
+                                                <button onclick="showModal('editmodal-{{ $financialplan->id }}')"
+                                                    class="dropdown-item text-white">Adjust</button>
                                                 {{-- <a class="dropdown-item text-white" href="#">Detail
                                                                 </a> --}}
                                                 {{-- <a data-toggle="modal"
@@ -135,9 +134,8 @@
                                                 aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item text-white"
                                                     href="{{ route('investasi') }}">Invest</a>
-                                                <a data-toggle="modal"
-                                                    data-target="#editmodal-{{ $financialplan->id }}"
-                                                    class="dropdown-item text-white" href="#">Adjust</a>
+                                                <button onclick="showModal('editmodal-{{ $financialplan->id }}')"
+                                                    class="dropdown-item text-white">Adjust</button>
                                                 {{-- <a class="dropdown-item text-white" href="#">Detail
                                                                 </a> --}}
                                                 {{-- <a data-toggle="modal"

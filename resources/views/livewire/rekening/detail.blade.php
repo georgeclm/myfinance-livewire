@@ -19,24 +19,20 @@
         </div>
         <div class="card-body">
             @forelse ($transactions as $transaction)
-                <div class="modal fade" wire:ignore id="refund_{{ $transaction->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="bg-dark modal-content">
-                            <div class="border-0 modal-header">
-                                <h5 class="modal-title text-white">Revert The Transaction?</h5>
-                                <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body text-white">Transaction Will be Reverted and Rp.
-                                {{ number_format($transaction->jumlah, 0, ',', '.') }} will @if ($transaction->jenisuang_id == 2) be refunded to your pocket. @else be deducted from your pocket. @endif
-                            </div>
-                            <div class="modal-footer border-0">
-                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                <a class="btn btn-primary" href="javascript:void(0)"
-                                    wire:click="revert({{ $transaction->id }})">Revert</a>
-                            </div>
+                <div class="modal__container" wire:ignore id="refund-{{ $transaction->id }}">
+                    <div class="bg-black modal__content">
+                        <div class="border-0 modal-header">
+                            <h5 class="modal-title text-white">Revert The Transaction?</h5>
+                            <button class="close text-white" onclick="closeModal('refund-{{ $transaction->id }}')">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-white">Transaction Will be Reverted and Rp.
+                            {{ number_format($transaction->jumlah, 0, ',', '.') }} will @if ($transaction->jenisuang_id == 2) be refunded to your pocket. @else be deducted from your pocket. @endif
+                        </div>
+                        <div class="modal-footer border-0">
+                            <a class="btn btn-warning btn-block" href="javascript:void(0)"
+                                wire:click="revert({{ $transaction->id }})">Revert</a>
                         </div>
                     </div>
                 </div>
@@ -66,7 +62,7 @@
                         </h6>
                     </div>
                     @if (in_array($transaction->jenisuang_id, [1, 2]))
-                        <a href="#" data-toggle="modal" data-target="#refund_{{ $transaction->id }}"
+                        <a href="javascript:void(0)" onclick="showModal('refund-{{ $transaction->id }}')"
                             class="btn btn-sm btn-warning btn-icon-split">
                             <span class="icon text-white-50">
                                 <i class="fas fa-exclamation-triangle"></i>

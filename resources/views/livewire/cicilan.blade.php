@@ -4,9 +4,9 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-2 text-white">Repetition</h1>
             @if (!auth()->user()->rekenings->isEmpty())
-                <a href="#" data-toggle="modal" data-target="#addCicilan"
+                <button onclick="showModal('create-cicilan')"
                     class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
-                        class="fas fa-download fa-sm text-white-50"></i> Add</a>
+                        class="fas fa-download fa-sm text-white-50"></i> Add</button>
             @endif
         </div>
         <div class="row mobile">
@@ -38,9 +38,9 @@
                                 </a>
                                 <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                     aria-labelledby="dropdownMenuLink">
-                                    <a data-toggle="modal" data-target="#editmodal-{{ $cicilan->id }}"
+                                    <a onclick="showModal('editmodal-{{ $cicilan->id }}')"
                                         class="dropdown-item text-white" href="javascript:void(0)">Edit</a>
-                                    <a data-toggle="modal" data-target="#deletemodal-{{ $cicilan->id }}"
+                                    <a onclick="showModal('deletemodal-{{ $cicilan->id }}')"
                                         class="dropdown-item text-white" href="javascript:void(0)">Delete</a>
                                 </div>
                             </div>

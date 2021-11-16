@@ -4,9 +4,9 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-2 text-white">Your Friends Debt </h1>
             @if (auth()->user()->rekenings->isNotEmpty())
-                <a href="#" data-toggle="modal" data-target="#addRekening"
+                <button onclick="showModal('create-friend-debt')"
                     class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
-                        class="fas fa-download fa-sm text-white-50"></i> Add Your Friends Debt </a>
+                        class="fas fa-download fa-sm text-white-50"></i> Add Your Friends Debt </button>
             @endif
         </div>
         <div class="row mobile">
@@ -50,7 +50,7 @@
                         <h6 class="m-0 font-weight-bold text-warning">{{ $utang->nama }} - Rp.
                             {{ number_format($utang->jumlah, 0, ',', '.') }}
                         </h6>
-                        <button data-toggle="modal" data-target="#editmodal-{{ $utang->id }}" type="button"
+                        <button onclick="showModal('edit-friend-debt-{{ $utang->id }}')"
                             class="btn btn-sm btn-info btn-circle">
                             <i class="fas fa-info-circle"></i>
                         </button>

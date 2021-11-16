@@ -22,164 +22,161 @@
             });
         </script>
     @endif
-    <div class="modal fade" wire:ignore id="addRekening" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="bg-black modal-content">
-                <div class="modal-header bg-gray-100 border-0">
-                    <h5 class="modal-title text-white">New Transaction</h5>
-                    <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="transaction" wire:submit.prevent="submit">
-                        <div class="form-group">
-                            <select
-                                class="border-0 form-control form-control-user form-block @error('form.jenisuang_id') is-invalid @enderror"
-                                wire:model.defer="form.jenisuang_id" name="jenisuang_id"
-                                style="padding: 0.5rem !important" required id="jenisuang">
-                                <option value="" selected disabled hidden>Choose Type</option>
-                                @foreach ($jenisuangsSelect as $jenis)
-                                    <option value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
-                                @endforeach
-                            </select>
-                            @error('form.jenisuang_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group" id="utang">
-                            <select disabled
-                                class="border-0 form-control form-control-user form-block @error('form.utang_id') is-invalid @enderror"
-                                wire:model.defer="form.utang_id" name="utang_id" style="padding: 0.5rem !important">
-                                <option value='' selected disabled hidden>Debt Who</option>
-                                @foreach (auth()->user()->utangs as $utang)
-                                    <option value="{{ $utang->id }}">
-                                        {{ $utang->nama }},
-                                        {{ Str::limit($utang->keterangan, 15, $end = '...') ?? '-' }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('form.utang_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group" id="utangteman">
-                            <select disabled
-                                class="border-0 form-control form-control-user form-block @error('form.utangteman_id') is-invalid @enderror"
-                                wire:model.defer="form.utangteman_id" name="utangteman_id"
-                                style="padding: 0.5rem !important">
-                                <option value='' selected disabled hidden>Debt Who</option>
-                                @foreach (auth()->user()->utangtemans as $utang)
-                                    <option value="{{ $utang->id }}">
-                                        {{ $utang->nama }},
-                                        {{ Str::limit($utang->keterangan, 15, $end = '...') ?? '-' }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('form.utangteman_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="mb-3 hide-inputbtns input-group" id="jumlah">
-                            <input type="text" disabled type-currency="IDR" inputmode="numeric"
-                                class="border-0 form-control form-control-user @error('form.jumlah') is-invalid @enderror"
-                                wire:model.defer="form.jumlah" name="jumlah" required placeholder="Total">
-                            @error('form.jumlah')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <select disabled
-                                class="border-0 form-control form-control-user form-block @error('form.category_id') is-invalid @enderror"
-                                wire:model.defer="form.category_id" name="category_id"
-                                style="padding: 0.5rem !important" id="category_id">
-                                <option value='' selected disabled hidden>Choose Category</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->nama }}</option>
-                                @endforeach
-                            </select>
-                            @error('form.category_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <select disabled
-                                class="border-0 form-control form-control-user form-block @error('form.category_masuk_id') is-invalid @enderror"
-                                wire:model.defer="form.category_masuk_id" name="category_masuk_id"
-                                style="padding: 0.5rem !important" id="category_masuk_id">
-                                <option value='' selected disabled hidden>Choose Category</option>
-                                @foreach ($categorymasuks as $category)
-                                    <option value="{{ $category->id }}">{{ $category->nama }}</option>
-                                @endforeach
-                            </select>
-                            @error('form.category_masuk_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <select disabled id="rekening_id"
-                                class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
-                                wire:model.defer="form.rekening_id" name="rekening_id"
-                                style="padding: 0.5rem !important" required>
-                                <option value="" selected disabled hidden>Choose Pocket</option>
-                                @foreach (auth()->user()->rekenings as $rekening)
-                                    <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }} - Rp.
-                                        {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
-                                @endforeach
-                            </select>
-                            @error('form.rekening_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <select disabled
-                                class="border-0 form-control form-control-user form-block @error('form.rekening_id2') is-invalid @enderror"
-                                wire:model.defer="form.rekening_id2" name="rekening_id2"
-                                style="padding: 0.5rem !important" id="transfer">
-                                <option value='' selected disabled hidden>Choose Pocket Destination</option>
-                                @foreach (auth()->user()->rekenings as $rekening)
-                                    <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }} - Rp.
-                                        {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
-                                @endforeach
-                            </select>
-                            @error('form.rekening_id2')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
+    <div class="modal__container" wire:ignore id="createTransaction">
+        <div class="bg-black modal__content">
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white">New Transaction</h5>
+                <button class="close text-white" onclick="closeModal('createTransaction')">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="transaction" wire:submit.prevent="submit">
+                    <div class="form-group">
+                        <select
+                            class="border-0 form-control form-control-user form-block @error('form.jenisuang_id') is-invalid @enderror"
+                            wire:model.defer="form.jenisuang_id" name="jenisuang_id" style="padding: 0.5rem !important"
+                            required id="jenisuang">
+                            <option value="" selected disabled hidden>Choose Type</option>
+                            @foreach ($jenisuangsSelect as $jenis)
+                                <option value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
+                            @endforeach
+                        </select>
+                        @error('form.jenisuang_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group" id="utang">
+                        <select disabled
+                            class="border-0 form-control form-control-user form-block @error('form.utang_id') is-invalid @enderror"
+                            wire:model.defer="form.utang_id" name="utang_id" style="padding: 0.5rem !important">
+                            <option value='' selected disabled hidden>Debt Who</option>
+                            @foreach (auth()->user()->utangs as $utang)
+                                <option value="{{ $utang->id }}">
+                                    {{ $utang->nama }}, Rp.
+                                    {{ number_format($utang->jumlah, 0, ',', '.') }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('form.utang_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group" id="utangteman">
+                        <select disabled
+                            class="border-0 form-control form-control-user form-block @error('form.utangteman_id') is-invalid @enderror"
+                            wire:model.defer="form.utangteman_id" name="utangteman_id"
+                            style="padding: 0.5rem !important">
+                            <option value='' selected disabled hidden>Debt Who</option>
+                            @foreach (auth()->user()->utangtemans as $utang)
+                                <option value="{{ $utang->id }}">
+                                    {{ $utang->nama }}, Rp.
+                                    {{ number_format($utang->jumlah, 0, ',', '.') }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('form.utangteman_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <select disabled id="rekening_id"
+                            class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
+                            wire:model.defer="form.rekening_id" name="rekening_id" style="padding: 0.5rem !important"
+                            required>
+                            <option value="" selected disabled hidden>Choose Pocket</option>
+                            @foreach (auth()->user()->rekenings as $rekening)
+                                <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }} - Rp.
+                                    {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
+                            @endforeach
+                        </select>
+                        @error('form.rekening_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group" id="jumlah">
+                        <input type="text" disabled type-currency="IDR" inputmode="numeric"
+                            class="border-0 form-control form-control-user @error('form.jumlah') is-invalid @enderror"
+                            wire:model.defer="form.jumlah" name="jumlah" required placeholder="Total">
+                        @error('form.jumlah')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <select disabled
+                            class="border-0 form-control form-control-user form-block @error('form.category_id') is-invalid @enderror"
+                            wire:model.defer="form.category_id" name="category_id" style="padding: 0.5rem !important"
+                            id="category_id">
+                            <option value='' selected disabled hidden>Choose Category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->nama }}</option>
+                            @endforeach
+                        </select>
+                        @error('form.category_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <select disabled
+                            class="border-0 form-control form-control-user form-block @error('form.category_masuk_id') is-invalid @enderror"
+                            wire:model.defer="form.category_masuk_id" name="category_masuk_id"
+                            style="padding: 0.5rem !important" id="category_masuk_id">
+                            <option value='' selected disabled hidden>Choose Category</option>
+                            @foreach ($categorymasuks as $category)
+                                <option value="{{ $category->id }}">{{ $category->nama }}</option>
+                            @endforeach
+                        </select>
+                        @error('form.category_masuk_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
 
-                        <div class="form-group">
-                            <input type="text" disabled id="keterangan"
-                                class="border-0 form-control form-control-user @error('form.keterangan') is-invalid @enderror"
-                                wire:model.defer="form.keterangan" name="keterangan" placeholder="Description">
-                            @error('form.keterangan')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer border-0">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="btn btn-primary" form="transaction" value="Add" />
-                </div>
+                    <div class="form-group">
+                        <select disabled
+                            class="border-0 form-control form-control-user form-block @error('form.rekening_id2') is-invalid @enderror"
+                            wire:model.defer="form.rekening_id2" name="rekening_id2" style="padding: 0.5rem !important"
+                            id="transfer">
+                            <option value='' selected disabled hidden>Choose Pocket Destination</option>
+                            @foreach (auth()->user()->rekenings as $rekening)
+                                <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }} - Rp.
+                                    {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
+                            @endforeach
+                        </select>
+                        @error('form.rekening_id2')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" disabled id="keterangan"
+                            class="border-0 form-control form-control-user @error('form.keterangan') is-invalid @enderror"
+                            wire:model.defer="form.keterangan" name="keterangan" placeholder="Description">
+                        @error('form.keterangan')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <input type="submit" class="btn btn-block btn-success" form="transaction" value="Save" />
             </div>
         </div>
     </div>

@@ -4,16 +4,14 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Stock</h1>
         @if (is_null(auth()->user()->previous_stock))
-            <a href="#" data-toggle="modal" data-target="#previous_stock"
-                class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+            <button onclick="showModal('previous_stock')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
                     class="fas fa-plus fa-sm text-white-50"></i>
-                Previous Earning?</a>
+                Previous Earning?</button>
         @endif
         @if (auth()->user()->rekenings->isNotEmpty() &&
     auth()->user()->financialplans->isNotEmpty())
-            <a href="#" data-toggle="modal" data-target="#stock"
-                class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Add Stock</a>
+            <button onclick="showModal('stock')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i> Add Stock</button>
         @endif
     </div>
     <div class="row mobile">
@@ -76,12 +74,12 @@
                         </a>
                         <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
                             aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item text-white" data-toggle="modal"
-                                data-target="#topup-{{ $stock->id }}" href="#">Buy More</a>
-                            <a class="dropdown-item text-white" data-toggle="modal"
-                                data-target="#change-{{ $stock->id }}" href="#">Change Goal</a>
-                            <a class="dropdown-item text-white" data-toggle="modal"
-                                data-target="#jual-{{ $stock->id }}" href="#">Sell</a>
+                            <button class="dropdown-item text-white"
+                                onclick="showModal('topup-{{ $stock->id }}')">Buy More</button>
+                            <button class="dropdown-item text-white"
+                                onclick="showModal('change-{{ $stock->id }}')">Change Goal</button>
+                            <button class="dropdown-item text-white"
+                                onclick="showModal('jual-{{ $stock->id }}')">Sell</button>
                         </div>
                     </div>
                 </div>
