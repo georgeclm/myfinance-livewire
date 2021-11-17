@@ -295,7 +295,7 @@
     <!-- /.container-fluid -->
 </div>
 @section('script')
-    <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
+    <script src="{{ asset('js/chart.js/Chart.min.js') }}"></script>
     <script>
         window.addEventListener('refresh-chart', event => {
             thechart();

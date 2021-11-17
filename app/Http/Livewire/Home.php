@@ -74,27 +74,39 @@ class Home extends Component
         $incomeDiffPercent = (auth()->user()->uangmasuk->sum('jumlah') + $incomeDiff != 0) ?  round($incomeDiff / (auth()->user()->uangmasuk->sum('jumlah') + $incomeDiff) * 100) : 0;
         $spendingDiffPercent = (auth()->user()->uangkeluar->sum('jumlah') + $spendingDiff != 0) ? round($spendingDiff / (auth()->user()->uangkeluar->sum('jumlah') + $spendingDiff) * 100) : 0;
         for ($i = 1; $i <= 4; $i++) {
-            $prevIncome[$i] = Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
-            $prevSpending[$i] = Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
-            $totalStockGainOrLoss = $stock->totalGainOrLossMonth($i)->sum('gain_or_loss');
+            $prevIncome[$i] = cache()->remember('prevIncome' . $i, 60 * 60 * 24 * 30, function () use ($i) {
+                return Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
+            });
+            $prevSpending[$i] = cache()->remember('prevSpending' . $i, 60 * 60 * 24 * 30, function () use ($i) {
+                return Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
+            });
+            $totalStockGainOrLoss = cache()->remember('totalStockGainOrLoss' . $i, 60 * 60 * 24 * 30, function () use ($i,$stock) {
+                return $stock->totalGainOrLossMonth($i)->sum('gain_or_loss');
+            });
             if ($totalStockGainOrLoss > 0) {
                 $prevIncome[$i] += $totalStockGainOrLoss;
             } else {
                 $prevSpending[$i] -= $totalStockGainOrLoss;
             }
-            $totalP2pGain = $p2p->totalGainOrLossMonth($i)->sum('gain_or_loss');
+            $totalP2pGain = cache()->remember('totalP2pGain' . $i, 60 * 60 * 24 * 30, function () use ($i,$p2p) {
+                return $p2p->totalGainOrLossMonth($i)->sum('gain_or_loss');
+            });
             if ($totalP2pGain > 0) {
                 $prevIncome[$i] += $totalP2pGain;
             } else {
                 $prevSpending[$i] -= $totalP2pGain;
             }
-            $totalMutualFundGain = $mutualFund->totalGainOrLossMonth($i)->sum('gain_or_loss');
+            $totalMutualFundGain = cache()->remember('totalMutualFundGain' . $i, 60 * 60 * 24 * 30, function () use ($i,$mutualFund) {
+                return $mutualFund->totalGainOrLossMonth($i)->sum('gain_or_loss');
+            });
             if ($totalMutualFundGain > 0) {
                 $prevIncome[$i] += $totalMutualFundGain;
             } else {
                 $prevSpending[$i] -= $totalMutualFundGain;
             }
-            $totalDepositoGain = $deposito->totalGainOrLossMonth($i)->sum('gain_or_loss');
+            $totalDepositoGain = cache()->remember('totalDepositoGain' . $i, 60 * 60 * 24 * 30, function () use ($i,$deposito) {
+                return $deposito->totalGainOrLossMonth($i)->sum('gain_or_loss');
+            });
             if ($totalDepositoGain > 0) {
                 $prevIncome[$i] += $totalDepositoGain;
             } else {
