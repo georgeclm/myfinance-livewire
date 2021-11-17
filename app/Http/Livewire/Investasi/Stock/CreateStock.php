@@ -25,6 +25,7 @@ class CreateStock extends Component
     ];
 
 
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName, [
@@ -33,6 +34,22 @@ class CreateStock extends Component
             'form.rekening_id' => ['required', 'numeric', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',')],
         ]);
+        if ($propertyName == 'form.kode') {
+            $queryString = http_build_query([
+                'access_key' => '3fb12d1ba1ca20adc1d483f362ce81be'
+            ]);
+            $code = $this->form['kode'];
+            $ch = curl_init(sprintf('%s?%s', "http://api.marketstack.com/v1/tickers/$code.XIDX/eod/latest", $queryString));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            $json = curl_exec($ch);
+            curl_close($ch);
+
+            $apiResult = json_decode($json, true);
+            if (array_key_exists("close", $apiResult)) {
+                $this->form['harga_beli'] = 'Rp  ' . number_format($apiResult['close'], 0, ',', '.');
+            }
+        }
     }
 
     protected $validationAttributes = [

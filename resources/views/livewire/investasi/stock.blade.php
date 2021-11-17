@@ -66,6 +66,14 @@
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">{{ $stock->kode }} - Rp.
                         {{ number_format($stock->total, 0, ',', '.') }}
+                        @if ($stock->currentPrice() != 0)
+                            <span class="badge @if ($stock->currentPrice() > $stock->harga_beli) badge-success @else badge-danger @endif">
+                                @if ($stock->currentPrice() > $stock->harga_beli)
+                                    + @endif
+                                {{ round((($stock->currentPrice() - $stock->harga_beli) / $stock->harga_beli) * 100, 2) }}
+                                %
+                            </span>
+                        @endif
                     </h6>
                     <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -75,9 +83,11 @@
                         <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
                             aria-labelledby="dropdownMenuLink">
                             <button class="dropdown-item text-white"
-                                onclick="showModal('topup-{{ $stock->id }}')">Buy More</button>
+                                onclick="showModal('topup-{{ $stock->id }}')">Buy
+                                More</button>
                             <button class="dropdown-item text-white"
-                                onclick="showModal('change-{{ $stock->id }}')">Change Goal</button>
+                                onclick="showModal('change-{{ $stock->id }}')">Change
+                                Goal</button>
                             <button class="dropdown-item text-white"
                                 onclick="showModal('jual-{{ $stock->id }}')">Sell</button>
                         </div>
@@ -88,6 +98,9 @@
                     <div class="d-flex">
                         <div class="flex-grow-1">
                             Avg Price: Rp. {{ number_format($stock->harga_beli, 0, ',', '.') }} per-Lembar
+                            <br>
+                            @if ($stock->currentPrice() != 0)Current Price: Rp. {{ number_format($stock->currentPrice(), 0, ',', '.') }} per-Lembar @endif
+
                         </div>
                         {{ $stock->lot }} Lot
                     </div>

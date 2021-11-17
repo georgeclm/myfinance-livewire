@@ -97,3 +97,23 @@ Route::get('ticker-search', function (Request $request) {
 });
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+Route::get('fetch/{stock}', function ($stock) {
+    $queryString = http_build_query([
+        'access_key' => '3fb12d1ba1ca20adc1d483f362ce81be'
+    ]);
+    $code = $stock;
+    $ch = curl_init(sprintf('%s?%s', "http://api.marketstack.com/v1/tickers/$code.XIDX/eod/latest", $queryString));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $json = curl_exec($ch);
+    curl_close($ch);
+
+    $apiResult = json_decode($json, true);
+    dd($apiResult);
+    if (!array_key_exists("close", $apiResult)) {
+        return 0;
+    }
+    $price = $apiResult['close'];
+    // dd($apiResult);
+    return $price;
+});
