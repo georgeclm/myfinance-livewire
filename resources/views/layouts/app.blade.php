@@ -429,10 +429,10 @@
                     'Today': [moment(), moment().add(1, 'days')],
                     'Yesterday': [moment().subtract(1, 'days'), moment()],
                     'Last 7 Days': [moment().subtract(6, 'days'), moment().add(1, 'days')],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment().add(1, 'days')],
                     'This Month': [moment().startOf('month'), moment().endOf('month').add(1, 'days')],
                     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
-                        'month').endOf('month')]
+                        'month').endOf('month')],
+                    'This Year': [moment().startOf('year'), moment().endOf('year')]
                 }
             }, function(start, end, label) {
                 // $('#date_submit').submit();
