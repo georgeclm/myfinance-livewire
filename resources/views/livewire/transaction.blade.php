@@ -42,7 +42,7 @@
                             </button>
                         </div>
                         <div class="modal-body text-white">Total Income and Total Gain In All Investment Based on
-                            Daterange. (Sell Investment Not
+                            Date. (Sell Investment Not
                             Included)</div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                             </button>
                         </div>
                         <div class="modal-body text-white">Total Spending and Total Loss In All Investment Based on
-                            Daterange.
+                            Date.
                             (Investment is not included)</div>
                     </div>
                 </div>
