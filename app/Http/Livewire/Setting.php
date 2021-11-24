@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Bank;
 use App\Models\Category;
 use App\Models\CategoryMasuk;
+use App\Models\Ticker;
 use Livewire\Component;
 
 class Setting extends Component
@@ -18,6 +20,15 @@ class Setting extends Component
     public $stockjumlah;
     public $depositojumlah;
     public $reksadanajumlah;
+    public $bankform = [
+        'nama' => '',
+        'code' => '',
+    ];
+    public $tickerform = [
+        'nama' => '',
+        'code' => '',
+    ];
+
 
     public function mount()
     {
@@ -40,8 +51,10 @@ class Setting extends Component
             case 'depositojumlah':
                 $this->updatedeposito = '';
                 break;
-            default:
+            case 'reksadanajumlah':
                 $this->updatemutualfund = '';
+                break;
+            default:
                 break;
         }
     }
@@ -89,6 +102,32 @@ class Setting extends Component
         $user->save();
 
         session()->flash('success', 'Previous Mutual Fund Earning Have Been Updated');
+        return redirect(route('setting'));
+    }
+    public function store_bank()
+    {
+        $this->validate([
+            'bankform.nama' => 'required|unique:banks,nama',
+            'bankform.code' => 'required|numeric|unique:banks,code|min:2',
+        ]);
+        Bank::create([
+            'nama' => strtoupper($this->bankform['nama']),
+            'code' => $this->bankform['code']
+        ]);
+        session()->flash('success', 'New Bank have been added');
+        return redirect(route('setting'));
+    }
+    public function store_stock()
+    {
+        $this->validate([
+            'tickerform.nama' => 'required|unique:tickers,nama',
+            'tickerform.code' => 'required|unique:tickers,code|regex:/^[a-zA-Z ]+$/|min:4',
+        ]);
+        Ticker::create([
+            'nama' => $this->tickerform['nama'],
+            'code' => strtoupper($this->tickerform['code'])
+        ]);
+        session()->flash('success', 'New Ticker have been added');
         return redirect(route('setting'));
     }
     public function render()

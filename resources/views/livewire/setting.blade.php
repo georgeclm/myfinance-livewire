@@ -134,7 +134,76 @@
                 </div>
             </div>
         </div>
-
+        @if (auth()->user()->email == 'cavidjaja@gmail.com')
+            <div class="col-lg-6 small-when-0 ">
+                <div class="bg-dark border-0 card shadow mb-4">
+                    <div
+                        class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Add New Bank</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <form wire:submit.prevent="store_bank">
+                            <div class="form-group">
+                                <input type="text" name="jumlah" required placeholder="Bank Name"
+                                    wire:model.defer="bankform.nama"
+                                    class="form-control form-control-user @error('bankform.nama') is-invalid @enderror">
+                                @error('bankform.nama')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name="jumlah" required placeholder="Bank Code"
+                                    wire:model.defer="bankform.code"
+                                    class="form-control form-control-user @error('bankform.code') is-invalid @enderror">
+                                @error('bankform.code')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 small-when-0 ">
+                <div class="bg-dark border-0 card shadow mb-4">
+                    <div
+                        class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Add New Stock</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <form wire:submit.prevent="store_stock">
+                            <div class="form-group">
+                                <input type="text" name="jumlah" required placeholder="Stock Name"
+                                    wire:model.defer="tickerform.nama"
+                                    class="form-control form-control-user @error('tickerform.nama') is-invalid @enderror">
+                                @error('tickerform.nama')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="jumlah" required placeholder="Stock Code"
+                                    wire:model.defer="tickerform.code" maxlength="4"
+                                    class="form-control form-control-user @error('tickerform.code') is-invalid @enderror">
+                                @error('tickerform.code')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
     @livewire('setting.create-category')
     @livewire('setting.create-category-masuk')
