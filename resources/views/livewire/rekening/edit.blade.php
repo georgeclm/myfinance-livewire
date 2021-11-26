@@ -27,12 +27,12 @@
                 @if ($rekening->jenis_id != 1)
                     <div class="form-group">
                         <input type="text" class="border-0 form-control form-control-user " name="nama_banke"
-                            wire:model.defer="form.nama_bank" required placeholder="Nama Bank">
+                            wire:model.defer="form.nama_bank" readonly placeholder="Nama Bank">
                     </div>
                 @endif
                 <div class="mb-3 hide-inputbtns input-group">
                     <input type="text" type-currency="IDR" inputmode="numeric"
-                        class="border-0 form-control form-control-user " wire:model.defer="form.saldo_sekarang" disabled
+                        class="border-0 form-control form-control-user " wire:model.defer="form.saldo_sekarang" readonly
                         placeholder="Current Balance">
                 </div>
                 @if ($rekening->jenis_id == 2)
