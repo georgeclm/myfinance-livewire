@@ -17,7 +17,11 @@
         <div class="bg-gray-100 border-0 card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Transaction</h6>
         </div>
-        <div class="card-body">
+        <div id="preloader" wire:loading>
+            <div id="loader"></div>
+            <br><br><br>
+        </div>
+        <div class="card-body" wire:loading.remove>
             @forelse ($transactions as $transaction)
                 <div class="modal__container" wire:ignore id="refund-{{ $transaction->id }}">
                     <div class="bg-black modal__content">
