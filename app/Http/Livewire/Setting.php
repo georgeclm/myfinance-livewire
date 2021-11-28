@@ -28,7 +28,16 @@ class Setting extends Component
         'nama' => '',
         'code' => '',
     ];
+    protected $listeners = ['updateCategory', 'updateCategoryMasuk'];
 
+    public function updateCategory()
+    {
+        $this->categories = Category::where('user_id', null)->orWhere('user_id', auth()->id())->get();
+    }
+    public function updateCategoryMasuk()
+    {
+        $this->category_masuks = CategoryMasuk::where('user_id', null)->orWhere('user_id', auth()->id())->get();
+    }
 
     public function mount()
     {
@@ -66,9 +75,9 @@ class Setting extends Component
         $user = auth()->user();
         $user->previous_p2p = $this->p2pjumlah;
         $user->save();
+        $this->p2pjumlah = 'Rp  ' . number_format(auth()->user()->previous_p2p, 0, ',', '.');
 
         session()->flash('success', 'Previous P2P Earning Have Been Updated');
-        return redirect(route('setting'));
     }
     public function submitstock()
     {
@@ -78,9 +87,9 @@ class Setting extends Component
         $user = auth()->user();
         $user->previous_stock = $this->stockjumlah;
         $user->save();
+        $this->stockjumlah = 'Rp  ' . number_format(auth()->user()->previous_stock, 0, ',', '.');
 
         session()->flash('success', 'Previous Stock Earning Have Been Updated');
-        return redirect(route('setting'));
     }
     public function submitdeposito()
     {
@@ -89,9 +98,9 @@ class Setting extends Component
         $user = auth()->user();
         $user->previous_deposito = $this->depositojumlah;
         $user->save();
+        $this->depositojumlah = 'Rp  ' . number_format(auth()->user()->previous_deposito, 0, ',', '.');
 
         session()->flash('success', 'Previous Deposito Earning Have Been Updated');
-        return redirect(route('setting'));
     }
     public function submitreksadana()
     {
@@ -100,9 +109,9 @@ class Setting extends Component
         $user = auth()->user();
         $user->previous_reksadana = $this->reksadanajumlah;
         $user->save();
+        $this->reksadanajumlah = 'Rp  ' . number_format(auth()->user()->previous_reksadana, 0, ',', '.');
 
         session()->flash('success', 'Previous Mutual Fund Earning Have Been Updated');
-        return redirect(route('setting'));
     }
     public function store_bank()
     {
@@ -114,8 +123,11 @@ class Setting extends Component
             'nama' => strtoupper($this->bankform['nama']),
             'code' => $this->bankform['code']
         ]);
+        $this->bankform = [
+            'nama' => '',
+            'code' => '',
+        ];
         session()->flash('success', 'New Bank have been added');
-        return redirect(route('setting'));
     }
     public function store_stock()
     {
@@ -127,11 +139,16 @@ class Setting extends Component
             'nama' => $this->tickerform['nama'],
             'code' => strtoupper($this->tickerform['code'])
         ]);
+        $this->tickerform = [
+            'nama' => '',
+            'code' => '',
+        ];
+
         session()->flash('success', 'New Ticker have been added');
-        return redirect(route('setting'));
     }
     public function render()
     {
+
         return view('livewire.setting');
     }
 }

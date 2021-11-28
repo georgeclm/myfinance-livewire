@@ -28,8 +28,13 @@ class CreateCategory extends Component
             return $this->render();
         }
         Category::create($this->form + ['user_id' => auth()->id()]);
+        $this->form = [
+            'nama' => '',
+        ];
         session()->flash('success', 'New Category have been added');
-        return redirect(route('setting'));
+        $this->dispatchBrowserEvent('success');
+
+        $this->emit('updateCategory');
     }
     public function render()
     {
