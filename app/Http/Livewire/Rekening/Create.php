@@ -40,9 +40,22 @@ class Create extends Component
 
         ModelsRekening::create($this->form);
         session()->flash('success', 'New Pocket have been registered');
-        return redirect()->to('/pockets');
+        $this->emit("hideCreatePocket");
+        $this->emit('refreshBalance');
+        $this->emit('refreshPocket');
+        $this->emit('refreshView');
+        $this->resetErrorBag();
+        $this->form = [
+            'jenis_id' => '',
+            'nama_akun' => '',
+            'nama_bank' => null,
+            'saldo_sekarang' => '',
+            'saldo_mengendap' => null,
+            'keterangan' => null,
+            'user_id' => ''
+        ];
+        // return redirect()->to('/pockets');
     }
-
     public function render()
     {
         return view('livewire.rekening.create');

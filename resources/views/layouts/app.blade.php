@@ -448,6 +448,30 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
         data-turbolinks-track="true"></script>
     <script>
+        window.livewire.on('hideEdit', () => {
+            closeModal('editModal');
+        });
+        window.livewire.on('hideCreatePocket', () => {
+            closeModal('new-pocket');
+        });
+        window.livewire.on('editModal', () => {
+            showModal('editModal');
+        });
+        window.livewire.on('deleteModal', () => {
+            showModal('deleteModal');
+        });
+        window.livewire.on('hideDelete', () => {
+            closeModal('deleteModal');
+        });
+        window.livewire.on('adjustModal', () => {
+            showModal('adjustModal');
+        });
+        window.livewire.on('hideAdjust', () => {
+            closeModal('adjustModal');
+        });
+        window.livewire.on('run', () => {
+            run();
+        });
         /*=============== SHOW MODAL ===============*/
         var showModal = (modalContent) => {
             const modalContainer = document.getElementById(modalContent)

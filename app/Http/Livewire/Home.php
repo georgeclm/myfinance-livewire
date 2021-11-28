@@ -29,6 +29,7 @@ class Home extends Component
         }
         // dd(auth()->user()->transactions);
         auth()->user()->load('all_transactions', 'uangmasuk');
+        $this->dispatchBrowserEvent('refresh-chart');
 
         $this->categories = Category::with('userTransactionsByCategory')->get();
         $this->category_masuks = CategoryMasuk::with('userTransactionsByCategory')->get();
@@ -80,7 +81,7 @@ class Home extends Component
             $prevSpending[$i] = cache()->remember('prevSpending' . $i, 60 * 60 * 24 * 30, function () use ($i) {
                 return Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
             });
-            $totalStockGainOrLoss = cache()->remember('totalStockGainOrLoss' . $i, 60 * 60 * 24 * 30, function () use ($i,$stock) {
+            $totalStockGainOrLoss = cache()->remember('totalStockGainOrLoss' . $i, 60 * 60 * 24 * 30, function () use ($i, $stock) {
                 return $stock->totalGainOrLossMonth($i)->sum('gain_or_loss');
             });
             if ($totalStockGainOrLoss > 0) {
@@ -88,7 +89,7 @@ class Home extends Component
             } else {
                 $prevSpending[$i] -= $totalStockGainOrLoss;
             }
-            $totalP2pGain = cache()->remember('totalP2pGain' . $i, 60 * 60 * 24 * 30, function () use ($i,$p2p) {
+            $totalP2pGain = cache()->remember('totalP2pGain' . $i, 60 * 60 * 24 * 30, function () use ($i, $p2p) {
                 return $p2p->totalGainOrLossMonth($i)->sum('gain_or_loss');
             });
             if ($totalP2pGain > 0) {
@@ -96,7 +97,7 @@ class Home extends Component
             } else {
                 $prevSpending[$i] -= $totalP2pGain;
             }
-            $totalMutualFundGain = cache()->remember('totalMutualFundGain' . $i, 60 * 60 * 24 * 30, function () use ($i,$mutualFund) {
+            $totalMutualFundGain = cache()->remember('totalMutualFundGain' . $i, 60 * 60 * 24 * 30, function () use ($i, $mutualFund) {
                 return $mutualFund->totalGainOrLossMonth($i)->sum('gain_or_loss');
             });
             if ($totalMutualFundGain > 0) {
@@ -104,7 +105,7 @@ class Home extends Component
             } else {
                 $prevSpending[$i] -= $totalMutualFundGain;
             }
-            $totalDepositoGain = cache()->remember('totalDepositoGain' . $i, 60 * 60 * 24 * 30, function () use ($i,$deposito) {
+            $totalDepositoGain = cache()->remember('totalDepositoGain' . $i, 60 * 60 * 24 * 30, function () use ($i, $deposito) {
                 return $deposito->totalGainOrLossMonth($i)->sum('gain_or_loss');
             });
             if ($totalDepositoGain > 0) {
