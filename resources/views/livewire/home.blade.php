@@ -292,6 +292,8 @@
         @endif
 
     </div>
+    <br><br><br><br><br><br><br>
+
     <!-- /.container-fluid -->
 </div>
 @section('script')

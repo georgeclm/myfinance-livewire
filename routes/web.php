@@ -97,3 +97,23 @@ Route::get('ticker-search', function (Request $request) {
 });
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+Route::get('yahoof/{stock}', function ($stock) {
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, "https://yfapi.net/v6/finance/quote?symbols=$stock.jk");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+
+
+    $headers = array();
+    $headers[] = 'Accept: application/json';
+    $headers[] = 'X-Api-Key: XE6XBRrsIR2TJRK4UVUjhaY739kIFSD24TMxFRcl';
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    $result = curl_exec($ch);
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+    curl_close($ch);
+    dd(json_decode($result)->quoteResponse->result[0]);
+});

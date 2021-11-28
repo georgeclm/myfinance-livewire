@@ -25,6 +25,7 @@ class CreateStock extends Component
     ];
 
 
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName, [
@@ -33,6 +34,28 @@ class CreateStock extends Component
             'form.rekening_id' => ['required', 'numeric', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',')],
         ]);
+        if ($propertyName == 'form.kode') {
+            $ch = curl_init();
+            $code = $this->form['kode'];
+            curl_setopt($ch, CURLOPT_URL, "https://yfapi.net/v6/finance/quote?symbols=$code.jk");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+
+
+            $headers = array();
+            $headers[] = 'Accept: application/json';
+            $headers[] = 'X-Api-Key: XE6XBRrsIR2TJRK4UVUjhaY739kIFSD24TMxFRcl';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            $result = curl_exec($ch);
+            if (curl_errno($ch)) {
+                $this->error = 'Error Code Search';
+                $this->dispatchBrowserEvent('contentChanged');
+            }
+            curl_close($ch);
+            // dd(json_decode($result)->quoteResponse->result[0]);
+            $this->form['harga_beli'] = 'Rp  ' . number_format(json_decode($result)->quoteResponse->result[0]->regularMarketPrice, 0, ',', '.');
+        }
     }
 
     protected $validationAttributes = [

@@ -76,4 +76,6 @@
         </div>
         <!-- End of Main Content -->
         @livewire('utangteman.create')
+        <br><br><br><br><br><br><br>
+
     </div>
