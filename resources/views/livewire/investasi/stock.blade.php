@@ -78,9 +78,9 @@
     @endif
     <div class="card-body small-when-0 ">
         @forelse ($stocks as $key => $stock)
-            @livewire('investasi.stock.topup',['stock' => $stock])
+            @livewire('investasi.stock.topup',['stock' => $stock,'current' => $stockPrice[$key]])
             @livewire('investasi.stock.change',['stock' => $stock])
-            @livewire('investasi.stock.jual',['stock' => $stock])
+            @livewire('investasi.stock.jual',['stock' => $stock,'current' => $stockPrice[$key]])
             <div class="bg-dark border-0 card shadow mb-4">
                 <div
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">

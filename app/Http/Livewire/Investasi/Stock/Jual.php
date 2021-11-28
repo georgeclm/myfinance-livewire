@@ -12,12 +12,12 @@ class Jual extends Component
     public $stock;
     public $error;
     public $form;
-
+    public $current;
 
     public function mount()
     {
         $this->form = $this->stock->toArray();
-        $this->form['harga_beli'] = 'Rp  ' . number_format($this->stock->harga_beli, 0, ',', '.');
+        $this->form['harga_beli'] = 'Rp  ' . number_format($this->current, 0, ',', '.');
     }
 
 
