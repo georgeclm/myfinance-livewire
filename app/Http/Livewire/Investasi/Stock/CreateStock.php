@@ -35,20 +35,26 @@ class CreateStock extends Component
             'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',')],
         ]);
         if ($propertyName == 'form.kode') {
-            $queryString = http_build_query([
-                'access_key' => '3fb12d1ba1ca20adc1d483f362ce81be'
-            ]);
+            $ch = curl_init();
             $code = $this->form['kode'];
-            $ch = curl_init(sprintf('%s?%s', "http://api.marketstack.com/v1/tickers/$code.XIDX/eod/latest", $queryString));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_URL, "https://yfapi.net/v6/finance/quote?symbols=$code.jk");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
-            $json = curl_exec($ch);
-            curl_close($ch);
 
-            $apiResult = json_decode($json, true);
-            if (array_key_exists("close", $apiResult)) {
-                $this->form['harga_beli'] = 'Rp  ' . number_format($apiResult['close'], 0, ',', '.');
+            $headers = array();
+            $headers[] = 'Accept: application/json';
+            $headers[] = 'X-Api-Key: XE6XBRrsIR2TJRK4UVUjhaY739kIFSD24TMxFRcl';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            $result = curl_exec($ch);
+            if (curl_errno($ch)) {
+                $this->error = 'Error Code Search';
+                $this->dispatchBrowserEvent('contentChanged');
             }
+            curl_close($ch);
+            // dd(json_decode($result)->quoteResponse->result[0]);
+            $this->form['harga_beli'] = 'Rp  ' . number_format(json_decode($result)->quoteResponse->result[0]->regularMarketPrice, 0, ',', '.');
         }
     }
 

@@ -97,23 +97,23 @@ Route::get('ticker-search', function (Request $request) {
 });
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
-Route::get('fetch/{stock}', function ($stock) {
-    $queryString = http_build_query([
-        'access_key' => '3fb12d1ba1ca20adc1d483f362ce81be'
-    ]);
-    $code = $stock;
-    $ch = curl_init(sprintf('%s?%s', "http://api.marketstack.com/v1/tickers/$code.XIDX/eod/latest", $queryString));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+Route::get('yahoof/{stock}', function ($stock) {
+    $ch = curl_init();
 
-    $json = curl_exec($ch);
-    curl_close($ch);
+    curl_setopt($ch, CURLOPT_URL, "https://yfapi.net/v6/finance/quote?symbols=$stock.jk");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
-    $apiResult = json_decode($json, true);
-    dd($apiResult);
-    if (!array_key_exists("close", $apiResult)) {
-        return 0;
+
+    $headers = array();
+    $headers[] = 'Accept: application/json';
+    $headers[] = 'X-Api-Key: XE6XBRrsIR2TJRK4UVUjhaY739kIFSD24TMxFRcl';
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    $result = curl_exec($ch);
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
     }
-    $price = $apiResult['close'];
-    // dd($apiResult);
-    return $price;
+    curl_close($ch);
+    dd(json_decode($result)->quoteResponse->result[0]);
 });
