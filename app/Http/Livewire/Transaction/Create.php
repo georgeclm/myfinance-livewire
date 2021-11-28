@@ -171,7 +171,7 @@ class Create extends Component
 
         Transaction::create($this->form);
         session()->flash('success', $msg);
-        return redirect(route('transaction'));
+        // return redirect(route('transaction'));
     }
     public function render()
     {
