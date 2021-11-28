@@ -13,15 +13,13 @@
         <div class="col-lg-6 small-when-0 mb-3 this_small">
             <!-- Project Card Example -->
             <div class="d-flex align-items-center justify-content-between">
-                <a class="card bg-dark border-0" href="{{ route('utangteman') }}"
-                    style="max-width: 69px; line-height: 80% !important">
+                <a class="card bg-dark border-0" href="{{ route('utangteman') }}" style="max-width: 69px; line-height: 80% !important">
                     <div class="card-body text-center p-2">
                         <i class="fas fa-fw fa-bomb"></i><br>
                         <small style="font-size: 10px">Friend&nbspDebt</small>
                     </div>
                 </a>
-                <a class="card bg-dark border-0" href="{{ route('utang') }}"
-                    style="max-width: 69px; line-height: 80% !important">
+                <a class="card bg-dark border-0" href="{{ route('utang') }}" style="max-width: 69px; line-height: 80% !important">
                     <div class="card-body text-center p-2">
                         <i class="fas fa-fw fa-biohazard"></i><br>
                         <span style="font-size: 10px; " class="d-sm-inline">Your Debt</span>
@@ -66,8 +64,7 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body text-white">Total {{ now()->format('F') }} Income and Total Gain In All
-                            Investment.
+                        <div class="modal-body text-white">Total {{ now()->format('F') }} Income and Total Gain In All Investment.
                             (Sell Investment Not Included)</div>
                     </div>
                 </div>
@@ -81,7 +78,8 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                 Spending
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#spendingModal">
+                                <a href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#spendingModal">
                                     <i class="fas fa-question-circle"></i>
                                 </a>
 
@@ -105,12 +103,12 @@
                     <div class="bg-dark modal-content">
                         <div class="border-0 modal-header">
                             <h5 class="modal-title text-white">Spending</h5>
-                            <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                            <button class="close text-white" type="button" data-dismiss="modal"
+                                aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body text-white">Total {{ now()->format('F') }} Spending and Total Loss In
-                            All Investment.
+                        <div class="modal-body text-white">Total {{ now()->format('F') }} Spending and Total Loss In All Investment.
                             (Investment is not included)</div>
                     </div>
                 </div>
@@ -137,8 +135,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="balanceModal" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="balanceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="bg-dark modal-content">
                         <div class="border-0 modal-header">
@@ -214,12 +212,13 @@
                         @endforeach
                         @if ($spendingDiff != 0)
                             <h4 class="small font-weight-bold text-white">
-                                Loss From Investment<span class="float-right">{{ $spendingDiffPercent }}%</span>
+                                Loss From Investment<span
+                                    class="float-right">{{ $spendingDiffPercent }}%</span>
                             </h4>
                             <div class="progress mb-4">
                                 <div role="progressbar" style="width: {{ $spendingDiffPercent }}%"
-                                    aria-valuenow="{{ $spendingDiffPercent }}" aria-valuemin="0" aria-valuemax="100"
-                                    class="progress-bar bg-danger">
+                                    aria-valuenow="{{ $spendingDiffPercent }}" aria-valuemin="0"
+                                    aria-valuemax="100" class="progress-bar bg-danger">
                                 </div>
                             </div>
                         @endif
@@ -256,12 +255,13 @@
                         @endforeach
                         @if ($incomeDiff != 0)
                             <h4 class="small font-weight-bold text-white">
-                                Gain From Investment<span class="float-right">{{ $incomeDiffPercent }}%</span>
+                                Gain From Investment<span
+                                    class="float-right">{{ $incomeDiffPercent }}%</span>
                             </h4>
                             <div class="progress mb-4">
                                 <div role="progressbar" style="width: {{ $incomeDiffPercent }}%"
-                                    aria-valuenow="{{ $incomeDiffPercent }}" aria-valuemin="0" aria-valuemax="100"
-                                    class="progress-bar bg-success">
+                                    aria-valuenow="{{ $incomeDiffPercent }}" aria-valuemin="0"
+                                    aria-valuemax="100" class="progress-bar bg-success">
                                 </div>
                             </div>
                         @endif
@@ -292,7 +292,7 @@
         @endif
 
     </div>
-    <br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
 
     <!-- /.container-fluid -->
 </div>
@@ -304,81 +304,184 @@
         });
 
         @if (auth()->user()->all_transactions->count() != 0)
-            function thechart(){
+        function thechart(){
 
-            var x = window.matchMedia("(max-width: 700px)");
-            if (x.matches) {
+        var x = window.matchMedia("(max-width: 700px)");
+        if (x.matches) {
             var size = 10;
-            } else {
+        } else {
             var size = 12;
-            }
-            // Set new default font family and font color to mimic Bootstrap's default styling
-            (Chart.defaults.global.defaultFontFamily = "Nunito"),
-            '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-            Chart.defaults.global.defaultFontColor = "#858796";
+        }
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        (Chart.defaults.global.defaultFontFamily = "Nunito"),
+        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = "#858796";
 
-            function number_format(number, decimals, dec_point, thousands_sep) {
-            // * example: number_format(1234.56, 2, ',', ' ');
-            // * return: '1 234,56'
+        function number_format(number, decimals, dec_point, thousands_sep) {
+            // *     example: number_format(1234.56, 2, ',', ' ');
+            // *     return: '1 234,56'
             number = (number + "").replace(",", "").replace(" ", "");
             var n = !isFinite(+number) ? 0 : +number,
-            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-            sep = typeof thousands_sep === "undefined" ? "." : thousands_sep,
-            dec = typeof dec_point === "undefined" ? "," : dec_point,
-            s = "",
-            toFixedFix = function(n, prec) {
-            var k = Math.pow(10, prec);
-            return "" + Math.round(n * k) / k;
-            };
+                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                sep = typeof thousands_sep === "undefined" ? "." : thousands_sep,
+                dec = typeof dec_point === "undefined" ? "," : dec_point,
+                s = "",
+                toFixedFix = function(n, prec) {
+                    var k = Math.pow(10, prec);
+                    return "" + Math.round(n * k) / k;
+                };
             // Fix for IE parseFloat(0.55).toFixed(0) = 0;
             s = (prec ? toFixedFix(n, prec) : "" + Math.round(n)).split(".");
             if (s[0].length > 3) {
-            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
             }
-            if ((s[1] || "").length < prec) { s[1]=s[1] || "" ; s[1] +=new Array(prec - s[1].length + 1).join("0"); } return
-                s.join(dec); } // Area Chart Example var ctx=document.getElementById("myAreaChart"); var
-                x=window.matchMedia("(max-width: 700px)"); var myLineChart=new Chart(ctx, { type: "line" , data: { labels:
-                [ "{{ substr(
-                    now()->subMonth(4)->format('F'),
-                    0,
-                    3,
-                ) }}"
-                , "{{ substr(
-                    now()->subMonth(3)->format('F'),
-                    0,
-                    3,
-                ) }}"
-                , "{{ substr(
-                    now()->subMonth(2)->format('F'),
-                    0,
-                    3,
-                ) }}"
-                , "{{ substr(
-                    now()->subMonth(1)->format('F'),
-                    0,
-                    3,
-                ) }}"
-                , "{{ substr(now()->format('F'), 0, 3) }}" , ], datasets: [{ label: "Spending" , lineTension: 0.3,
-                backgroundColor: "rgba(78, 115, 223, 0.05)" , borderColor: "#e74a3b" , pointRadius: 3,
-                pointBackgroundColor: "#e74a3b" , pointBorderColor: "#e74a3b" , pointHoverRadius: 3,
-                pointHoverBackgroundColor: "#e74a3b" , pointHoverBorderColor: "#e74a3b" , pointHitRadius: 10, pointBorderWidth:
-                2, data: [ "{{ $prevSpending[4] }}" , "{{ $prevSpending[3] }}" , "{{ $prevSpending[2] }}"
-                , "{{ $prevSpending[1] }}" , "{{ $spending }}" , ], }, { label: "Income" , lineTension: 0.3,
-                backgroundColor: "rgba(78, 115, 223, 0.05)" , borderColor: "#1cc88a" , pointRadius: 3,
-                pointBackgroundColor: "#1cc88a" , pointBorderColor: "#1cc88a" , pointHoverRadius: 3,
-                pointHoverBackgroundColor: "#1cc88a" , pointHoverBorderColor: "#1cc88a" , pointHitRadius: 10, pointBorderWidth:
-                2, data: [ "{{ $prevIncome[4] }}" , "{{ $prevIncome[3] }}" , "{{ $prevIncome[2] }}"
-                , "{{ $prevIncome[1] }}" , "{{ $income }}" , ], } ], }, options: { maintainAspectRatio: false, scales:
-                { xAxes: [{ time: { unit: "date" , }, gridLines: { display: false, drawBorder: false, }, ticks: { maxTicksLimit:
-                7, }, }, ], yAxes: [{ ticks: { maxTicksLimit: 5, padding: 10, fontSize: size, // Include a dollar sign in the
-                ticks callback: function(value, index, values) { return "Rp." + number_format(value); }, }, gridLines: {
-                color: "rgb(234, 236, 244)" , zeroLineColor: "rgb(234, 236, 244)" , drawBorder: false, borderDash: [2],
-                zeroLineBorderDash: [2], }, }, ], }, legend: { display: false, }, tooltips: {
-                backgroundColor: "rgb(255,255,255)" , bodyFontColor: "#858796" , titleMarginBottom: 10,
-                titleFontColor: "#6e707e" , titleFontSize: 14, borderColor: "#dddfeb" , borderWidth: 1, xPadding: 15, yPadding:
-                15, displayColors: false, intersect: false, mode: "index" , caretPadding: 10, callbacks: { label:
-                function(tooltipItem, chart) { var datasetLabel=chart.datasets[tooltipItem.datasetIndex].label || "" ; return (
-                datasetLabel + ": Rp." + number_format(tooltipItem.yLabel) ); }, }, }, }, }); @endif
+            if ((s[1] || "").length < prec) {
+                s[1] = s[1] || "";
+                s[1] += new Array(prec - s[1].length + 1).join("0");
+            }
+            return s.join(dec);
+        }
+
+        // Area Chart Example
+        var ctx = document.getElementById("myAreaChart");
+        var x = window.matchMedia("(max-width: 700px)");
+
+        var myLineChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [
+                    "{{ substr(
+    now()->subMonth(4)->format('F'),
+    0,
+    3,
+) }}",
+                    "{{ substr(
+    now()->subMonth(3)->format('F'),
+    0,
+    3,
+) }}",
+                    "{{ substr(
+    now()->subMonth(2)->format('F'),
+    0,
+    3,
+) }}",
+                    "{{ substr(
+    now()->subMonth(1)->format('F'),
+    0,
+    3,
+) }}",
+                    "{{ substr(now()->format('F'), 0, 3) }}",
+                ],
+                datasets: [{
+                        label: "Spending",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(78, 115, 223, 0.05)",
+                        borderColor: "#e74a3b",
+                        pointRadius: 3,
+                        pointBackgroundColor: "#e74a3b",
+                        pointBorderColor: "#e74a3b",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "#e74a3b",
+                        pointHoverBorderColor: "#e74a3b",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: [
+                            "{{ $prevSpending[4] }}",
+                            "{{ $prevSpending[3] }}",
+                            "{{ $prevSpending[2] }}",
+                            "{{ $prevSpending[1] }}",
+                            "{{ $spending }}",
+                        ],
+                    },
+                    {
+                        label: "Income",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(78, 115, 223, 0.05)",
+                        borderColor: "#1cc88a",
+                        pointRadius: 3,
+                        pointBackgroundColor: "#1cc88a",
+                        pointBorderColor: "#1cc88a",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "#1cc88a",
+                        pointHoverBorderColor: "#1cc88a",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: [
+                            "{{ $prevIncome[4] }}",
+                            "{{ $prevIncome[3] }}",
+                            "{{ $prevIncome[2] }}",
+                            "{{ $prevIncome[1] }}",
+                            "{{ $income }}",
+                        ],
+                    }
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: "date",
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false,
+                        },
+                        ticks: {
+                            maxTicksLimit: 7,
+                        },
+                    }, ],
+                    yAxes: [{
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            fontSize: size,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return "Rp." + number_format(value);
+                            },
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2],
+                        },
+                    }, ],
+                },
+                legend: {
+                    display: false,
+                },
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    titleMarginBottom: 10,
+                    titleFontColor: "#6e707e",
+                    titleFontSize: 14,
+                    borderColor: "#dddfeb",
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    intersect: false,
+                    mode: "index",
+                    caretPadding: 10,
+                    callbacks: {
+                        label: function(tooltipItem, chart) {
+                            var datasetLabel =
+                                chart.datasets[tooltipItem.datasetIndex].label || "";
+                            return (
+                                datasetLabel +
+                                ": Rp." +
+                                number_format(tooltipItem.yLabel)
+                            );
+                        },
+                    },
+                },
+            },
+        });
+        @endif
 
         // Pie Chart Example
         @if (!auth()->user()->rekenings->isEmpty())
@@ -420,9 +523,10 @@
             cutoutPercentage: 80,
             },
             });
-            }
-            thechart();
+        }
+        thechart();
         @endif
+
     </script>
 
 @endsection
