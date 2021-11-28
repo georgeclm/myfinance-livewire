@@ -71,6 +71,8 @@
                         <select wire:model.defer="form.financial_plan_id"
                             class="border-0 form-control form-control-user form-block @error('financial_plan_id') is-invalid @enderror"
                             style="padding: 0.5rem !important" name="financial_plan_id" disabled>
+                            <option value="0">Trading</option>
+
                             @foreach (auth()->user()->financialplans as $financialplan)
                                 <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
                                     {{ $financialplan->nama }} - Rp.

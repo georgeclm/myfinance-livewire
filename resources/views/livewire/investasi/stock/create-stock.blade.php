@@ -115,6 +115,7 @@
                             wire:model.defer="form.financial_plan_id" name="financial_plan_id"
                             style="padding: 0.5rem !important" required>
                             <option value="" selected disabled hidden>Invest Goal</option>
+                            <option value="0">Trading</option>
                             @foreach (auth()->user()->financialplans as $financialplan)
                                 <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
                                     {{ $financialplan->nama }} - Rp.

@@ -103,9 +103,11 @@
                             <button class="dropdown-item text-white"
                                 onclick="showModal('topup-{{ $stock->id }}')">Buy
                                 More</button>
-                            <button class="dropdown-item text-white"
-                                onclick="showModal('change-{{ $stock->id }}')">Change
-                                Goal</button>
+                                @if ($stock->financial_plan_id != 0)
+                                    <button class="dropdown-item text-white"
+                                        onclick="showModal('change-{{ $stock->id }}')">Change
+                                        Goal</button>
+                                @endif
                             <button class="dropdown-item text-white"
                                 onclick="showModal('jual-{{ $stock->id }}')">Sell</button>
                         </div>

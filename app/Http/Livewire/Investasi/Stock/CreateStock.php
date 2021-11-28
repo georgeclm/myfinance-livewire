@@ -32,7 +32,7 @@ class CreateStock extends Component
             'form.kode' => 'required',
             'form.lot' => ['required', 'numeric'],
             'form.rekening_id' => ['required', 'numeric', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
-            'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',')],
+            'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',') . ',0'],
         ]);
         if ($propertyName == 'form.kode') {
             $ch = curl_init();
@@ -74,7 +74,7 @@ class CreateStock extends Component
             'form.harga_beli' => ['required', 'numeric'],
             'form.biaya_lain' => ['nullable', 'numeric'],
             'form.rekening_id' => ['required', 'numeric', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
-            'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',')],
+            'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',') . ',0'],
         ];
     }
     public function submit()
@@ -101,10 +101,11 @@ class CreateStock extends Component
 
         $rekening->saldo_sekarang -= $this->form['total'];
         $rekening->save();
-
-        $financialplan = FinancialPlan::findOrFail($this->form['financial_plan_id']);
-        $financialplan->jumlah += $this->form['total'];
-        $financialplan->save();
+        if($this->form['financial_plan_id'] != 0){
+            $financialplan = FinancialPlan::findOrFail($this->form['financial_plan_id']);
+            $financialplan->jumlah += $this->form['total'];
+            $financialplan->save();
+        }
         Transaction::create([
             'user_id' => auth()->id(),
             'jenisuang_id' => 2,
