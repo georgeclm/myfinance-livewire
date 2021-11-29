@@ -1,8 +1,8 @@
-    <div class="modal__container" wire:ignore.self id="danaDarurat">
+    <div class="modal__container" wire:ignore.self id="modalEmergency">
         <div class="bg-black modal__content">
             <div class="modal-header bg-gray-100 border-0">
                 <h5 class="modal-title text-white">Emergency Fund</h5>
-                <button type="button" onclick="closeModal('danaDarurat')" class="close text-white">
+                <button type="button" onclick="closeModal('modalEmergency')" class="close text-white">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -39,6 +39,4 @@
                 <input type="submit" class="btn btn-primary btn-block" form="addDanaDarurat" value="Add" />
             </div>
         </div>
-    </div>
-
     </div>

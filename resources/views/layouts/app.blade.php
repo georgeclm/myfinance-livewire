@@ -472,6 +472,42 @@
         window.livewire.on('hideAdjust', () => {
             closeModal('adjustModal');
         });
+        window.livewire.on('editmodalEmergency', () => {
+            showModal('editmodalEmergency');
+        });
+        window.livewire.on('hideeditmodalEmergency', () => {
+            closeModal('editmodalEmergency');
+        });
+        window.livewire.on('editmodalFund', () => {
+            showModal('editmodalFund');
+        });
+        window.livewire.on('hideeditmodalFund', () => {
+            closeModal('editmodalFund');
+        });
+        window.livewire.on('editmodalSaving', () => {
+            showModal('editmodalSaving');
+        });
+        window.livewire.on('hideeditmodalSaving', () => {
+            closeModal('editmodalSaving');
+        });
+        window.livewire.on('modalEmergency', () => {
+            showModal('modalEmergency');
+        });
+        window.livewire.on('hidemodalEmergency', () => {
+            closeModal('modalEmergency');
+        });
+        window.livewire.on('modalFund', () => {
+            showModal('modalFund');
+        });
+        window.livewire.on('hidemodalFund', () => {
+            closeModal('modalFund');
+        });
+        window.livewire.on('modalSaving', () => {
+            showModal('modalSaving');
+        });
+        window.livewire.on('hidemodalSaving', () => {
+            closeModal('modalSaving');
+        });
         window.livewire.on('run', () => {
             run();
         });

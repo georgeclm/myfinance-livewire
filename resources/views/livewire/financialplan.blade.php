@@ -16,7 +16,7 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <ul class="list-group">
-                        <button onclick="showModal('danaDarurat')"
+                        <button onclick="showModal('modalEmergency')"
                             class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
                             <div class="w-100 text-white">
                                 <i class="fas fa-exclamation-circle text-warning mx-2"></i>Emergency
@@ -24,7 +24,7 @@
                             </div>
                             <i class="fas fa-angle-right"></i>
                         </button>
-                        <button onclick="showModal('DanaMembeliBarang')"
+                        <button onclick="showModal('modalFund')"
                             class="list-group-item list-group-item-action bg-black d-flex align-items-center">
                             <div class="w-100 text-white">
                                 <i class="fas fa-shopping-basket text-warning mx-2"></i>Fund for
@@ -39,7 +39,7 @@
                                                 <i class="fas fa-umbrella-beach text-success mx-2"></i>Dana Liburan
                                             </div>
                                         </a> --}}
-                        <button onclick="showModal('DanaMenabung')"
+                        <button onclick="showModal('modalSaving')"
                             class="list-group-item list-group-item-action bg-black d-flex align-items-center">
                             <div class="w-100 text-white">
                                 <i class="fas fa-piggy-bank text-primary mx-2"></i>Savings Fund
@@ -72,7 +72,7 @@
                                             </button>
                                             <div class=" bg-dark border-0  dropdown-menu"
                                                 aria-labelledby="dropdownMenuButton">
-                                                <button onclick="showModal('editmodal-{{ $financialplan->id }}')"
+                                                <button wire:click="editModal({{ $financialplan->id }})"
                                                     class="dropdown-item text-white">Adjust</button>
                                                 {{-- <a class="dropdown-item text-white" href="#">Detail
                                                                 </a> --}}
@@ -115,7 +115,7 @@
                 </div>
                 <div class="card-body p-2">
                     @forelse (auth()->user()->financialplans as $financialplan)
-                        @livewire($financialplan->edit(),['financialplan'=> $financialplan])
+                        {{-- @livewire($financialplan->edit(),['financialplan'=> $financialplan]) --}}
                         @if ($financialplan->jumlah < $financialplan->target)
                             {{-- @include('financialplan.delete') --}}
                             <div class="pt-4 rounded mb-3">
@@ -134,13 +134,14 @@
                                                 aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item text-white"
                                                     href="{{ route('investasi') }}">Invest</a>
-                                                <button onclick="showModal('editmodal-{{ $financialplan->id }}')"
+                                                <button wire:click="editModal({{ $financialplan->id }})"
                                                     class="dropdown-item text-white">Adjust</button>
                                                 {{-- <a class="dropdown-item text-white" href="#">Detail
                                                                 </a> --}}
-                                                {{-- <a data-toggle="modal"
-                                                                    data-target="#deletemodal-{{ $financialplan->id }}"
-                                                                    class="dropdown-item text-white" href="#">Hapus</a> --}}
+                                                @if ($financialplan->jumlah == 0)
+                                                    <button class="dropdown-item text-white"
+                                                        wire:click="deleteModal({{ $financialplan->id }})">Delete</button>
+                                                @endif
                                             </div>
                                         </div>
                                     </span>
@@ -175,11 +176,181 @@
             </div>
         </div>
     </div>
+    <div class="modal__container" wire:ignore.self id="editmodalEmergency">
+        <div class="bg-black modal__content">
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white">Emergency Fund</h5>
+                <button onclick="closeModal('editmodalEmergency')" class="close text-white">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formeditmodalEmergency" wire:submit.prevent="update">
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input type-currency="IDR" inputmode="numeric" type="text" name="jumlah"
+                            wire:model.defer="emergency.jumlah" required
+                            class="border-0 form-control form-control-user @error('emergency.jumlah') is-invalid @enderror">
+                        @error('emergency.jumlah')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <select wire:model.defer="emergency.status_pernikahan"
+                            class="border-0 form-control form-control-user form-block @error('emergency.status_pernikahan') is-invalid @enderror"
+                            style="padding: 0.5rem !important" required>
+                            <option value="1">Single</option>
+                            <option value="2">Married</option>
+                            <option value="3">Married with children</option>
+                        </select>
+                        @error('emergency.status_pernikahan')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <input type="submit" class="btn btn-block btn-primary" form="formeditmodalEmergency" value="Update" />
+            </div>
+        </div>
+    </div>
+    <div class="modal__container" wire:ignore.self id="editmodalSaving">
+        <div class="bg-black modal__content">
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white">Regular Savings Fund</h5>
+                <button onclick="closeModal('editmodalSaving')" class="close text-white">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formeditmodalSaving" wire:submit.prevent="update">
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input type="text" name="target" type-currency="IDR" inputmode="numeric" required
+                            wire:model.defer="saving.target" placeholder="Starting Funds"
+                            class="border-0 form-control form-control-user @error('saving.target') is-invalid @enderror">
+                        @error('saving.target')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input type="text" name="jumlah" type-currency="IDR" inputmode="numeric"
+                            wire:model.defer="saving.jumlah" required placeholder="Amount to invest each month"
+                            class="border-0 form-control form-control-user @error('saving.jumlah') is-invalid @enderror">
+                        @error('saving.jumlah')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input type="text" maxlength="2"
+                            class="border-0 form-control form-control-user @error('saving.bulan') is-invalid @enderror"
+                            wire:model.defer="saving.bulan" name="bulan" placeholder="How long?" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">months</span>
+                        </div>
+                        @error('saving.bulan')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <input type="submit" class="btn btn-primary btn-block" form="formeditmodalSaving" value="Update" />
+            </div>
+        </div>
+    </div>
+    <div class="modal__container" wire:ignore.self id="editmodalFund">
+        <div class="bg-black modal__content">
+
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white">Fund For Stuff</h5>
+                <button onclick="closeModal('editmodalFund')" class="close text-white">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formeditmodalFund" wire:submit.prevent="update">
+                    <div class="form-group">
+                        <input type="text"
+                            class="border-0 form-control form-control-user @error('fund.nama') is-invalid @enderror"
+                            name="nama" wire:model.defer="fund.nama" placeholder="Stuff Name" required>
+                        @error('fund.nama')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input type="text" name="target" type-currency="IDR" inputmode="numeric"
+                            wire:model.defer="fund.target" required placeholder="Stuff Price"
+                            class="border-0 form-control form-control-user @error('fund.target') is-invalid @enderror">
+                        @error('fund.target')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input type="number" wire:model.defer="fund.bulan"
+                            class="border-0 form-control form-control-user @error('fund.bulan') is-invalid @enderror"
+                            name="bulan" placeholder="How long?" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">months</span>
+                        </div>
+                        @error('fund.bulan')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input type="text" name="jumlah" type-currency="IDR" inputmode="numeric"
+                            wire:model.defer="fund.jumlah" required placeholder="Fund Avalible Now"
+                            class="border-0 form-control form-control-user @error('fund.jumlah') is-invalid @enderror">
+                        @error('fund.jumlah')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <input type="submit" class="btn btn-primary btn-block" form="formeditmodalFund" value="Update" />
+            </div>
+        </div>
+    </div>
+    <div class="modal__container" wire:ignore.self id="deleteModal">
+        <div class="bg-black modal__content">
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white" id="exampleModalLabel">Delete {{ $name }}?</h5>
+                <button class="close text-white" type="button" onclick="closeModal('deleteModal')">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body text-white">Select "Delete" below if you are ready to delete this Financial Plan,
+                this
+                action cannot
+                be undone </div>
+            <div class="modal-footer border-0">
+                <a class="btn btn-danger btn-block" href="javascript:void(0)" wire:click="delete">Delete</a>
+            </div>
+        </div>
+    </div>
     @livewire('financialplan.create-dana-darurat')
     @livewire('financialplan.create-dana-menabung')
     @livewire('financialplan.create-dana-membeli-barang')
-    <br><br><br><br><br><br><br>
 
+    <br><br><br><br><br><br><br>
 </div>
 @section('script')
     <script>

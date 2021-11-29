@@ -58,7 +58,15 @@ class CreateDanaMembeliBarang extends Component
             'dana_awal' => $this->form['jumlah']
         ]);
         $this->emit('success', 'Fund For Stuff Plan have been saved');
-        return redirect(route('financialplan'));
+        $this->emit("hidemodalFund");
+        $this->emit('refreshFinancialPlan');
+        $this->resetErrorBag();
+        $this->form = [
+            'nama' => '',
+            'target' => '',
+            'bulan' => '',
+            'jumlah' => ''
+        ];
     }
     public function render()
     {

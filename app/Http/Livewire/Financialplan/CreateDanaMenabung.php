@@ -54,8 +54,14 @@ class CreateDanaMenabung extends Component
             'dana_awal' => $this->form['target']
         ]);
         $this->emit('success', 'Savings Fund Plan have been saved');
-
-        return redirect(route('financialplan'));
+        $this->emit("hidemodalSaving");
+        $this->emit('refreshFinancialPlan');
+        $this->resetErrorBag();
+        $this->form = [
+            'target' => '',
+            'jumlah' => '',
+            'bulan' => ''
+        ];
     }
     public function render()
     {

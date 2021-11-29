@@ -43,7 +43,13 @@ class CreateDanaDarurat extends Component
             'perbulan' => $this->form['jumlah'] / $multiply
         ]);
         $this->emit('success', 'Emergency Fund Plan have been saved');
-
+        $this->emit("hidemodalEmergency");
+        $this->emit('refreshFinancialPlan');
+        $this->resetErrorBag();
+        $this->form = [
+            'jumlah' => '',
+            'status' => ''
+        ];
         return redirect(route('financialplan'));
     }
     public function render()
