@@ -66,7 +66,7 @@
                                     <br>
                                     Date : {{ $cicilan->tanggal }}
                                 </div>
-                                {{ $cicilan->sekarang }}/{{ $cicilan->bulan }}
+                                {{ $cicilan->sekarang }}/@if ($cicilan->bulan == 0)∞@else{{ $cicilan->bulan }}@endif
                             </div>
                         </div>
                         <hr class="bg-white my-1">
@@ -195,7 +195,7 @@
                             <div class="mb-3 hide-inputbtns input-group">
                                 <input type="number"
                                     class="border-0 form-control form-control-user @error('form.bulan') is-invalid @enderror"
-                                    name="bulan" wire:model.defer="form.bulan" placeholder="How Many Months" required>
+                                    name="bulan" wire:model.defer="form.bulan" placeholder="How Many Months">
                                 <div class="input-group-append">
                                     <span class="input-group-text">bulan</span>
                                 </div>
@@ -288,6 +288,9 @@
                                 @enderror
                             </div>
                         </form>
+                        <div class="text-white">
+                            <b>Empty How Many Months Field For Infinity Repetition</b>
+                        </div>
                     </div>
                     <div class="modal-footer border-0">
                         <input type="submit" class="btn btn-primary btn-block" form="formeditmodal" value="Edit" />

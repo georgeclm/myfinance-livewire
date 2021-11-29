@@ -39,7 +39,6 @@ class Create extends Component
             'form.sekarang' => ['required', 'numeric', 'in:0'],
             'form.nama' => 'required',
             'form.tanggal' => ['required', 'numeric'],
-            'form.bulan' => ['required', 'numeric'],
             'form.jenisuang_id' => 'required',
             'form.jumlah' => ['required', 'numeric'],
             'form.rekening_id' => ['required', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
@@ -90,6 +89,9 @@ class Create extends Component
         }
         if ($this->form['category_masuk_id'] == '') {
             $this->form['category_masuk_id'] = null;
+        }
+        if ($this->form['bulan'] == '') {
+            $this->form['bulan'] = 0;
         }
         $this->form['user_id'] = auth()->id();
         $this->frontJumlah = $this->form['jumlah'];

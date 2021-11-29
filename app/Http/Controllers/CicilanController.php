@@ -19,7 +19,7 @@ class CicilanController extends Controller
         $cicilans = Cicilan::where('tanggal', $tanggal)->get();
         // dd($cicilans);
         foreach ($cicilans as $cicilan) {
-            if ($cicilan->sekarang < $cicilan->bulan) {
+            if ($cicilan->sekarang < $cicilan->bulan || $cicilan->bulan == 0) {
                 $cicilan->sekarang++;
                 $cicilan->save();
                 $rekening1 = Rekening::findOrFail($cicilan->rekening_id);

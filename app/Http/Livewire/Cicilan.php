@@ -35,7 +35,6 @@ class Cicilan extends Component
             'form.nama' => 'required',
             'form.tanggal' => ['required', 'numeric'],
             'form.bulan' => ['required', 'numeric'],
-            'form.jumlah' => ['required', 'numeric'],
             'form.rekening_id' => ['required', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.rekening_id2' => ['nullable', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.keterangan' => 'nullable',
@@ -67,6 +66,9 @@ class Cicilan extends Component
     }
     public function update()
     {
+        if ($this->form['bulan'] == '') {
+            $this->form['bulan'] = 0;
+        }
         $this->frontJumlah = $this->form['jumlah'];
         $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
         $this->validate();
