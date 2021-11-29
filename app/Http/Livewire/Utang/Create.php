@@ -65,7 +65,17 @@ class Create extends Component
         ModelsUtang::create($this->form);
 
         session()->flash('success', 'Debt have been stored');
-        return redirect(route('utang'));
+        $this->emit("hideCreatePocket");
+        $this->emit('refreshDebt');
+        $this->resetErrorBag();
+        $this->form = [
+            'nama' => '',
+            'jumlah' => '',
+            'rekening_id' => '',
+            'keterangan' => null,
+            'user_id' => '',
+            'lunas' => 0
+        ];
     }
     public function render()
     {

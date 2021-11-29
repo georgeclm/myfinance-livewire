@@ -238,7 +238,6 @@
                     </div>
                     @if (in_array($transaction->jenisuang_id, [1, 2]))
                         <a href="javascript:void(0)" wire:click="refundModal({{ $transaction->id }})"
-                            onclick="showModal('refund-{{ $transaction->id }}')"
                             class="btn btn-sm btn-warning btn-icon-split">
                             <span class="icon text-white-50">
                                 <i class="fas fa-exclamation-triangle"></i>

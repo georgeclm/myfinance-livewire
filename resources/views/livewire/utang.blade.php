@@ -1,10 +1,31 @@
 @section('title', 'Your Debt - My Finance')
 <div class="container-fluid small-when-0">
+    @if (session()->has('success'))
+        <script>
+            new Notify({
+                status: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                effect: 'fade',
+                speed: 300,
+                customClass: null,
+                customIcon: null,
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 3000,
+                gap: 20,
+                distance: 20,
+                type: 2,
+                position: 'right top'
+            })
+        </script>
+    @endif
     <!-- Page Heading -->
     <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Your Debt</h1>
         @if (auth()->user()->rekenings->isNotEmpty())
-            <button onclick="showModal('create-debt')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+            <button onclick="showModal('new-pocket')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
                     class="fas fa-download fa-sm text-white-50"></i> Add Your Debt</button>
         @endif
     </div>
@@ -43,14 +64,14 @@
         </div>
         <div class="card-body">
             @forelse (auth()->user()->utangs as $utang)
-                @livewire('utang.edit',['utang'=> $utang])
+                {{-- @livewire('utang.edit',['utang'=> $utang]) --}}
 
                 <div class="py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-danger">
                         {{ $utang->nama }} - Rp.
                         {{ number_format($utang->jumlah, 0, ',', '.') }}
                     </h6>
-                    <button onclick="showModal('edit-debt-{{ $utang->id }}')" class="btn btn-sm btn-info btn-circle">
+                    <button wire:click="editModal({{ $utang->id }})" class="btn btn-sm btn-info btn-circle">
                         <i class="fas fa-info-circle"></i>
                     </button>
                 </div>
@@ -71,6 +92,38 @@
                     No Debt
                 </div>
             @endforelse
+        </div>
+    </div>
+    <div class="modal__container" wire:ignore.self id="editModal">
+        <div class="bg-black modal__content">
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white">
+                    Update
+                    Debt
+                </h5>
+                <button class="close text-white" onclick="closeModal('editModal')">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="Utangform" wire:submit.prevent="update">
+                    <div class="form-group">
+                        <input type="text" name="nama" required wire:model.defer="form.nama" placeholder="Debt to who"
+                            class="border-0 form-control form-control-user">
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input wire:model="form.jumlah" type-currency="IDR" inputmode="numeric" type="text" readonly
+                            placeholder="Jumlah Utang" class="border-0 form-control form-control-user">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" wire:model.defer="form.keterangan" name="keterangan"
+                            placeholder="Description" class="border-0 form-control form-control-user">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <input type="submit" class="btn btn-block btn-warning" form="Utangform" value="Edit" />
+            </div>
         </div>
     </div>
 
