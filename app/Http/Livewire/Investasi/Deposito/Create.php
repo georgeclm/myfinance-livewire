@@ -11,7 +11,6 @@ use Livewire\Component;
 
 class Create extends Component
 {
-    public $error;
     public $form = [
         'nama_bank' => '',
         'nama_deposito' => '',
@@ -52,9 +51,7 @@ class Create extends Component
 
         if ($this->form['jumlah'] > $rekening->saldo_sekarang) {
             $this->form['jumlah'] = $frontJumlah;
-            $this->error = 'Balance Not Enough';
-            $this->dispatchBrowserEvent('contentChanged');
-            return $this->render();
+            return $this->emit('error', 'Balance Not Enough');
         }
 
         $rekening->saldo_sekarang -= $this->form['jumlah'];
@@ -74,7 +71,8 @@ class Create extends Component
         ]);
         $this->form['harga_jual'] = $this->form['jumlah'] * (100 + $this->form['bunga']) / 100;
         Deposito::create($this->form + ['user_id' => auth()->id()]);
-        session()->flash('success', 'Deposito have been saved');
+        $this->emit('success', 'Deposito have been saved');
+
         return redirect(route('deposito'));
     }
 

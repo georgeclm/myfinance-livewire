@@ -14,7 +14,6 @@ class CreateDanaMembeliBarang extends Component
         'bulan' => '',
         'jumlah' => ''
     ];
-    public $error;
     public $rules = [
         'form.nama' => 'required',
         'form.target' => ['required', 'numeric'],
@@ -43,9 +42,7 @@ class CreateDanaMembeliBarang extends Component
         if ($this->form['target'] == '0') {
             $this->form['target'] = $frontTarget;
             $this->form['jumlah'] = $frontJumlah;
-            $this->error = 'Stuff Price cannot be 0';
-            $this->dispatchBrowserEvent('contentChanged');
-            return $this->render();
+            return $this->emit('error', 'Stuff Price cannot be 0');
         }
         $target = $this->form['target'] - $this->form['jumlah'];
         $perbulan = $target / $this->form['bulan'];
@@ -60,7 +57,7 @@ class CreateDanaMembeliBarang extends Component
             'bulan' => $this->form['bulan'],
             'dana_awal' => $this->form['jumlah']
         ]);
-        session()->flash('success', 'Fund For Stuff Plan have been saved');
+        $this->emit('success', 'Fund For Stuff Plan have been saved');
         return redirect(route('financialplan'));
     }
     public function render()

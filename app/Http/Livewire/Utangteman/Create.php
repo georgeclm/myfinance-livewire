@@ -17,7 +17,6 @@ class Create extends Component
         'user_id' => '',
         'lunas' => 0
     ];
-    public $error;
 
     public function updated($propertyName)
     {
@@ -54,25 +53,31 @@ class Create extends Component
         $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
         if ($this->form['jumlah'] == '0') {
             $this->form['jumlah'] = $frontJumlah;
-            $this->error = 'Total cannot be 0';
-            $this->dispatchBrowserEvent('contentChanged');
-            return $this->render();
+            return $this->emit('error', 'Total cannot be 0');
         }
         $this->validate();
 
         $rekening = Rekening::findOrFail($this->form['rekening_id']);
         if ($rekening->saldo_sekarang < request()->jumlah) {
             $this->form['jumlah'] = $frontJumlah;
-            $this->error = 'Balance not enough';
-            $this->dispatchBrowserEvent('contentChanged');
-            return $this->render();
+            return $this->emit('error', 'Total cannot be 0');
         }
         $rekening->saldo_sekarang -= $this->form['jumlah'];
         $rekening->save();
         Utangteman::create($this->form);
 
-        session()->flash('success', 'Friend Debt have been stored');
-        return redirect(route('utangteman'));
+        $this->emit('success', 'Friend Debt have been stored');
+        $this->emit("hideCreatePocket");
+        $this->emit('refreshFriendDebt');
+        $this->resetErrorBag();
+        $this->form = [
+            'nama' => '',
+            'jumlah' => '',
+            'rekening_id' => '',
+            'keterangan' => null,
+            'user_id' => '',
+            'lunas' => 0
+        ];
     }
 
     public function render()

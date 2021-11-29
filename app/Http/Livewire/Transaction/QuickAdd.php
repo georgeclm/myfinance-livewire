@@ -16,7 +16,6 @@ class QuickAdd extends Component
 {
     public $categories;
     public $category_masuks;
-    public $error;
     public $form = [
         'user_id' => '',
         'jenisuang_id' => '',
@@ -62,10 +61,8 @@ class QuickAdd extends Component
         $frontJumlah = $this->form['jumlah'];
         $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
         if ($this->form['jumlah'] == '0') {
-            $this->error = 'Total cannot be 0';
             $this->form['jumlah'] = $frontJumlah;
-            $this->dispatchBrowserEvent('contentChanged');
-            return $this->render();
+            return $this->emit('error', 'Total cannot be 0');
         }
         $this->validate();
         $rekening1 = Rekening::find($this->form['rekening_id']);
@@ -75,9 +72,7 @@ class QuickAdd extends Component
         } else {
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
                 $this->form['jumlah'] = $frontJumlah;
-                $this->error = 'Total is more than the curent pocket balance';
-                $this->dispatchBrowserEvent('contentChanged');
-                return $this->render();
+                return $this->emit('error', 'Total is more than the curent pocket balance');
             }
             if ($this->form['jumlah'] > Auth::user()->total_with_assets() / 10) {
                 $msg = 'You just spent more than you can afford';
@@ -87,8 +82,19 @@ class QuickAdd extends Component
         }
 
         Transaction::create($this->form);
-        session()->flash('success', $msg);
-        return redirect(route('transaction'));
+        $this->emit("hideCreateTransaction");
+        $this->emit('success', $msg);
+        $this->emit('refreshTransaction');
+        $this->resetErrorBag();
+        $this->form = [
+            'jenisuang_id' => '',
+            'jumlah' => '',
+            'rekening_id' => '',
+            'keterangan' => '',
+            'category_id' => '',
+            'category_masuk_id' => ''
+        ];
+        // return redirect(route('transaction'));
     }
     public function render()
     {

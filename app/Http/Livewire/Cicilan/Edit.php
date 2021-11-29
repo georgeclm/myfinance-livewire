@@ -33,12 +33,6 @@ class Edit extends Component
         ];
     }
 
-    public function callError($msg)
-    {
-        $this->form['jumlah'] = $this->frontJumlah;
-        $this->error = $msg;
-        $this->dispatchBrowserEvent('contentChanged');
-    }
 
     public function mount()
     {
@@ -53,8 +47,8 @@ class Edit extends Component
         $this->validate();
         // dd($this->form);
         if ($this->form['tanggal'] > 31 || $this->form['tanggal'] < 1) {
-            $this->callError('Date must be between 1 to 31');
-            return $this->render();
+            $this->form['jumlah'] = $this->frontJumlah;
+            return $this->emit('error', 'Date must be between 1 to 31');
         }
         // dd($this->form);
 
@@ -62,39 +56,40 @@ class Edit extends Component
         if ($this->form['jenisuang_id'] == 1) {
         } else if ($this->form['jenisuang_id'] == 2) {
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
-                $this->callError('Total is more than the curent pocket balance');
-                return $this->render();
+                $this->form['jumlah'] = $this->frontJumlah;
+                return $this->emit('error', 'Total is more than the curent pocket balance');
             }
         } else if ($this->form['jenisuang_id'] == 4) {
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
-                $this->callError('Total is more than the curent pocket balance');
-                return $this->render();
+                $this->form['jumlah'] = $this->frontJumlah;
+                return $this->emit('error', 'Total is more than the curent pocket balance');
             }
             $utang = Utang::findOrFail($this->form['utang_id']);
             if ($utang->jumlah < $this->form['jumlah'] * $this->form['bulan']) {
-                $this->callError('Pay More than the debt');
-                return $this->render();
+                $this->form['jumlah'] = $this->frontJumlah;
+                return $this->emit('error', 'Pay More than the debt');
             }
         } else if ($this->form['jenisuang_id'] == 5) {
             $utang = Utangteman::findOrFail($this->form['utangteman_id']);
             if ($utang->jumlah < $this->form['jumlah'] * $this->form['bulan']) {
-                $this->callError('Pay More than the debt');
-                return $this->render();
+                $this->form['jumlah'] = $this->frontJumlah;
+                return $this->emit('error', 'Pay More than the debt');
             }
         } else {
             if ($rekening1->saldo_sekarang < $this->form['jumlah']) {
-                $this->callError('Total is more than the curent pocket balance');
-                return $this->render();
+                $this->form['jumlah'] = $this->frontJumlah;
+                return $this->emit('error', 'Total is more than the curent pocket balance');
             }
             $rekening2 = Rekening::findOrFail($this->form['rekening_id2']);
             if ($rekening1 == $rekening2) {
-                $this->callError('Cant Transfer to the same pocket');
-                return $this->render();
+                $this->form['jumlah'] = $this->frontJumlah;
+                return $this->emit('error', 'Cant Transfer to the same pocket');
             }
         }
         // dd($this->form);
         $this->cicilan->update($this->form);
-        session()->flash('success', 'Repetition have been updated');
+        $this->emit('success', 'Cant Transfer to the same pocket');
+
         return redirect(route('cicilan'));
     }
     public function render()

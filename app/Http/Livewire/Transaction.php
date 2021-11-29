@@ -17,7 +17,6 @@ class Transaction extends Component
 
     public $jenisuangs;
     public $daterange = null;
-    public $error;
     protected $listeners = ['refreshTransaction'];
     public $jumlah;
     public $jenisuang_id;
@@ -42,9 +41,7 @@ class Transaction extends Component
 
         if ($this->transaction->jenisuang_id == 1) {
             if ($rekening1->saldo_sekarang < $this->transaction->jumlah) {
-                $this->error = 'Pocket doesnt have enough money';
-                $this->dispatchBrowserEvent('contentChanged');
-                return $this->render();
+                return $this->emit('error', 'Pocket doesnt have enough money');
             }
             $rekening1->saldo_sekarang -= $this->transaction->jumlah;
             $rekening1->save();
@@ -53,10 +50,8 @@ class Transaction extends Component
             $rekening1->save();
         }
         $this->transaction->delete();
-        session()->flash('success', "Transaction have been reverted");
+        $this->emit('success', 'Transaction have been reverted');
         $this->emit('hideEdit');
-        $this->render();
-        $this->resetErrorBag();
     }
     public function mount()
     {

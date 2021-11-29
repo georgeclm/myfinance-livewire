@@ -1,26 +1,5 @@
 @section('title', 'Transaction - My Finance')
 <div class="container-fluid small-when-0">
-    @if (session()->has('success'))
-        <script>
-            new Notify({
-                status: 'success',
-                title: 'Success',
-                text: "{{ session('success') }}",
-                effect: 'fade',
-                speed: 300,
-                customClass: null,
-                customIcon: null,
-                showIcon: true,
-                showCloseButton: true,
-                autoclose: true,
-                autotimeout: 3000,
-                gap: 20,
-                distance: 20,
-                type: 2,
-                position: 'right top'
-            })
-        </script>
-    @endif
     <!-- Page Heading -->
     <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Financial Records</h1>
@@ -209,11 +188,8 @@
         </div>
         <div class="card-body" wire:loading.remove>
             @forelse ($transactions as $transaction)
-
-
                 <div class="pt-3 pb-0 d-flex flex-row align-items-center justify-content-between">
                     <div class="flex-grow-1">
-
                         <h6 class="m-0 font-weight-bold {{ $transaction->jenisuang->textColor() }}">
                             @switch($transaction->jenisuang_id)
                                 @case(1)
@@ -236,7 +212,7 @@
                             {{ number_format($transaction->jumlah, 0, ',', '.') }}
                         </h6>
                     </div>
-                    @if (in_array($transaction->jenisuang_id, [1, 2]))
+                    @if (in_array($transaction->jenisuang_id, [1, 2]) && $transaction->rekening->nama_akun != 'Pocket Deleted')
                         <a href="javascript:void(0)" wire:click="refundModal({{ $transaction->id }})"
                             class="btn btn-sm btn-warning btn-icon-split">
                             <span class="icon text-white-50">
@@ -288,27 +264,4 @@
             </div>
         </div>
         @livewire('transaction.create',['jenisuangs' => $jenisuangs])
-        @if ($error)
-            <script>
-                window.addEventListener('contentChanged', event => {
-                    new Notify({
-                        status: 'error',
-                        title: 'Error',
-                        text: "{{ $error }}",
-                        effect: 'fade',
-                        speed: 300,
-                        customClass: null,
-                        customIcon: null,
-                        showIcon: true,
-                        showCloseButton: true,
-                        autoclose: true,
-                        autotimeout: 3000,
-                        gap: 20,
-                        distance: 20,
-                        type: 2,
-                        position: 'right top'
-                    })
-                });
-            </script>
-        @endif
     </div>

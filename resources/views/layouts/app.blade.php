@@ -409,7 +409,7 @@
         @if (!in_array(Route::current()->uri, ['login', 'register']))
             @if (!auth()->user()->rekenings->isEmpty() &&
     !in_array(Route::current()->uri, ['transactions', 'repetitions']))
-                <a class="add-button rounded-circle" onclick="showModal('quickAdd')" href="javascript:void(0)">
+                <a class="add-button rounded-circle" onclick="showModal('createTransaction')" href="javascript:void(0)">
                     <i class="fas fa-plus"></i>
                 </a>
                 @livewire('transaction.quick-add')
@@ -584,12 +584,12 @@
         }
     </script>
     @yield('script')
-    @if (session('error'))
-        <script>
+    <script>
+        Livewire.on('error', message => {
             new Notify({
                 status: 'error',
                 title: 'Error',
-                text: "{{ session('error') }}",
+                text: message,
                 effect: 'fade',
                 speed: 300,
                 customClass: null,
@@ -603,14 +603,12 @@
                 type: 2,
                 position: 'right top'
             })
-        </script>
-    @endif
-    @if (session()->has('success'))
-        <script>
+        })
+        Livewire.on('success', message => {
             new Notify({
                 status: 'success',
                 title: 'Success',
-                text: "{{ session('success') }}",
+                text: message,
                 effect: 'fade',
                 speed: 300,
                 customClass: null,
@@ -624,8 +622,8 @@
                 type: 2,
                 position: 'right top'
             })
-        </script>
-    @endif
+        })
+    </script>
 </body>
 
 </html>

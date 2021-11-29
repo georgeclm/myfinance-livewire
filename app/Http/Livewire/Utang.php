@@ -37,7 +37,8 @@ class Utang extends Component
             'keterangan' => $this->form['keterangan'],
         ]);
 
-        session()->flash('success', 'Debt have been updated');
+        $this->emit('success', 'Debt have been updated');
+
         $this->emit('hideEdit');
     }
 

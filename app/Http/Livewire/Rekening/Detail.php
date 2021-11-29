@@ -13,7 +13,10 @@ class Detail extends Component
     public $rekening;
     public $jenisuangs;
     public $daterange = null;
-    public $error;
+    public $jumlah;
+    public $jenisuang_id;
+    public $transaction;
+
 
     public function mount(Rekening $rekening)
     {
@@ -33,26 +36,30 @@ class Detail extends Component
         $transactions = $transactions->where('rekening_id', $this->rekening->id)->orWhere('rekening_id2', $this->rekening->id)->latest()->get();
         return view('livewire.rekening.detail', compact('transactions'));
     }
-    public function revert($id)
+    public function revert()
     {
-        $transaction = Transaction::findOrFail($id);
-        $rekening1 = Rekening::find($transaction->rekening_id);
+        $rekening1 = Rekening::find($this->transaction->rekening_id);
 
-        if ($transaction->jenisuang_id == 1) {
-            if ($rekening1->saldo_sekarang < $transaction->jumlah) {
-                $this->error = 'Pocket doesnt have enough money';
-                $this->dispatchBrowserEvent('contentChanged');
-                return $this->render();
+        if ($this->transaction->jenisuang_id == 1) {
+            if ($rekening1->saldo_sekarang < $this->transaction->jumlah) {
+                return $this->emit('error', 'Pocket doesnt have enough money');
             }
-            $rekening1->saldo_sekarang -= $transaction->jumlah;
+            $rekening1->saldo_sekarang -= $this->transaction->jumlah;
             $rekening1->save();
         } else {
-            $rekening1->saldo_sekarang += $transaction->jumlah;
+            $rekening1->saldo_sekarang += $this->transaction->jumlah;
             $rekening1->save();
         }
-        $transaction->delete();
-        session()->flash('success', "Transaction have been reverted");
-
-        return redirect(route('rekening.show', $this->rekening->id));
+        $this->transaction->delete();
+        $this->emit('success', 'Transaction have been reverted');
+        $this->emit('hideEdit');
+    }
+    public function refundModal($primaryId)
+    {
+        $this->transaction = Transaction::findOrFail($primaryId);
+        // dd($transaction);
+        $this->jumlah = $this->transaction->jumlah;
+        $this->jenisuang_id = $this->transaction->jenisuang_id;
+        $this->emit('editModal');
     }
 }

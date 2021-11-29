@@ -39,7 +39,7 @@ class Create extends Component
         ]);
 
         ModelsRekening::create($this->form);
-        session()->flash('success', 'New Pocket have been registered');
+        $this->emit('success', 'New Pocket have been registered');
         $this->emit("hideCreatePocket");
         $this->emit('refreshBalance');
         $this->emit('refreshPocket');

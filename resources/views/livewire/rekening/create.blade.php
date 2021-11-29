@@ -1,25 +1,3 @@
-<div>
-    @if (session()->has('success'))
-        <script>
-            new Notify({
-                status: 'success',
-                title: 'Success',
-                text: "{{ session('success') }}",
-                effect: 'fade',
-                speed: 300,
-                customClass: null,
-                customIcon: null,
-                showIcon: true,
-                showCloseButton: true,
-                autoclose: true,
-                autotimeout: 3000,
-                gap: 20,
-                distance: 20,
-                type: 2,
-                position: 'right top'
-            })
-        </script>
-    @endif
     <div class="modal__container" wire:ignore id="new-pocket">
         <div class="bg-black modal__content">
             <div class="modal-header bg-gray-100 border-0">
@@ -125,89 +103,88 @@
             </div>
         </div>
     </div>
-</div>
 
-@section('script')
-    <script>
-        run();
-        window.livewire.on('refreshView', () => {
+    @section('script')
+        <script>
+            run();
+            window.livewire.on('refreshView', () => {
+                refresh();
+            });
             refresh();
-        });
-        refresh();
 
-        function refresh() {
+            function refresh() {
 
-            $('.livesearch').select2({
-                placeholder: 'Select bank',
-                ajax: {
-                    url: '/bank-search',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.nama,
-                                    id: item.nama
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-            $('.livesearch').on('change', function(e) {
-                var data = $('.livesearch').select2("val");
-                @this.set('form.nama_bank', data);
-            });
-            $(document).ready(function() {
-                $(".dropdown-toggle").dropdown();
-                $('#thebank').hide('slow');
-                $('#ewallet').hide('slow');
-            });
-            // $(document).ready(function() {
-            //     $('#1').DataTable();
-            //     $('#2').DataTable();
-            //     $('#3').DataTable();
-            // });
-
-            $('.theselect').on('change', function(e) {
-                var optionSelected = $("option:selected", this);
-                var valueSelected = this.value;
-                $('#nama-akun').prop('disabled', false);
-                $('#nama-bank').prop('disabled', false);
-                $('#saldo_mengendap').prop('disabled', false);
-                $('#saldo_sekarang').prop('disabled', false);
-                $('#keteranganpocket').prop('disabled', false);
-                $('#ewallet').prop('disabled', false);
-                if (valueSelected == 1) {
-                    $('#nama_bank').prop('disabled', true);
+                $('.livesearch').select2({
+                    placeholder: 'Select bank',
+                    ajax: {
+                        url: '/bank-search',
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function(data) {
+                            return {
+                                results: $.map(data, function(item) {
+                                    return {
+                                        text: item.nama,
+                                        id: item.nama
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
+                $('.livesearch').on('change', function(e) {
+                    var data = $('.livesearch').select2("val");
+                    @this.set('form.nama_bank', data);
+                });
+                $(document).ready(function() {
+                    $(".dropdown-toggle").dropdown();
                     $('#thebank').hide('slow');
                     $('#ewallet').hide('slow');
-                    $('#ewallet').prop('required', false);
-                    $('#nama_bank').prop('required', false);
-                    $('#saldo_mengendap').prop('disabled', true);
-                    $('#saldo_mengendap').prop('required', false);
-                } else if (valueSelected == 2) {
-                    $('#nama_bank').prop('disabled', false);
-                    $('#thebank').show('slow');
-                    $('#ewallet').hide('slow');
-                    $('#ewallet').prop('required', false);
-                    $('#nama_bank').prop('required', true);
+                });
+                // $(document).ready(function() {
+                //     $('#1').DataTable();
+                //     $('#2').DataTable();
+                //     $('#3').DataTable();
+                // });
+
+                $('.theselect').on('change', function(e) {
+                    var optionSelected = $("option:selected", this);
+                    var valueSelected = this.value;
+                    $('#nama-akun').prop('disabled', false);
+                    $('#nama-bank').prop('disabled', false);
                     $('#saldo_mengendap').prop('disabled', false);
-                    $('#saldo_mengendap').prop('required', true);
-                } else {
-                    $('#nama_bank').prop('disabled', false);
-                    $('#thebank').hide('slow');
-                    $('#ewallet').show('slow');
-                    $('#nama_bank').prop('required', false);
-                    $('#saldo_mengendap').prop('disabled', true);
-                    $('#saldo_mengendap').prop('required', false);
+                    $('#saldo_sekarang').prop('disabled', false);
+                    $('#keteranganpocket').prop('disabled', false);
                     $('#ewallet').prop('disabled', false);
-                    $('#ewallet').prop('required', true);
-                }
-            });
-        }
-    </script>
+                    if (valueSelected == 1) {
+                        $('#nama_bank').prop('disabled', true);
+                        $('#thebank').hide('slow');
+                        $('#ewallet').hide('slow');
+                        $('#ewallet').prop('required', false);
+                        $('#nama_bank').prop('required', false);
+                        $('#saldo_mengendap').prop('disabled', true);
+                        $('#saldo_mengendap').prop('required', false);
+                    } else if (valueSelected == 2) {
+                        $('#nama_bank').prop('disabled', false);
+                        $('#thebank').show('slow');
+                        $('#ewallet').hide('slow');
+                        $('#ewallet').prop('required', false);
+                        $('#nama_bank').prop('required', true);
+                        $('#saldo_mengendap').prop('disabled', false);
+                        $('#saldo_mengendap').prop('required', true);
+                    } else {
+                        $('#nama_bank').prop('disabled', false);
+                        $('#thebank').hide('slow');
+                        $('#ewallet').show('slow');
+                        $('#nama_bank').prop('required', false);
+                        $('#saldo_mengendap').prop('disabled', true);
+                        $('#saldo_mengendap').prop('required', false);
+                        $('#ewallet').prop('disabled', false);
+                        $('#ewallet').prop('required', true);
+                    }
+                });
+            }
+        </script>
 
-@endsection
+    @endsection

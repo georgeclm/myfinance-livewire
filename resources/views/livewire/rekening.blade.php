@@ -1,26 +1,5 @@
 @section('title', 'Pockets - My Finance')
 <div class="container-fluid small-when-0">
-    @if (session()->has('success'))
-        <script>
-            new Notify({
-                status: 'success',
-                title: 'Success',
-                text: "{{ session('success') }}",
-                effect: 'fade',
-                speed: 300,
-                customClass: null,
-                customIcon: null,
-                showIcon: true,
-                showCloseButton: true,
-                autoclose: true,
-                autotimeout: 3000,
-                gap: 20,
-                distance: 20,
-                type: 2,
-                position: 'right top'
-            })
-        </script>
-    @endif
     <!-- Page Heading -->
     <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Pockets</h1>

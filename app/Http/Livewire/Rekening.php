@@ -50,13 +50,14 @@ class Rekening extends Component
         $this->name = $this->rekening->nama_akun;
         $this->saldo = $this->rekening->saldo_sekarang;
         $this->emit("adjustModal");
+        $this->emit('run');
     }
     public function delete()
     {
         $this->rekening->delete();
         $this->emit("hideDelete");
         $this->emit('refreshBalance');
-        session()->flash('success', 'Pocket have been deleted');
+        $this->emit('success', 'Pocket have been deleted');
     }
     public function adjust()
     {
@@ -95,7 +96,7 @@ class Rekening extends Component
         $this->emit('refreshBalance');
         $this->resetErrorBag();
         $this->update_saldo = null;
-        session()->flash('success', 'Balance have been updated');
+        $this->emit('success', 'Balance have been updated');
     }
     public function update()
     {
@@ -121,7 +122,8 @@ class Rekening extends Component
         $this->emit("hideEdit");
         $this->emit('refreshBalance');
 
-        session()->flash('success', 'Pocket have been updated');
+        $this->emit('success', 'Pocket have been updated');
+
         $this->resetErrorBag();
     }
     public function render()

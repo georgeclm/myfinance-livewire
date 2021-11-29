@@ -17,7 +17,6 @@ class Create extends Component
         'user_id' => '',
         'lunas' => 0
     ];
-    public $error;
 
 
     public function updated($propertyName)
@@ -53,8 +52,7 @@ class Create extends Component
         $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
         if ($this->form['jumlah'] == '0') {
             $this->form['jumlah'] = $frontJumlah;
-            $this->error = 'Total cannot be 0';
-            return $this->render();
+            return $this->emit('error', 'Total cannot be 0');
         }
         $this->validate();
         // dd($this->form);
@@ -64,7 +62,8 @@ class Create extends Component
         $rekening->save();
         ModelsUtang::create($this->form);
 
-        session()->flash('success', 'Debt have been stored');
+        $this->emit('success', 'Debt have been stored');
+
         $this->emit("hideCreatePocket");
         $this->emit('refreshDebt');
         $this->resetErrorBag();

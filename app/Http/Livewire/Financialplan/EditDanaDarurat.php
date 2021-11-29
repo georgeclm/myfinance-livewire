@@ -11,7 +11,6 @@ class EditDanaDarurat extends Component
         'jumlah' => '',
         'status' => ''
     ];
-    public $error;
     public $rules = [
         'form.jumlah' => ['required', 'numeric'],
         'form.status' => ['required', 'numeric', 'in:1,2,3']
@@ -30,9 +29,7 @@ class EditDanaDarurat extends Component
         $this->validate();
         if ($this->form['jumlah'] == '0') {
             $this->form['jumlah'] = $frontJumlah;
-            $this->error = 'Fund cannot be 0';
-            $this->dispatchBrowserEvent('contentChanged');
-            return $this->render();
+            return $this->emit('error', 'Fund cannot be 0');
         }
 
         $multiply =  [
@@ -48,7 +45,8 @@ class EditDanaDarurat extends Component
             'perbulan' => $this->form['jumlah'] / $multiply
         ]);
 
-        session()->flash('success', 'Emergency Fund Plan have been updated');
+        $this->emit('success', 'Emergency Fund Plan have been updated');
+
         return redirect(route('financialplan'));
     }
     public function render()

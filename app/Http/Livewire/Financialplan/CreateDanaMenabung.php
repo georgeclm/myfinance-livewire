@@ -8,7 +8,6 @@ use Livewire\Component;
 class CreateDanaMenabung extends Component
 {
 
-    public $error;
     public $form = [
         'target' => '',
         'jumlah' => '',
@@ -40,9 +39,7 @@ class CreateDanaMenabung extends Component
         if ($this->form['target'] == '0') {
             $this->form['target'] = $frontTarget;
             $this->form['jumlah'] = $frontJumlah;
-            $this->error = 'Funds or how long cannot be 0';
-            $this->dispatchBrowserEvent('contentChanged');
-            return $this->render();
+            return $this->emit('error', 'Funds or how long cannot be 0');
         }
 
         $target = $this->form['target'] + ($this->form['jumlah'] * $this->form['bulan']);
@@ -56,7 +53,8 @@ class CreateDanaMenabung extends Component
             'bulan' => $this->form['bulan'],
             'dana_awal' => $this->form['target']
         ]);
-        session()->flash('success', 'Savings Fund Plan have been saved');
+        $this->emit('success', 'Savings Fund Plan have been saved');
+
         return redirect(route('financialplan'));
     }
     public function render()
