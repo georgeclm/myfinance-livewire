@@ -111,7 +111,7 @@ class CreateStock extends Component
             'jenisuang_id' => 2,
             'jumlah' => $this->form['total'],
             'rekening_id' => $this->form['rekening_id'],
-            'keterangan' => 'Beli Stock ' . $this->form['kode'],
+            'keterangan' => 'Buy Stock ' . $this->form['kode'],
             'category_id' => Category::firstWhere('nama', 'Investment')->id,
         ]);
         Stock::create($this->form + ['user_id' => auth()->id()]);

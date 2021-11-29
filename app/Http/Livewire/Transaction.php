@@ -18,8 +18,46 @@ class Transaction extends Component
     public $jenisuangs;
     public $daterange = null;
     public $error;
+    protected $listeners = ['refreshTransaction'];
+    public $jumlah;
+    public $jenisuang_id;
+    public $transaction;
 
+    public function refreshTransaction()
+    {
+        $this->render();
+    }
 
+    public function refundModal($primaryId)
+    {
+        $this->transaction = ModelsTransaction::findOrFail($primaryId);
+        // dd($transaction);
+        $this->jumlah = $this->transaction->jumlah;
+        $this->jenisuang_id = $this->transaction->jenisuang_id;
+        $this->emit('editModal');
+    }
+    public function revert()
+    {
+        $rekening1 = Rekening::find($this->transaction->rekening_id);
+
+        if ($this->transaction->jenisuang_id == 1) {
+            if ($rekening1->saldo_sekarang < $this->transaction->jumlah) {
+                $this->error = 'Pocket doesnt have enough money';
+                $this->dispatchBrowserEvent('contentChanged');
+                return $this->render();
+            }
+            $rekening1->saldo_sekarang -= $this->transaction->jumlah;
+            $rekening1->save();
+        } else {
+            $rekening1->saldo_sekarang += $this->transaction->jumlah;
+            $rekening1->save();
+        }
+        $this->transaction->delete();
+        session()->flash('success', "Transaction have been reverted");
+        $this->emit('hideEdit');
+        $this->render();
+        $this->resetErrorBag();
+    }
     public function mount()
     {
         $this->jenisuangs = Jenisuang::all();
@@ -67,27 +105,5 @@ class Transaction extends Component
         }
         $balance = $income - $spending;
         return view('livewire.transaction', compact('income', 'spending', 'balance', 'transactions'));
-    }
-    public function revert($id)
-    {
-        $transaction = ModelsTransaction::findOrFail($id);
-        $rekening1 = Rekening::find($transaction->rekening_id);
-
-        if ($transaction->jenisuang_id == 1) {
-            if ($rekening1->saldo_sekarang < $transaction->jumlah) {
-                $this->error = 'Pocket doesnt have enough money';
-                $this->dispatchBrowserEvent('contentChanged');
-                return $this->render();
-            }
-            $rekening1->saldo_sekarang -= $transaction->jumlah;
-            $rekening1->save();
-        } else {
-            $rekening1->saldo_sekarang += $transaction->jumlah;
-            $rekening1->save();
-        }
-        $transaction->delete();
-        session()->flash('success', "Transaction have been reverted");
-
-        return redirect(route('transaction'));
     }
 }

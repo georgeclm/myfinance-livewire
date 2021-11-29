@@ -171,6 +171,20 @@ class Create extends Component
 
         Transaction::create($this->form);
         session()->flash('success', $msg);
+        $this->emit("hideCreateTransaction");
+        $this->emit('refreshTransaction');
+        $this->resetErrorBag();
+        $this->form = [
+            'jenisuang_id' => '',
+            'jumlah' => '',
+            'rekening_id' => '',
+            'rekening_id2' => '',
+            'keterangan' => '',
+            'utang_id' => '',
+            'utangteman_id' => '',
+            'category_id' => '',
+            'category_masuk_id' => ''
+        ];
         // return redirect(route('transaction'));
     }
     public function render()

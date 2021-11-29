@@ -454,6 +454,9 @@
         window.livewire.on('hideCreatePocket', () => {
             closeModal('new-pocket');
         });
+        window.livewire.on('hideCreateTransaction', () => {
+            closeModal('createTransaction');
+        });
         window.livewire.on('editModal', () => {
             showModal('editModal');
         });
