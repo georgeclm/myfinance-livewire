@@ -72,11 +72,11 @@ class Topup extends Component
 
         $rekening->saldo_sekarang -= $total;
         $rekening->save();
-
-        $financialplan = FinancialPlan::findOrFail($this->stock->financial_plan_id);
-        $financialplan->jumlah += $total;
-        $financialplan->save();
-
+        if ($this->stock->financial_plan_id != 0) {
+            $financialplan = FinancialPlan::findOrFail($this->stock->financial_plan_id);
+            $financialplan->jumlah += $total;
+            $financialplan->save();
+        }
         Transaction::create([
             'user_id' => auth()->id(),
             'jenisuang_id' => 2,
