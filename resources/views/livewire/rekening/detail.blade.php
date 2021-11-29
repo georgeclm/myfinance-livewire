@@ -97,6 +97,7 @@
                 @endforelse
             </div>
         </div>
+        <br><br><br><br><br><br><br>
         @if ($error)
             <script>
                 window.addEventListener('contentChanged', event => {
