@@ -56,9 +56,10 @@ class Jual extends Component
         $rekening->save();
 
         $total_beli = $this->stock->harga_beli * $this->form['lot'] * 100;
-        $this->stock->financialplan->jumlah -= $total_beli;
-        $this->stock->financialplan->save();
-
+        if ($this->stock->financial_plan_id != 0) {
+            $this->stock->financialplan->jumlah -= $total_beli;
+            $this->stock->financialplan->save();
+        }
         $this->stock->harga_jual = $this->form['harga_beli'];
         $this->stock->lot -= $this->form['lot'];
         $this->stock->total = $this->stock->lot * 100 * $this->stock->harga_beli;
