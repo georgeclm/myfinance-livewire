@@ -15,8 +15,9 @@ class Previous extends Component
         $user->previous_deposito = $this->jumlah;
         $user->save();
 
-        session()->flash('success', 'Previous Deposito Earning Have Been Saved');
-        return redirect(route('deposito'));
+        $this->emit('success', 'Previous Deposito Earning Have Been Saved');
+
+        $this->emit("hidemodalFund");
     }
     public function render()
     {

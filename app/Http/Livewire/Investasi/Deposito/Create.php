@@ -72,8 +72,21 @@ class Create extends Component
         $this->form['harga_jual'] = $this->form['jumlah'] * (100 + $this->form['bunga']) / 100;
         Deposito::create($this->form + ['user_id' => auth()->id()]);
         $this->emit('success', 'Deposito have been saved');
-
-        return redirect(route('deposito'));
+        $this->emit("hideCreatePocket");
+        $this->emit('refreshDeposito');
+        $this->emit('refreshView');
+        $this->resetErrorBag();
+        $this->form = [
+            'nama_bank' => '',
+            'nama_deposito' => '',
+            'jumlah' => '',
+            'bunga' => '',
+            'rekening_id' => '',
+            'harga_jual' => '',
+            'financial_plan_id' => '',
+            'keterangan' => null,
+            'jatuh_tempo' => ''
+        ];
     }
 
     public function render()

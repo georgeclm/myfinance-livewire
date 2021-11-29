@@ -1,8 +1,8 @@
-<div class="modal__container" wire:ignore id="p2p">
+<div class="modal__container" wire:ignore id="new-pocket">
     <div class="bg-black modal__content">
         <div class="modal-header bg-gray-100 border-0">
             <h5 class="modal-title text-white">Deposito</h5>
-            <button onclick="closeModal('p2p')" class="close text-white">
+            <button onclick="closeModal('new-pocket')" class="close text-white">
                 <span aria-hidden="true">×</span>
             </button>
         </div>
@@ -104,37 +104,44 @@
 @section('script')
     <script>
         run();
-        $(function() {
-            $('input[name="jatuh_tempo"]').daterangepicker({
-                singleDatePicker: true,
-                "locale": {
-                    "format": "YYYY-MM-DD",
-                    "separator": " / ",
-                },
+        window.livewire.on('refreshView', () => {
+            refresh();
+        });
+        refresh();
+
+        function refresh() {
+
+            $(function() {
+                $('input[name="jatuh_tempo"]').daterangepicker({
+                    singleDatePicker: true,
+                    "locale": {
+                        "format": "YYYY-MM-DD",
+                        "separator": " / ",
+                    },
+                });
             });
-        });
-        $('.livesearch').select2({
-            placeholder: 'Select bank',
-            ajax: {
-                url: '/bank-search',
-                dataType: 'json',
-                delay: 250,
-                processResults: function(data) {
-                    return {
-                        results: $.map(data, function(item) {
-                            return {
-                                text: item.nama,
-                                id: item.nama
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
-        $('.livesearch').on('change', function(e) {
-            var data = $('.livesearch').select2("val");
-            @this.set('form.nama_bank', data);
-        });
+            $('.livesearch').select2({
+                placeholder: 'Select bank',
+                ajax: {
+                    url: '/bank-search',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(item) {
+                                return {
+                                    text: item.nama,
+                                    id: item.nama
+                                }
+                            })
+                        };
+                    }
+                }
+            });
+            $('.livesearch').on('change', function(e) {
+                var data = $('.livesearch').select2("val");
+                @this.set('form.nama_bank', data);
+            });
+        }
     </script>
 @endsection

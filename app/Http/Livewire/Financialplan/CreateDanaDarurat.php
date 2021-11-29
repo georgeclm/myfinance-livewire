@@ -50,7 +50,6 @@ class CreateDanaDarurat extends Component
             'jumlah' => '',
             'status' => ''
         ];
-        return redirect(route('financialplan'));
     }
     public function render()
     {
