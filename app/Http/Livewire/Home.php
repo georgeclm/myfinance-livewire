@@ -30,7 +30,7 @@ class Home extends Component
         // dd(auth()->user()->transactions);
         auth()->user()->load('all_transactions', 'uangmasuk');
         $this->dispatchBrowserEvent('refresh-chart');
-
+        $this->emit('thechart');
         $this->categories = Category::with('userTransactionsByCategory')->get();
         $this->category_masuks = CategoryMasuk::with('userTransactionsByCategory')->get();
     }
