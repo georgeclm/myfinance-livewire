@@ -70,12 +70,6 @@ class Create extends Component
             });
         }
     }
-    public function callError($msg)
-    {
-        $this->form['jumlah'] = $this->frontJumlah;
-        $this->error = $msg;
-        $this->dispatchBrowserEvent('contentChanged');
-    }
 
     public function submit()
     {
@@ -144,7 +138,24 @@ class Create extends Component
         // dd($this->form);
         Cicilan::create($this->form);
         $this->emit('success', 'Repetition have been saved');
-        return redirect(route('cicilan'));
+        $this->resetErrorBag();
+        $this->emit('refreshCicilan');
+        $this->emit('hideCreatePocket');
+        $this->form =  [
+            'sekarang' => 0,
+            'nama' => '',
+            'tanggal' => '',
+            'bulan' => '',
+            'jenisuang_id' => '',
+            'jumlah' => '',
+            'rekening_id' => '',
+            'rekening_id2' => '',
+            'keterangan' => '',
+            'utang_id' => '',
+            'utangteman_id' => '',
+            'category_id' => '',
+            'category_masuk_id' => ''
+        ];
     }
     public function render()
     {

@@ -1,8 +1,8 @@
-<div class="modal__container" wire:ignore id="create-cicilan">
+<div class="modal__container" wire:ignore id="new-pocket">
     <div class="bg-black modal__content">
         <div class="modal-header bg-gray-100 border-0">
             <h5 class="modal-title text-white">Repetition</h5>
-            <button class="close text-white" onclick="closeModal('create-cicilan')">
+            <button class="close text-white" onclick="closeModal('new-pocket')">
                 <span aria-hidden="true">×</span>
             </button>
         </div>
