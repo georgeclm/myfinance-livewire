@@ -58,8 +58,6 @@
     @endif
     <div class="card-body small-when-0">
         @forelse (auth()->user()->depositos as $deposito)
-            {{-- @livewire('investasi.deposito.change' , ['deposito' => $deposito])
-            @livewire('investasi.deposito.sell', ['deposito' => $deposito]) --}}
             <div class="bg-dark border-0 card shadow mb-4">
                 <div
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
