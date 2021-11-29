@@ -32,361 +32,51 @@
     <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet" data-turbolinks-track="true">
 
     @yield('style')
-    <style>
-        ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            background-color: rgb(33, 33, 33);
-
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-            background-color: rgb(33, 33, 33);
-
-        }
-
-        ::-webkit-scrollbar-thumb {
-            border-radius: 10px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-            background-color: rgb(170, 170, 170);
-
-        }
-
-        input[type="text"][disabled],
-        input[type="number"][disabled],
-        select[disabled],
-        select option[disabled] {
-            background-color: rgb(61, 61, 61) !important;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="number"],
-        select,
-        select option {
-            background-color: rgb(33, 33, 33) !important;
-        }
-
-        .scrollable {
-            height: auto;
-            max-height: 400px;
-            overflow-y: auto !important;
-        }
-
-        .mobile {
-            margin-left: 0 !important;
-            padding-right: 0 !important;
-        }
-
-        @media screen and (max-width: 768px) {
-            .mobile-small {
-                font-size: 80%;
-            }
-
-            .mb-3-when-small {
-                margin-bottom: 1rem;
-            }
-
-            .small-when-0 {
-                padding: 0 !important;
-            }
-
-            .small-when-1 {
-                padding: 0.5rem !important;
-            }
-
-            .only-big {
-                display: none !important;
-            }
-        }
-
-        .add-button {
-            position: fixed;
-            right: 1rem;
-            bottom: 4rem;
-            width: 2.75rem;
-            height: 2.75rem;
-            text-align: center;
-            color: #4e73df;
-            background: #f8f9fc;
-            line-height: 46px;
-        }
-
-        .add-button:hover {
-            background: rgb(33, 33, 33);
-        }
-
-        .add-button i {
-            font-weight: 800;
-        }
-
-        .select2-search {
-            background-color: rgb(61, 61, 61) !important;
-            /* border: 0 !important; */
-            /* padding: 0.5rem !important */
-        }
-
-        .select2-search input {
-            background-color: rgb(61, 61, 61) !important;
-            border: 0 !important;
-            padding: 0.5rem !important
-        }
-
-        .select2-results {
-            background-color: rgb(33, 33, 33) !important;
-            border: 0 !important;
-            color: white !important;
-            padding: 0.5rem !important
-        }
-
-        .select2-choice {
-            background-color: rgb(33, 33, 33) !important;
-            border: 0 !important;
-            padding: 0.5rem !important
-        }
-
-        .select2-container--default .select2-selection--single {
-            background-color: rgb(33, 33, 33) !important;
-            border: 0 !important;
-            /* padding: 0.5rem !important */
-        }
-
-        .select2-search--dropdown {
-            background-color: rgb(33, 33, 33) !important;
-            padding: 0.5rem !important
-        }
-
-        .select2-search__field {
-            background-color: rgb(33, 33, 33) !important;
-            padding: 0.5rem !important
-        }
-
-        .select2 {
-            background-color: rgb(33, 33, 33) !important;
-            padding: 0.5rem !important
-        }
-
-        .select2 .select2-selection__rendered {
-            color: rgb(170, 170, 170) !important;
-        }
-
-        /*=============== MODAL ===============*/
-
-        .modaltest {
-            height: 100vh;
-            display: grid;
-            place-items: center;
-        }
-
-        .modal__button {
-            display: inline-block;
-            background-color: hsl(240, 16%, 18%);
-            color: #FFF;
-            padding: 1rem 1.25rem;
-            border-radius: .5rem;
-            transition: .3s;
-        }
-
-        .modal__button:hover {
-            background-color: hsl(240, 16%, 12%);
-        }
-
-        .modal__container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: hsla(0, 0%, 1%, 0.664);
-            width: 100%;
-            height: 100%;
-            display: grid;
-            align-items: flex-end;
-            overflow: hidden;
-            transition: all .3s;
-            z-index: 1000;
-            visibility: hidden;
-            opacity: 0;
-
-            /*=== Effect 3 ===*/
-            /* perspective: 1000px; */
-        }
-
-        .modal__content {
-            position: relative;
-            background-color: #FFF;
-            /* padding: 3rem 2rem 2rem; */
-            border-radius: 1rem 1rem 0 0;
-            transition: all .3s;
-            padding-bottom: 10px !important;
-            /*=== Effect 1 ===*/
-            transform: translateY(10%);
-
-            /*=== Effect 2 ===*/
-            /* transform: scale(.5) translateY(10%); */
-
-            /*=== Effect 3 ===*/
-            /* transform: rotateX(65deg) scale(.75) translateY(10%);
-  transform-origin: 50% 100%; */
-        }
-
-        .modal__img {
-            width: 150px;
-            margin-bottom: .75rem;
-        }
-
-        .modal__close {
-            display: inline-flex;
-            background-color: hsl(240, 16%, 18%);
-            border-radius: .25rem;
-            color: #FFF;
-            font-size: 1.5rem;
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            cursor: pointer;
-        }
-
-        .modal__title {
-            font-size: 1.5rem;
-            color: hsl(240, 8%, 15%);
-            font-weight: 500;
-        }
-
-        .modal__description {
-            margin-bottom: 1.5rem;
-        }
-
-        .modal__button-width {
-            width: 90%;
-        }
-
-        .modal__button-link {
-            display: block;
-            margin: 1rem auto 0;
-            background-color: transparent;
-            color: hsl(240, 16%, 18%);
-            font-weight: 500;
-        }
-
-        /* Show modal */
-        .show-modal {
-            visibility: visible;
-            opacity: 1;
-
-        }
-
-        .show-modal .modal__content {
-            /*=== Effect 1 ===*/
-            transform: translateY(0);
-
-            /*=== Effect 2 ===*/
-            /* transform: scale(1) translateY(0); */
-
-            /*=== Effect 3 ===*/
-            /* transform: rotateX(0) scale(1) translateY(0); */
-        }
-
-        /*=============== BREAKPOINTS ===============*/
-        /* For small devices */
-        @media screen and (min-width: 576px) {
-            .modal__content {
-                margin: auto;
-                width: 500px;
-                border-radius: 1.25rem !important;
-            }
-
-            .modal__img {
-                width: 170px;
-            }
-        }
-
-
-        /* #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        } */
-
-        #loader {
-            display: block;
-            position: relative;
-            left: 50%;
-            top: 50%;
-            width: 150px;
-            height: 150px;
-            margin: 200px 0 0 -75px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top-color: #9370DB;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
-        }
-
-        #loader:before {
-            content: "";
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            right: 5px;
-            bottom: 5px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top-color: #BA55D3;
-            -webkit-animation: spin 3s linear infinite;
-            animation: spin 3s linear infinite;
-        }
-
-        #loader:after {
-            content: "";
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top-color: #FF00FF;
-            -webkit-animation: spin 1.5s linear infinite;
-            animation: spin 1.5s linear infinite;
-        }
-
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-                -ms-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-                -ms-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-                -ms-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-                -ms-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-    </style>
     @livewireStyles
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
         data-turbolinks-eval="false"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
         data-turbolinks-track="true" />
+    <script>
+        Livewire.on('error', message => {
+            new Notify({
+                status: 'error',
+                title: 'Error',
+                text: message,
+                effect: 'fade',
+                speed: 300,
+                customClass: null,
+                customIcon: null,
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 3000,
+                gap: 20,
+                distance: 20,
+                type: 2,
+                position: 'right top'
+            })
+        })
+        Livewire.on('success', message => {
+            new Notify({
+                status: 'success',
+                title: 'Success',
+                text: message,
+                effect: 'fade',
+                speed: 300,
+                customClass: null,
+                customIcon: null,
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 3000,
+                gap: 20,
+                distance: 20,
+                type: 2,
+                position: 'right top'
+            })
+        })
+    </script>
 </head>
 
 <body id="page-top" class="bg-dark">
@@ -511,6 +201,9 @@
         window.livewire.on('run', () => {
             run();
         });
+        window.livewire.on('thechart', () => {
+            thechart();
+        });
         /*=============== SHOW MODAL ===============*/
         var showModal = (modalContent) => {
             const modalContainer = document.getElementById(modalContent)
@@ -620,46 +313,7 @@
         }
     </script>
     @yield('script')
-    <script>
-        Livewire.on('error', message => {
-            new Notify({
-                status: 'error',
-                title: 'Error',
-                text: message,
-                effect: 'fade',
-                speed: 300,
-                customClass: null,
-                customIcon: null,
-                showIcon: true,
-                showCloseButton: true,
-                autoclose: true,
-                autotimeout: 3000,
-                gap: 20,
-                distance: 20,
-                type: 2,
-                position: 'right top'
-            })
-        })
-        Livewire.on('success', message => {
-            new Notify({
-                status: 'success',
-                title: 'Success',
-                text: message,
-                effect: 'fade',
-                speed: 300,
-                customClass: null,
-                customIcon: null,
-                showIcon: true,
-                showCloseButton: true,
-                autoclose: true,
-                autotimeout: 3000,
-                gap: 20,
-                distance: 20,
-                type: 2,
-                position: 'right top'
-            })
-        })
-    </script>
+
 </body>
 
 </html>
