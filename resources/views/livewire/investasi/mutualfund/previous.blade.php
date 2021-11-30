@@ -1,4 +1,4 @@
-<div class="modal__container" wire:ignore.self id="previous_reksadana">
+<div class="modal__container" wire:ignore.self id="editmodalEmergency">
     <div class="bg-black modal__content">
         <div class="modal-header bg-gray-100 border-0">
             <h5 class="modal-title text-white">Previous Earning From Mutual Fund</h5>

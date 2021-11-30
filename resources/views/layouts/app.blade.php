@@ -144,6 +144,9 @@
         window.livewire.on('hideCreatePocket', () => {
             closeModal('new-pocket');
         });
+        window.livewire.on('CreatePocket', () => {
+            showModal('new-pocket');
+        });
         window.livewire.on('hideCreateTransaction', () => {
             closeModal('createTransaction');
         });

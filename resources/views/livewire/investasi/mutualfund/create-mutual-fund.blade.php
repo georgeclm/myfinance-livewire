@@ -1,32 +1,8 @@
-<div>
-    @if ($error)
-        <script>
-            window.addEventListener('contentChanged', event => {
-                new Notify({
-                    status: 'error',
-                    title: 'Error',
-                    text: "{{ $error }}",
-                    effect: 'fade',
-                    speed: 300,
-                    customClass: null,
-                    customIcon: null,
-                    showIcon: true,
-                    showCloseButton: true,
-                    autoclose: true,
-                    autotimeout: 3000,
-                    gap: 20,
-                    distance: 20,
-                    type: 2,
-                    position: 'right top'
-                })
-            });
-        </script>
-    @endif
-    <div class="modal__container" wire:ignore.self id="stock">
+    <div class="modal__container" wire:ignore.self id="new-pocket">
         <div class="bg-black modal__content">
             <div class="modal-header bg-gray-100 border-0">
                 <h5 class="modal-title text-white">Mutual Fund</h5>
-                <button onclick="closeModal('stock')" class="close text-white">
+                <button onclick="closeModal('new-pocket')" class="close text-white">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -56,8 +32,8 @@
                             @enderror
                         </div> --}}
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input type="text" name="buyprice" required placeholder="Buy Price (NAV)" inputmode="numeric"
-                            type-currency="IDR" wire:model.defer="form.harga_beli"
+                        <input type="text" name="buypriceCreate" required placeholder="Buy Price (NAV)"
+                            inputmode="numeric" type-currency="IDR" wire:model.defer="form.harga_beli"
                             class="border-0 form-control form-control-user @error('form.harga_beli') is-invalid @enderror">
                         <div class="input-group-append">
                             <span class="input-group-text">Per Unit</span>
@@ -69,7 +45,7 @@
                         @enderror
                     </div>
                     <div class="mb-3 hide-inputbtns input-group">
-                        <input type="text" name="total" required placeholder="Purchase Amount" inputmode="numeric"
+                        <input type="text" name="totalCreate" required placeholder="Purchase Amount" inputmode="numeric"
                             type-currency="IDR" wire:model.defer="form.total"
                             class="border-0 form-control form-control-user @error('form.total') is-invalid @enderror">
                         @error('form.total')
@@ -138,11 +114,10 @@
                     </div>
                 </form>
                 <b> Unit Estimation</b>
-                <span class="float-right"> <span id="myText"></span> Unit</span>
+                <span class="float-right"> <span id="Create"></span> Unit</span>
             </div>
             <div class="modal-footer border-0">
                 <input type="submit" class="btn btn-success btn-block" form="addStock" value="Save" />
             </div>
         </div>
     </div>
-</div>

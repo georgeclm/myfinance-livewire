@@ -16,7 +16,9 @@ class Previous extends Component
         $user->save();
 
         session()->flash('success', 'Previous Mutual Fund Earning Have Been Saved');
-        return redirect(route('mutualfund'));
+        $this->emit('success', 'Previous Mutual Fund Earning Have Been Saved');
+        $this->emit('hideeditmodalEmergency');
+        $this->emit('refreshMutualFund');
     }
     public function render()
     {

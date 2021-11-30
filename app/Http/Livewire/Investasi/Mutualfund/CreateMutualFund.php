@@ -46,8 +46,7 @@ class CreateMutualFund extends Component
         if ($this->form['total'] > $rekening->saldo_sekarang) {
             $this->form['harga_beli'] = $frontJumlah;
             $this->form['total'] = $frontTotal;
-            $this->addError('form.rekening_id', 'Balance In Pocket Not Enough ');
-            return $this->render();
+            return $this->emit('success', 'Balance In Pocket Not Enough ');
         }
 
         $rekening->saldo_sekarang -= $this->form['total'];
@@ -65,11 +64,23 @@ class CreateMutualFund extends Component
             'category_id' => Category::firstWhere('nama', 'Investment')->id,
         ]);
         MutualFund::create($this->form + ['user_id' => auth()->id()]);
-        session()->flash('success', 'Mutual Fund have been saved');
-        return redirect(route('mutualfund'));
+        $this->emit('success', 'Mutual Fund have been saved');
+        $this->emit('hideCreatePocket');
+        $this->emit('refreshMutualFund');
+        $this->form = [
+            'nama_reksadana' => '',
+            'unit' => '',
+            'harga_beli' => '',
+            'rekening_id' => '',
+            'financial_plan_id' => '',
+            'keterangan' => null,
+            'total' => ''
+        ];
     }
     public function render()
     {
+        $this->emit('refresh-count', 'Rp. 0');
+
         return view('livewire.investasi.mutualfund.create-mutual-fund');
     }
 }

@@ -25,7 +25,7 @@ class Deposito extends Component
         $this->deposito = ModelsDeposito::findOrFail($primaryId);
         $this->form = $this->deposito->toArray();
         $this->form['harga_jual'] = 'Rp  ' . number_format($this->deposito->harga_jual, 0, ',', '.');
-        $this->form['jumlah'] = 'Rp  ' . number_format($this->deposito->jumlah, 0, ',', '.');
+        // $this->form['jumlah'] = 'Rp  ' . number_format($this->deposito->jumlah, 0, ',', '.');
 
         $this->emit('editModal');
     }
@@ -42,7 +42,7 @@ class Deposito extends Component
 
     public function sell()
     {
-        $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
+        // $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
         $this->form['harga_jual'] = str_replace('.', '', substr($this->form['harga_jual'], 4));
 
         $this->validate([
