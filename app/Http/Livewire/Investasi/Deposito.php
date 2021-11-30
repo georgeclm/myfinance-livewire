@@ -25,6 +25,7 @@ class Deposito extends Component
         $this->deposito = ModelsDeposito::findOrFail($primaryId);
         $this->form = $this->deposito->toArray();
         $this->form['harga_jual'] = 'Rp  ' . number_format($this->deposito->harga_jual, 0, ',', '.');
+        $this->form['jumlah'] = 'Rp  ' . number_format($this->deposito->jumlah, 0, ',', '.');
 
         $this->emit('editModal');
     }
