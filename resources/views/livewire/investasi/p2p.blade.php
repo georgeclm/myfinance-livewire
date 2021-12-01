@@ -97,6 +97,8 @@
     </div>
     @livewire('investasi.p2p.create')
     @livewire('investasi.p2p.previous')
+    <br><br><br><br><br><br><br>
+
 </div>
 @section('script')
     <script>
