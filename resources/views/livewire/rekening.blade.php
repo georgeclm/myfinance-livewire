@@ -209,9 +209,6 @@
                 <br>
                 Balance {{ $name }} : Rp. {{ number_format($saldo, 0, ',', '.') }}
                 <hr>
-                <b> Adjust Balance</b>
-                <br>
-                Your Real Balance
                 <form class="mt-2" id="moveform" wire:submit.prevent="move">
                     <div class="form-group">
                         <select id="rekening_id"
