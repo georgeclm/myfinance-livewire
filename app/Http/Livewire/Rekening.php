@@ -55,6 +55,14 @@ class Rekening extends Component
         $rekening2->save();
         $this->rekening->saldo_sekarang -= $this->move['jumlah'];
         $this->rekening->save();
+        Transaction::create([
+            'user_id' => auth()->id(),
+            'rekening_id' => $this->rekening->id,
+            'rekening_id2' => $rekening2->id,
+            'jenisuang_id' => 3,
+            'jumlah' => $this->move['jumlah']
+        ]);
+
         $this->emit('success', 'Money have been moved');
         $this->emit('refreshPocket');
         $this->emit('hidemodalFund');
