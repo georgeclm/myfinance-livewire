@@ -4,13 +4,13 @@
     <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Stock</h1>
         @if (is_null(auth()->user()->previous_stock))
-            <button onclick="showModal('previous_stock')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+            <button onclick="showModal('modalFund')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
                     class="fas fa-plus fa-sm text-white-50"></i>
                 Previous Earning?</button>
         @endif
         @if (auth()->user()->rekenings->isNotEmpty() &&
     auth()->user()->financialplans->isNotEmpty())
-            <button onclick="showModal('stock')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+            <button onclick="showModal('new-pocket')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
                     class="fas fa-download fa-sm text-white-50"></i> Add Stock</button>
         @endif
     </div>
@@ -77,19 +77,19 @@
         @livewire('partials.no-data', ['message' => 'Create Pocket and Financial Plan First to Start'])
     @endif
     <div class="card-body small-when-0 ">
-        @forelse ($stocks as $key => $stock)
-            @livewire('investasi.stock.topup',['stock' => $stock,'current' => $stockPrice[$key]])
+        @forelse ($stocks as  $stock)
+            {{-- @livewire('investasi.stock.topup',['stock' => $stock,'current' => $stockPrice[$stock->kode]])
             @livewire('investasi.stock.change',['stock' => $stock])
-            @livewire('investasi.stock.jual',['stock' => $stock,'current' => $stockPrice[$key]])
+            @livewire('investasi.stock.jual',['stock' => $stock,'current' => $stockPrice[$stock->kode]]) --}}
             <div class="bg-dark border-0 card shadow mb-4">
                 <div
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">{{ $stock->kode }} - Rp.
                         {{ number_format($stock->total, 0, ',', '.') }}
-                        <span class="badge @if ($stockPrice[$key] >= $stock->harga_beli) badge-success @else badge-danger @endif">
-                            @if ($stockPrice[$key] > $stock->harga_beli)
+                        <span class="badge @if ($stockPrice[$stock->kode] >= $stock->harga_beli) badge-success @else badge-danger @endif">
+                            @if ($stockPrice[$stock->kode] > $stock->harga_beli)
                                 + @endif
-                            {{ round((($stockPrice[$key] - $stock->harga_beli) / $stock->harga_beli) * 100, 2) }}
+                            {{ round((($stockPrice[$stock->kode] - $stock->harga_beli) / $stock->harga_beli) * 100, 2) }}
                             %
                         </span>
                     </h6>
@@ -100,16 +100,15 @@
                         </a>
                         <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
                             aria-labelledby="dropdownMenuLink">
-                            <button class="dropdown-item text-white"
-                                onclick="showModal('topup-{{ $stock->id }}')">Buy
+                            <button class="dropdown-item text-white" wire:click="topupModal({{ $stock->id }})">Buy
                                 More</button>
-                                @if ($stock->financial_plan_id != 0)
-                                    <button class="dropdown-item text-white"
-                                        onclick="showModal('change-{{ $stock->id }}')">Change
-                                        Goal</button>
-                                @endif
+                            @if ($stock->financial_plan_id != 0)
+                                <button class="dropdown-item text-white"
+                                    wire:click="adjustModal({{ $stock->id }})">Change
+                                    Goal</button>
+                            @endif
                             <button class="dropdown-item text-white"
-                                onclick="showModal('jual-{{ $stock->id }}')">Sell</button>
+                                wire:click="sellModal({{ $stock->id }})">Sell</button>
                         </div>
                     </div>
                 </div>
@@ -119,7 +118,7 @@
                         <div class="flex-grow-1">
                             Avg Price: Rp. {{ number_format($stock->harga_beli, 0, ',', '.') }} per-Lembar
                             <br>
-                            @if ($stockPrice[$key] != 0)Current Price: Rp. {{ number_format($stockPrice[$key], 0, ',', '.') }} per-Lembar @endif
+                            @if ($stockPrice[$stock->kode] != 0)Current Price: Rp. {{ number_format($stockPrice[$stock->kode], 0, ',', '.') }} per-Lembar @endif
 
                         </div>
                         {{ $stock->lot }} Lot
@@ -130,8 +129,227 @@
             @livewire('partials.no-data', ['message' => 'Start Add Stock to Your Asset'])
         @endforelse
     </div>
-    <br><br><br><br><br><br><br>
+    <div class="modal__container" wire:ignore.self id="editModal">
+        <div class="bg-black modal__content">
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white">Buy More Stock</h5>
+                <button onclick="closeModal('editModal')" class="close text-white">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formeditModal" wire:submit.prevent="topup">
+                    <div class="form-group">
+                        <input type="text" class="border-0 form-control form-control-user" wire:model="form.kode"
+                            placeholder="Stock Code" disabled>
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input type="number" class="border-0 form-control form-control-user" wire:model.defer="form.lot"
+                            placeholder="Total" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text">lot</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input wire:model.defer="form.harga_beli" type-currency="IDR" inputmode="numeric" type="text"
+                            required placeholder="Buy Price" class="border-0 form-control form-control-user ">
+                        <div class="input-group-append">
+                            <span class="input-group-text">Per Lembar</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <select wire:model.defer="form.rekening_id"
+                            class="border-0 form-control form-control-user form-block @error('form.rekening_id') is-invalid @enderror"
+                            style="padding: 0.5rem !important">
+                            @foreach (auth()->user()->rekenings as $rekening)
+                                <option value="{{ $rekening->id }}">
+                                    {{ $rekening->nama_akun }} - Rp.
+                                    {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
+                            @endforeach
+                        </select>
+                        @error('form.rekening_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <select wire:model.defer="form.financial_plan_id"
+                            class="border-0 form-control form-control-user form-block @error('financial_plan_id') is-invalid @enderror"
+                            style="padding: 0.5rem !important" name="financial_plan_id" disabled>
+                            <option value="0">Trading</option>
+
+                            @foreach (auth()->user()->financialplans as $financialplan)
+                                <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
+                                    {{ $financialplan->nama }} - Rp.
+                                    {{ number_format($financialplan->target, 0, ',', '.') }}</option>
+                            @endforeach
+                            @error('financial_plan_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" wire:model.defer="form.keterangan"
+                            class="border-0 form-control form-control-user" disabled placeholder="Description">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <input type="submit" class="btn btn-primary btn-block" form="formeditModal" value="Buy" />
+            </div>
+        </div>
+    </div>
+    <div class="modal__container" wire:ignore.self id="deleteModal">
+        <div class="bg-black modal__content">
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white">Sell Stock</h5>
+                <button onclick="closeModal('deleteModal')" class="close text-white">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formdeleteModal" wire:submit.prevent="sell">
+                    <div class="form-group">
+                        <input type="text" class="border-0 form-control form-control-user " wire:model="form.kode"
+                            placeholder="Stock Code" disabled>
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input type="number"
+                            class="border-0 form-control form-control-user @error('form.lot') is-invalid @enderror"
+                            wire:model.defer="form.lot" placeholder="Total" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text">lot</span>
+                        </div>
+                        @error('form.lot')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input wire:model.defer="form.harga_beli" type-currency="IDR" inputmode="numeric" type="text"
+                            required placeholder="Sell Price" class="border-0 form-control form-control-user ">
+                        <div class="input-group-append">
+                            <span class="input-group-text">Per Lembar</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <select wire:model.defer="form.rekening_id"
+                            class="border-0 form-control form-control-user form-block"
+                            style="padding: 0.5rem !important">
+                            @foreach (auth()->user()->rekenings as $rekening)
+                                <option value="{{ $rekening->id }}">
+                                    {{ $rekening->nama_akun }} - Rp.
+                                    {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select wire:model.defer="form.financial_plan_id"
+                            class="border-0 form-control form-control-user form-block @error('financial_plan_id') is-invalid @enderror"
+                            style="padding: 0.5rem !important" name="financial_plan_id" disabled>
+                            <option value="0">Trading</option>
+
+                            @foreach (auth()->user()->financialplans as $financialplan)
+                                <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
+                                    {{ $financialplan->nama }} - Rp.
+                                    {{ number_format($financialplan->target, 0, ',', '.') }}</option>
+                            @endforeach
+                            @error('financial_plan_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" wire:model.defer="form.keterangan"
+                            class="border-0 form-control form-control-user" disabled placeholder="Description">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <input type="submit" class="btn btn-primary btn-block" form="formdeleteModal" value="Sell" />
+            </div>
+        </div>
+    </div>
+    <div class="modal__container" wire:ignore id="adjustModal">
+        <div class="bg-black modal__content">
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white">Change Stock Goal</h5>
+                <button onclick="closeModal('adjustModal')" class="close text-white">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formadjustModal" wire:submit.prevent="change">
+                    <div class="form-group">
+                        <input type="text" class="border-0 form-control form-control-user" wire:model="form.kode"
+                            placeholder="Stock Code" disabled>
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input type="number" class="border-0 form-control form-control-user" disabled
+                            wire:model="form.lot" placeholder="Total" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text">lot</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 hide-inputbtns input-group">
+                        <input wire:model="form.harga_beli" type-currency="IDR" inputmode="numeric" type="text" required
+                            placeholder="Buy Price" class="border-0 form-control form-control-user " disabled>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Per Lembar</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <select wire:model="form.rekening_id"
+                            class="border-0 form-control form-control-user form-block"
+                            style="padding: 0.5rem !important" disabled>
+                            @foreach (auth()->user()->rekenings as $rekening)
+                                <option value="{{ $rekening->id }}">
+                                    {{ $rekening->nama_akun }} - Rp.
+                                    {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select wire:model="form.financial_plan_id"
+                            class="border-0 form-control form-control-user form-block @error('financial_plan_id') is-invalid @enderror"
+                            style="padding: 0.5rem !important" name="financial_plan_id">
+                            @foreach (auth()->user()->financialplans as $financialplan)
+                                <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
+                                    {{ $financialplan->nama }} - Rp.
+                                    {{ number_format($financialplan->target, 0, ',', '.') }}</option>
+                            @endforeach
+                            @error('financial_plan_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" wire:model="form.keterangan" class="border-0 form-control form-control-user"
+                            disabled placeholder="Description">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <input type="submit" class="btn btn-primary btn-block" form="formadjustModal" value="Update" />
+            </div>
+        </div>
+    </div>
     @livewire('investasi.stock.create-stock')
     @livewire('investasi.stock.previous')
+    <br><br><br><br><br><br><br>
 
 </div>

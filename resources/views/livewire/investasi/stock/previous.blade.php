@@ -1,8 +1,8 @@
-<div class="modal__container" wire:ignore.self id="previous_stock">
+<div class="modal__container" wire:ignore.self id="modalFund">
     <div class="bg-black modal__content">
         <div class="modal-header bg-gray-100 border-0">
             <h5 class="modal-title text-white">Previous Earning From Stock</h5>
-            <button onclick="closeModal('previous_stock')" class="close text-white">
+            <button onclick="closeModal('modalFund')" class="close text-white">
                 <span aria-hidden="true">×</span>
             </button>
         </div>

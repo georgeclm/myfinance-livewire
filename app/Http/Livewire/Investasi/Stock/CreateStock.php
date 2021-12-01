@@ -12,7 +12,6 @@ use Livewire\Component;
 class CreateStock extends Component
 {
 
-    public $error;
     public $form = [
         'kode' => '',
         'lot' => '',
@@ -49,8 +48,7 @@ class CreateStock extends Component
 
             $result = curl_exec($ch);
             if (curl_errno($ch)) {
-                $this->error = 'Error Code Search';
-                $this->dispatchBrowserEvent('contentChanged');
+                return $this->emit('error', 'Error Code Search');
             }
             curl_close($ch);
             // dd(json_decode($result)->quoteResponse->result[0]);
@@ -86,22 +84,18 @@ class CreateStock extends Component
         $stocks = Stock::where('user_id', auth()->id())->where('kode', $this->form['kode'])->get();
         if ($stocks->isNotEmpty()) {
             $this->form['harga_beli'] = $frontJumlah;
-            $this->error = 'Code already listed please TopUp';
-            // $this->addError('form.kode', 'Code already listed please TopUp');
-            $this->dispatchBrowserEvent('contentChanged');
-            return $this->render();
+            return $this->emit('error', 'Code already listed please TopUp');
         }
         $this->form['total'] = $this->form['harga_beli'] * $this->form['lot'] * 100;
         $rekening = Rekening::findOrFail($this->form['rekening_id']);
         if ($this->form['total'] > $rekening->saldo_sekarang) {
             $this->form['harga_beli'] = $frontJumlah;
-            $this->addError('form.rekening_id', 'Balance In Pocket Not Enough ');
-            return $this->render();
+            return $this->emit('error', 'Balance In Pocket Not Enough');
         }
 
         $rekening->saldo_sekarang -= $this->form['total'];
         $rekening->save();
-        if($this->form['financial_plan_id'] != 0){
+        if ($this->form['financial_plan_id'] != 0) {
             $financialplan = FinancialPlan::findOrFail($this->form['financial_plan_id']);
             $financialplan->jumlah += $this->form['total'];
             $financialplan->save();
@@ -116,8 +110,19 @@ class CreateStock extends Component
         ]);
         Stock::create($this->form + ['user_id' => auth()->id()]);
 
-        session()->flash('success', 'Stock have been saved');
-        return redirect(route('stock'));
+        $this->emit('success', 'Stock have been saved');
+        $this->emit('hideCreatePocket');
+        $this->form = [
+            'kode' => '',
+            'lot' => '',
+            'harga_beli' => '',
+            'biaya_lain' => null,
+            'rekening_id' => '',
+            'financial_plan_id' => '',
+            'keterangan' => null,
+            'total' => ''
+        ];
+        $this->emit('refreshStockRender');
     }
     public function render()
     {
