@@ -22,12 +22,44 @@ class Rekening extends Component
     public $name;
     public $saldo;
     public $update_saldo;
+    public $move = [
+        'rekening_id' => '',
+        'jumlah' => '',
+    ];
+    public $moveButton = 'disabled';
+
     protected $listeners = ['refreshPocket'];
 
     public function refreshPocket()
     {
-        $this->render();
+        $this->mount();
     }
+
+    public function updated($propertyName)
+    {
+        if ($propertyName == 'move.jumlah') {
+            $check_jumlah = str_replace('.', '', substr($this->move['jumlah'], 4));
+            if ($check_jumlah > $this->rekening->saldo_sekarang) {
+                $this->moveButton = 'disabled';
+                return $this->emit('error', 'Balance In Pocket Not Enough');
+            }
+            $this->moveButton = '';
+        }
+    }
+
+    public function move()
+    {
+        $this->move['jumlah'] = str_replace('.', '', substr($this->move['jumlah'], 4));
+        $rekening2 = ModelsRekening::findOrFail($this->move['rekening_id']);
+        $rekening2->saldo_sekarang += $this->move['jumlah'];
+        $rekening2->save();
+        $this->rekening->saldo_sekarang -= $this->move['jumlah'];
+        $this->rekening->save();
+        $this->emit('success', 'Money have been moved');
+        $this->emit('refreshPocket');
+        $this->emit('hidemodalFund');
+    }
+
     public function editModal($id)
     {
         $this->rekening  = ModelsRekening::findOrFail($id);
@@ -52,12 +84,23 @@ class Rekening extends Component
         $this->emit("adjustModal");
         $this->emit('run');
     }
+
+    public function refundModal($primaryId)
+    {
+        $this->rekening  = ModelsRekening::findOrFail($primaryId);
+        $this->name = $this->rekening->nama_akun;
+        $this->saldo = $this->rekening->saldo_sekarang;
+        $this->emit("modalFund");
+        $this->emit('run');
+    }
+
     public function delete()
     {
         $this->rekening->delete();
         $this->emit("hideDelete");
         $this->emit('refreshBalance');
         $this->emit('success', 'Pocket have been deleted');
+        $this->emit('refreshPocket');
     }
     public function adjust()
     {
@@ -65,7 +108,7 @@ class Rekening extends Component
         $this->update_saldo = str_replace('.', '', substr($this->update_saldo, 4));
         if ($this->update_saldo == $this->rekening->saldo_sekarang) {
             $this->update_saldo = $frontJumlah;
-            return $this->addError('update_saldo', 'Same Amount');
+            return $this->emit('error', 'Same Amount');
         }
 
         $jumlah = abs($this->rekening->saldo_sekarang - $this->update_saldo);
@@ -97,6 +140,7 @@ class Rekening extends Component
         $this->resetErrorBag();
         $this->update_saldo = null;
         $this->emit('success', 'Balance have been updated');
+        $this->emit('refreshPocket');
     }
     public function update()
     {
@@ -125,10 +169,16 @@ class Rekening extends Component
         $this->emit('success', 'Pocket have been updated');
 
         $this->resetErrorBag();
+        $this->emit('refreshPocket');
     }
-    public function render()
+
+    public function mount()
     {
         $this->jeniss = Jenis::with('user_rekenings')->get();
+    }
+
+    public function render()
+    {
         return view('livewire.rekening');
     }
 }

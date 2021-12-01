@@ -20,18 +20,29 @@
             <div class="bg-gray-100 border-0 card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">{{ $jenis->nama }}</h6>
             </div>
-            <div id="preloader" wire:loading>
+            {{-- <div id="preloader" wire:loading>
                 <div id="loader"></div>
                 <br><br><br>
-            </div>
-            <div class="card-body" wire:loading.remove>
+            </div> --}}
+            <div class="card-body">
                 @forelse ($jenis->user_rekenings as $rekening)
                     <div class="py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary"><a
-                                href="{{ route('rekening.show', $rekening->id) }}">{{ $rekening->nama_akun }}</a>
-                            - Rp.
-                            {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}
-                        </h6>
+                        <div class="flex-grow-1">
+                            <h6 class="m-0 font-weight-bold text-primary"><a
+                                    href="{{ route('rekening.show', $rekening->id) }}">{{ $rekening->nama_akun }}</a>
+                                - Rp.
+                                {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}
+                            </h6>
+                        </div>
+                        {{-- @if (in_array($transaction->jenisuang_id, [1, 2]) && $transaction->rekening->nama_akun != 'Pocket Deleted') --}}
+                        <a href="javascript:void(0)" wire:click="refundModal({{ $rekening->id }})"
+                            class="btn btn-sm btn-secondary btn-icon-split mr-4">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-arrow-up"></i>
+                            </span>
+                            <span class="text only-big">Move Money</span>
+                        </a>
+                        {{-- @endif --}}
                         <div class="dropdown no-arrow">
                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -180,6 +191,60 @@
             </div>
             <div class="modal-footer border-0">
                 <input type="submit" class="btn btn-block btn-primary" form="adjustform" value="Update" />
+            </div>
+        </div>
+    </div>
+    <div class="modal__container" id="modalFund" wire:ignore.self>
+        <div class="bg-black modal__content">
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white">
+                    Move money to
+                </h5>
+                <button class="close text-white" onclick="closeModal('modalFund')" type="button">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body text-white">
+                <b> Current Balance</b>
+                <br>
+                Balance {{ $name }} : Rp. {{ number_format($saldo, 0, ',', '.') }}
+                <hr>
+                <b> Adjust Balance</b>
+                <br>
+                Your Real Balance
+                <form class="mt-2" id="moveform" wire:submit.prevent="move">
+                    <div class="form-group">
+                        <select id="rekening_id"
+                            class="border-0 form-control form-control-user form-block @error('move.rekening_id') is-invalid @enderror"
+                            wire:model="move.rekening_id" name="rekening_id" style="padding: 0.5rem !important"
+                            required>
+                            <option value="" selected disabled hidden>Choose Pocket</option>
+                            @foreach (auth()->user()->rekenings as $rekening)
+                                <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }} - Rp.
+                                    {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
+                            @endforeach
+                        </select>
+                        @error('move.rekening_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="hide-inputbtns input-group">
+                        <input type="text" type-currency="IDR" inputmode="numeric" name="saldo_sekarang"
+                            wire:model="move.jumlah" placeholder="Amount" required
+                            class="border-0 form-control @error('jumlah') is-invalid @enderror">
+                        @error('jumlah')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <input type="submit" class="btn btn-block btn-primary" {{ $moveButton }} form="moveform"
+                    value="Move" />
             </div>
         </div>
     </div>
