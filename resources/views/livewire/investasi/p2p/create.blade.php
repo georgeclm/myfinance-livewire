@@ -1,32 +1,8 @@
-<div>
-    @if ($error)
-        <script>
-            window.addEventListener('contentChanged', event => {
-                new Notify({
-                    status: 'error',
-                    title: 'Error',
-                    text: "{{ $error }}",
-                    effect: 'fade',
-                    speed: 300,
-                    customClass: null,
-                    customIcon: null,
-                    showIcon: true,
-                    showCloseButton: true,
-                    autoclose: true,
-                    autotimeout: 3000,
-                    gap: 20,
-                    distance: 20,
-                    type: 2,
-                    position: 'right top'
-                })
-            });
-        </script>
-    @endif
-    <div class="modal__container" wire:ignore.self id="p2p">
+    <div class="modal__container" wire:ignore.self id="new-pocket">
         <div class="bg-black modal__content">
             <div class="modal-header bg-gray-100 border-0">
                 <h5 class="modal-title text-white">P2P Lending</h5>
-                <button onclick="closeModal('p2p')" class="close text-white">
+                <button onclick="closeModal('new-pocket')" class="close text-white">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -110,4 +86,3 @@
             </div>
         </div>
     </div>
-</div>

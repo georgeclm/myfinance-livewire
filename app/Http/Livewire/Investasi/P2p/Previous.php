@@ -14,9 +14,9 @@ class Previous extends Component
         $user = auth()->user();
         $user->previous_p2p = $this->jumlah;
         $user->save();
-
-        session()->flash('success', 'Previous P2P Earning Have Been Saved');
-        return redirect(route('p2p'));
+        $this->emit('success', 'Previous P2P Earning Have Been Saved');
+        $this->emit('hidemodalFund');
+        $this->emit('refreshP2P');
     }
     public function render()
     {

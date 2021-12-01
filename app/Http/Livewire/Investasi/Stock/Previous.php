@@ -14,7 +14,7 @@ class Previous extends Component
         $user = auth()->user();
         $user->previous_stock = $this->jumlah;
         $user->save();
-        $this->emit('success', 'Stock have been saved');
+        $this->emit('success', 'Previous Stock Earning have been saved');
         $this->emit('hidemodalFund');
         $this->emit('refreshStock');
     }

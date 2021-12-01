@@ -47,8 +47,7 @@ class Create extends Component
         if ($this->form['jumlah'] > $this->form['harga_jual']) {
             $this->form['jumlah'] = $frontJumlah;
             $this->form['harga_jual'] = $frontJual;
-            $this->addError('form.harga_jual', 'Return Amount Less than First Amount');
-            return $this->render();
+            return $this->emit('success', 'Return Amount Less than First Amount');
         }
 
         $this->form['bunga'] = ($this->form['harga_jual'] * 100 / $this->form['jumlah']) - 100;
@@ -57,8 +56,7 @@ class Create extends Component
         if ($this->form['jumlah'] > $rekening->saldo_sekarang) {
             $this->form['jumlah'] = $frontJumlah;
             $this->form['harga_jual'] = $frontJual;
-            $this->addError('form.rekening_id', 'Balance Not Enough');
-            return $this->render();
+            return $this->emit('success', 'Balance Not Enough');
         }
 
         $rekening->saldo_sekarang -= $this->form['jumlah'];
@@ -79,7 +77,20 @@ class Create extends Component
         $this->form['gain_or_loss'] = $this->form['harga_jual'] - $this->form['jumlah'];
         P2P::create($this->form + ['user_id' => auth()->id()]);
         session()->flash('success', 'P2P have been saved');
-        return redirect(route('p2p'));
+        $this->emit('hideCreatePocket');
+        $this->emit('success', 'P2P have been saved');
+        $this->emit('refreshP2P');
+        $this->form = [
+            'nama_p2p' => '',
+            'jumlah' => '',
+            'harga_jual' => '',
+            'rekening_id' => '',
+            'financial_plan_id' => '',
+            'keterangan' => null,
+            'jatuh_tempo' => '',
+            'gain_or_loss' => '',
+            'bunga' => ''
+        ];
     }
     public function render()
     {
