@@ -3,8 +3,8 @@
     <!-- Page Heading -->
     <div class="text-center d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-white">Investment</h1>
-        <a href="javascript:void(0)" class="d-sm-inline-block btn btn-primary shadow-sm">Rp.
-            {{ number_format(Auth::user()->total_investments(), 0, ',', '.') }}</a>
+        <button class="d-sm-inline-block btn btn-primary shadow-sm" disabled>Rp.
+            {{ number_format(Auth::user()->total_investments(), 0, ',', '.') }}</button>
 
     </div>
     <ul class="list-group">
@@ -13,6 +13,11 @@
                 class="list-group-item list-group-item-action bg-dark  d-flex align-items-center">
                 <div class="flex-grow-1 text-white">
                     {{ $investation->nama }}
+                    @if ($investation->nama == 'Cryptocurrency')<span
+                            class="badge  badge-primary ">
+                            On Development
+                        </span>
+                    @endif
                 </div>
                 <div class="text-white">
                     Rp. {{ number_format($investation->total, 0, ',', '.') }}

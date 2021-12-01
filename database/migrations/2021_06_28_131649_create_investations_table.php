@@ -22,7 +22,7 @@ class CreateInvestationsTable extends Migration
         DB::table('investations')->insert(
             array(
                 ['nama' => 'Deposito'],
-                ['nama' => 'Obligasi'],
+                ['nama' => 'Cryptocurrency'],
                 ['nama' => 'Reksadana'],
                 ['nama' => 'Saham'],
                 ['nama' => 'P2P'],
