@@ -177,7 +177,7 @@
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="chart-pie pt-4">
+                        <div class="chart-pie my-4">
                             <canvas id="myPieChart"></canvas>
                         </div>
 
