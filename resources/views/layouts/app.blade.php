@@ -32,6 +32,15 @@
     <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet" data-turbolinks-track="true">
 
     @yield('style')
+    <style>
+        .nav-link:hover,
+        .collapse-item:hover,
+        .nav-item.active,
+        .collapse-item.active {
+            background-color: rgb(61, 61, 61) !important;
+        }
+
+    </style>
     @livewireStyles
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
         data-turbolinks-eval="false"></script>
