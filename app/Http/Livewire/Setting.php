@@ -77,7 +77,7 @@ class Setting extends Component
         $user->save();
         $this->p2pjumlah = 'Rp  ' . number_format(auth()->user()->previous_p2p, 0, ',', '.');
 
-        session()->flash('success', 'Previous P2P Earning Have Been Updated');
+        return $this->emit('success', 'Previous P2P Earning Have Been Updated');
     }
     public function submitstock()
     {
@@ -89,7 +89,7 @@ class Setting extends Component
         $user->save();
         $this->stockjumlah = 'Rp  ' . number_format(auth()->user()->previous_stock, 0, ',', '.');
 
-        session()->flash('success', 'Previous Stock Earning Have Been Updated');
+        return $this->emit('success', 'Previous Stock Earning Have Been Updated');
     }
     public function submitdeposito()
     {
@@ -100,7 +100,7 @@ class Setting extends Component
         $user->save();
         $this->depositojumlah = 'Rp  ' . number_format(auth()->user()->previous_deposito, 0, ',', '.');
 
-        session()->flash('success', 'Previous Deposito Earning Have Been Updated');
+        return $this->emit('success', 'Previous Deposito Earning Have Been Updated');
     }
     public function submitreksadana()
     {
@@ -111,7 +111,7 @@ class Setting extends Component
         $user->save();
         $this->reksadanajumlah = 'Rp  ' . number_format(auth()->user()->previous_reksadana, 0, ',', '.');
 
-        session()->flash('success', 'Previous Mutual Fund Earning Have Been Updated');
+        return $this->emit('success', 'Previous Mutual Fund Earning Have Been Updated');
     }
     public function store_bank()
     {
@@ -127,7 +127,7 @@ class Setting extends Component
             'nama' => '',
             'code' => '',
         ];
-        session()->flash('success', 'New Bank have been added');
+        return $this->emit('success', 'New Bank have been added');
     }
     public function store_stock()
     {
@@ -144,7 +144,7 @@ class Setting extends Component
             'code' => '',
         ];
 
-        session()->flash('success', 'New Ticker have been added');
+        return $this->emit('success', 'New Ticker have been added');
     }
     public function render()
     {

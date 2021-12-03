@@ -31,8 +31,7 @@ class Login extends Component
         if (Auth::attempt($this->form, true)) {
             return redirect(route('home'));
         } else {
-            session()->flash('error', 'Email or Password Is Incorrect');
-            return redirect(route('login'));
+            return $this->emit('error', 'Email or Password Is Incorrect');
         }
     }
 

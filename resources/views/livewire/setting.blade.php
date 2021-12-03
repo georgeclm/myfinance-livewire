@@ -13,7 +13,7 @@
                 <div
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-danger">Categories Spending</h6>
-                    <a href="#" data-toggle="modal" data-target="#addCategory">
+                    <a href="javascript:void(0)" onclick="showModal('modalSaving')">
                         <i class="fas fa-plus fa-sm fa-fw text-danger"></i>
                     </a>
                 </div>
@@ -38,7 +38,7 @@
                 <div
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-success">Categories Income</h6>
-                    <a href="#" data-toggle="modal" data-target="#addCategoryMasuk">
+                    <a href="javascript:void(0)" onclick="showModal('modalFund')">
                         <i class="fas fa-plus fa-sm fa-fw text-success"></i>
                     </a>
                 </div>
@@ -207,26 +207,4 @@
     </div>
     @livewire('setting.create-category')
     @livewire('setting.create-category-masuk')
-    <!-- End of Page Wrapper -->
-    @if (session()->has('success'))
-        <script>
-            new Notify({
-                status: 'success',
-                title: 'Success',
-                text: "{{ session('success') }}",
-                effect: 'fade',
-                speed: 300,
-                customClass: null,
-                customIcon: null,
-                showIcon: true,
-                showCloseButton: true,
-                autoclose: true,
-                autotimeout: 3000,
-                gap: 20,
-                distance: 20,
-                type: 2,
-                position: 'right top'
-            })
-        </script>
-    @endif
 </div>

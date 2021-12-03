@@ -12,29 +12,26 @@ class CreateCategory extends Component
         'nama' => '',
     ];
 
+    protected $validationAttributes = [
+        'form.nama' => 'Spending Category',
+    ];
+
     public function rules()
     {
         return [
-            'form.nama' => 'required',
+            'form.nama' => 'required|unique:categories,nama',
         ];
     }
     public function submit()
     {
         $this->validate();
-        $category_names = Category::where('user_id', null)->orWhere('user_id', auth()->id())->pluck('nama')->toArray();
-        if (in_array(strtolower($this->form['nama']), array_map('strtolower', $category_names))) {
-            $this->error = 'Category Already Exists';
-            $this->dispatchBrowserEvent('contentChanged');
-            return $this->render();
-        }
         Category::create($this->form + ['user_id' => auth()->id()]);
         $this->form = [
             'nama' => '',
         ];
-        session()->flash('success', 'New Category have been added');
-        $this->dispatchBrowserEvent('success');
-
+        $this->emit('success', 'New Category have been added');
         $this->emit('updateCategory');
+        $this->emit('hidemodalSaving');
     }
     public function render()
     {

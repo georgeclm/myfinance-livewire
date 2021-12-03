@@ -15,7 +15,6 @@ class Previous extends Component
         $user->previous_reksadana = $this->jumlah;
         $user->save();
 
-        session()->flash('success', 'Previous Mutual Fund Earning Have Been Saved');
         $this->emit('success', 'Previous Mutual Fund Earning Have Been Saved');
         $this->emit('hideeditmodalEmergency');
         $this->emit('refreshMutualFund');

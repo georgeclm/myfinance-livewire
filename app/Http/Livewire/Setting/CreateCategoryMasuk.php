@@ -12,29 +12,26 @@ class CreateCategoryMasuk extends Component
         'nama' => '',
     ];
 
+    protected $validationAttributes = [
+        'form.nama' => 'Income Category',
+    ];
+
     public function rules()
     {
         return [
-            'form.nama' => 'required',
+            'form.nama' => 'required|unique:category_masuks,nama',
         ];
     }
 
     public function submit()
     {
         $this->validate();
-        $category_names = CategoryMasuk::where('user_id', null)->orWhere('user_id', auth()->id())->pluck('nama')->toArray();
-        if (in_array(strtolower($this->form['nama']), array_map('strtolower', $category_names))) {
-            $this->error = 'Category Already Exists';
-            $this->dispatchBrowserEvent('contentChanged');
-            return $this->render();
-        }
         CategoryMasuk::create($this->form + ['user_id' => auth()->id()]);
         $this->form = [
             'nama' => '',
         ];
-        session()->flash('success', 'New Category have been added');
-        $this->dispatchBrowserEvent('success');
-
+        $this->emit('success', 'New Category have been added');
+        $this->emit('hidemodalFund');
         $this->emit('updateCategoryMasuk');
     }
 

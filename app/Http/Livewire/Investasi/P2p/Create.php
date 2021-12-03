@@ -76,7 +76,6 @@ class Create extends Component
         ]);
         $this->form['gain_or_loss'] = $this->form['harga_jual'] - $this->form['jumlah'];
         P2P::create($this->form + ['user_id' => auth()->id()]);
-        session()->flash('success', 'P2P have been saved');
         $this->emit('hideCreatePocket');
         $this->emit('success', 'P2P have been saved');
         $this->emit('refreshP2P');
