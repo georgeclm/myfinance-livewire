@@ -33,29 +33,33 @@ class CreateStock extends Component
             'form.rekening_id' => ['required', 'numeric', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',') . ',0'],
         ]);
-        if ($propertyName == 'form.kode') {
-            $ch = curl_init();
-            $code = $this->form['kode'];
-            curl_setopt($ch, CURLOPT_URL, "https://yfapi.net/v6/finance/quote?symbols=$code.jk");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-
-
-            $headers = array();
-            $headers[] = 'Accept: application/json';
-            $headers[] = 'X-Api-Key: XE6XBRrsIR2TJRK4UVUjhaY739kIFSD24TMxFRcl';
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-            $result = curl_exec($ch);
-            curl_close($ch);
-            if (curl_errno($ch)) {
-                return $this->emit('error', 'Error Code Search');
-            }
-            // dd(json_decode($result)->quoteResponse->result[0]);
-            $this->form['harga_beli'] = 'Rp  ' . number_format(json_decode($result)->quoteResponse->result[0]->regularMarketPrice, 0, ',', '.');
-        }
     }
 
+    public function updatedFormKode()
+    {
+        $ch = curl_init();
+        $code = $this->form['kode'];
+        curl_setopt($ch, CURLOPT_URL, "https://yfapi.net/v6/finance/quote?symbols=$code.jk");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+
+        $headers = array();
+        $headers[] = 'Accept: application/json';
+        $headers[] = 'X-Api-Key: XE6XBRrsIR2TJRK4UVUjhaY739kIFSD24TMxFRcl';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+        if (curl_errno($ch)) {
+            return $this->emit('error', 'Error Code Search');
+        }
+        // dd(json_decode($result)->quoteResponse->result[0]);
+        $this->form['harga_beli'] = 'Rp  ' . number_format(json_decode($result)->quoteResponse->result[0]->regularMarketPrice, 0, ',', '.');
+    }
     protected $validationAttributes = [
         'form.kode' => 'code',
         'form.lot' => 'lot',

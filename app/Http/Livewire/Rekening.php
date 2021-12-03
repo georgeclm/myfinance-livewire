@@ -35,17 +35,18 @@ class Rekening extends Component
         $this->mount();
     }
 
-    public function updated($propertyName)
+    public function updatedMoveJumlah()
     {
-        if ($propertyName == 'move.jumlah') {
-            $check_jumlah = str_replace('.', '', substr($this->move['jumlah'], 4));
-            if ($check_jumlah > $this->rekening->saldo_sekarang) {
-                $this->moveButton = 'disabled';
-                return $this->emit('error', 'Balance In Pocket Not Enough');
-            }
-            $this->moveButton = '';
+        $check_jumlah = str_replace('.', '', substr($this->move['jumlah'], 4));
+        if ($check_jumlah > $this->rekening->saldo_sekarang) {
+            $this->moveButton = 'disabled';
+            // return $this->emit('error', 'Balance In Pocket Not Enough');
+            return $this->addError('move.jumlah', 'Balance In Pocket Not Enough');
         }
+        $this->resetErrorBag();
+        $this->moveButton = '';
     }
+
 
     public function move()
     {

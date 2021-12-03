@@ -230,8 +230,8 @@
                     <div class="hide-inputbtns input-group">
                         <input type="text" type-currency="IDR" inputmode="numeric" name="saldo_sekarang"
                             wire:model="move.jumlah" placeholder="Amount" required
-                            class="border-0 form-control @error('jumlah') is-invalid @enderror">
-                        @error('jumlah')
+                            class="border-0 form-control @error('move.jumlah') is-invalid @enderror">
+                        @error('move.jumlah')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
