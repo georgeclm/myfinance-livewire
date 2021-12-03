@@ -19,6 +19,7 @@ class Stock extends Component
     public $stock;
     public $form;
     protected $listeners = ['refreshStock', 'refreshStockRender'];
+    public $errorAPI = false;
 
     public function refreshStockRender()
     {
@@ -35,7 +36,7 @@ class Stock extends Component
         $this->stock = ModelsStock::findOrFail($primaryId);
         $this->form = $this->stock->toArray();
         $this->form['lot'] = "";
-        $this->form['harga_beli'] = 'Rp  ' . number_format($this->stockPrice[$this->stock->kode], 0, ',', '.');
+        $this->form['harga_beli'] = 'Rp  ' . number_format($this->stockPrice[$this->stock->kode] ?? 0, 0, ',', '.');
         $this->emit('editModal');
     }
 
@@ -43,7 +44,7 @@ class Stock extends Component
     {
         $this->stock = ModelsStock::findOrFail($primaryId);
         $this->form = $this->stock->toArray();
-        $this->form['harga_beli'] = 'Rp  ' . number_format($this->stockPrice[$this->stock->kode], 0, ',', '.');
+        $this->form['harga_beli'] = 'Rp  ' . number_format($this->stockPrice[$this->stock->kode] ?? 0, 0, ',', '.');
         $this->emit('deleteModal');
     }
 
@@ -193,10 +194,11 @@ class Stock extends Component
 
             $result = curl_exec($ch);
             // dd($result);
-            if (curl_errno($ch)) {
-                abort(500, 'Error:' . curl_error($ch));
-            }
             curl_close($ch);
+            if (curl_errno($ch)) {
+                // abort(500, 'Error:' . curl_error($ch));
+                return $this->errorAPI = true;
+            }
             // dd(json_decode($result)->quoteResponse->result);
             foreach (json_decode($result)->quoteResponse->result as  $result) {
                 $this->stockPrice[str_replace('.JK', '', $result->symbol)] = $result->regularMarketPrice;
@@ -208,9 +210,11 @@ class Stock extends Component
     public function render()
     {
         $this->stocks = ModelsStock::where('user_id', auth()->id())->where('lot', '!=', 0)->latest()->get();
-        $this->unrealized = 0;
-        foreach ($this->stocks  as  $stock) {
-            $this->unrealized += ($this->stockPrice[$stock->kode] * $stock->lot * 100) -  $stock->total;
+        if (!$this->errorAPI) {
+            $this->unrealized = 0;
+            foreach ($this->stocks  as  $stock) {
+                $this->unrealized += ($this->stockPrice[$stock->kode] ?? 0 * $stock->lot * 100) -  $stock->total;
+            }
         }
         $this->gain = ($this->unrealized >= 0) ? true : false;
         return view('livewire.investasi.stock');

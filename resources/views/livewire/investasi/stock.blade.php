@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        @if ($unrealized != 0)
+        @if ($unrealized != 0 && !$errorApi)
             <div class="small-when-0 col-xl-3 col-md-6 mb-4">
                 <div class="bg-gray-100 border-0 card @if ($gain) border-left-success @else border-left-danger @endif  shadow h-100 py-2">
                     <div class="card-body">
@@ -83,12 +83,14 @@
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">{{ $stock->kode }} - Rp.
                         {{ number_format($stock->total, 0, ',', '.') }}
-                        <span class="badge @if ($stockPrice[$stock->kode] >= $stock->harga_beli) badge-success @else badge-danger @endif">
-                            @if ($stockPrice[$stock->kode] > $stock->harga_beli)
-                                + @endif
-                            {{ round((($stockPrice[$stock->kode] - $stock->harga_beli) / $stock->harga_beli) * 100, 2) }}
-                            %
-                        </span>
+                        @if (!$errorApi)
+                            <span class="badge @if ($stockPrice[$stock->kode] >= $stock->harga_beli) badge-success @else badge-danger @endif">
+                                @if ($stockPrice[$stock->kode] > $stock->harga_beli)
+                                    + @endif
+                                {{ round((($stockPrice[$stock->kode] - $stock->harga_beli) / $stock->harga_beli) * 100, 2) }}
+                                %
+                            </span>
+                        @endif
                     </h6>
                     <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -115,8 +117,9 @@
                         <div class="flex-grow-1">
                             Avg Price: Rp. {{ number_format($stock->harga_beli, 0, ',', '.') }} per-Lembar
                             <br>
-                            @if ($stockPrice[$stock->kode] != 0)Current Price: Rp. {{ number_format($stockPrice[$stock->kode], 0, ',', '.') }} per-Lembar @endif
-
+                            @if (!$errorApi)
+                                @if ($stockPrice[$stock->kode] != 0)Current Price: Rp. {{ number_format($stockPrice[$stock->kode], 0, ',', '.') }} per-Lembar @endif
+                            @endif
                         </div>
                         {{ $stock->lot }} Lot
                     </div>

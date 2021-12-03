@@ -47,10 +47,10 @@ class CreateStock extends Component
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
             $result = curl_exec($ch);
+            curl_close($ch);
             if (curl_errno($ch)) {
                 return $this->emit('error', 'Error Code Search');
             }
-            curl_close($ch);
             // dd(json_decode($result)->quoteResponse->result[0]);
             $this->form['harga_beli'] = 'Rp  ' . number_format(json_decode($result)->quoteResponse->result[0]->regularMarketPrice, 0, ',', '.');
         }
