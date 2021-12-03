@@ -181,6 +181,10 @@ class Stock extends Component
             curl_setopt($ch, CURLOPT_URL, $queryString);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 
             $headers = array();
             $headers[] = 'Accept: application/json';
@@ -188,8 +192,9 @@ class Stock extends Component
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
             $result = curl_exec($ch);
+            // dd($result);
             if (curl_errno($ch)) {
-                echo 'Error:' . curl_error($ch);
+                abort(500, 'Error:' . curl_error($ch));
             }
             curl_close($ch);
             // dd(json_decode($result)->quoteResponse->result);
