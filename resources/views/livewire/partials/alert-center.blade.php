@@ -1,6 +1,6 @@
 <li class="nav-item dropdown no-arrow" wire:ignore.self>
-    <a class="nav-link dropdown-toggle" wire:click="check_notif" href="#" id="alertsDropdown" role="button"
-        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" style="background-color: rgb(33,33,33) !important;" wire:click="check_notif"
+        href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-bell fa-fw"></i>
         <!-- Counter - Alerts -->
         <span class="badge badge-danger badge-counter">{{ Auth::user()->total_notif() }}</span>
