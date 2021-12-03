@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        @if ($unrealized != 0 && !$errorApi)
+        @if ($unrealized != 0 && !$errorAPI)
             <div class="small-when-0 col-xl-3 col-md-6 mb-4">
                 <div class="bg-gray-100 border-0 card @if ($gain) border-left-success @else border-left-danger @endif  shadow h-100 py-2">
                     <div class="card-body">
@@ -83,7 +83,7 @@
                     class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">{{ $stock->kode }} - Rp.
                         {{ number_format($stock->total, 0, ',', '.') }}
-                        @if (!$errorApi)
+                        @if (!$errorAPI)
                             <span class="badge @if ($stockPrice[$stock->kode] >= $stock->harga_beli) badge-success @else badge-danger @endif">
                                 @if ($stockPrice[$stock->kode] > $stock->harga_beli)
                                     + @endif
@@ -117,7 +117,7 @@
                         <div class="flex-grow-1">
                             Avg Price: Rp. {{ number_format($stock->harga_beli, 0, ',', '.') }} per-Lembar
                             <br>
-                            @if (!$errorApi)
+                            @if (!$errorAPI)
                                 @if ($stockPrice[$stock->kode] != 0)Current Price: Rp. {{ number_format($stockPrice[$stock->kode], 0, ',', '.') }} per-Lembar @endif
                             @endif
                         </div>

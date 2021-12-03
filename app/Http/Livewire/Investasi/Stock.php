@@ -195,6 +195,7 @@ class Stock extends Component
             $result = curl_exec($ch);
             // dd($result);
             curl_close($ch);
+
             if (curl_errno($ch)) {
                 // abort(500, 'Error:' . curl_error($ch));
                 return $this->errorAPI = true;
@@ -213,7 +214,7 @@ class Stock extends Component
         if (!$this->errorAPI) {
             $this->unrealized = 0;
             foreach ($this->stocks  as  $stock) {
-                $this->unrealized += ($this->stockPrice[$stock->kode] ?? 0 * $stock->lot * 100) -  $stock->total;
+                $this->unrealized += ($this->stockPrice[$stock->kode] * $stock->lot * 100) -  $stock->total;
             }
         }
         $this->gain = ($this->unrealized >= 0) ? true : false;
