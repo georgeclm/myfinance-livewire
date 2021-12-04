@@ -126,7 +126,7 @@ class CreateStock extends Component
             'keterangan' => null,
             'total' => ''
         ];
-        $this->emit('refreshStockRender');
+        $this->emit('refreshStock');
     }
     public function render()
     {
