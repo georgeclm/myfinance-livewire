@@ -26,6 +26,7 @@ class Rekening extends Component
         'rekening_id' => '',
         'jumlah' => '',
     ];
+    public $move_rekening_id;
     public $moveButton = 'disabled';
 
     protected $listeners = ['refreshPocket'];
@@ -99,6 +100,7 @@ class Rekening extends Component
         $this->rekening  = ModelsRekening::findOrFail($primaryId);
         $this->name = $this->rekening->nama_akun;
         $this->saldo = $this->rekening->saldo_sekarang;
+        $this->move_rekening_id = $primaryId;
         $this->emit("modalFund");
         $this->emit('run');
     }

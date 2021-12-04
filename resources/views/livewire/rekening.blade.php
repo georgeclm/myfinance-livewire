@@ -217,7 +217,7 @@
                             required>
                             <option value="" selected disabled hidden>Choose Pocket</option>
                             @foreach (auth()->user()->rekenings as $rekening)
-                                <option value="{{ $rekening->id }}">{{ $rekening->nama_akun }} - Rp.
+                                <option value="{{ $rekening->id }}" @if($move_rekening_id == $rekening->id) hidden @endif>{{ $rekening->nama_akun }} - Rp.
                                     {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
                             @endforeach
                         </select>
