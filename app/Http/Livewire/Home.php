@@ -115,7 +115,6 @@ class Home extends Component
             }
         }
         // dd($incomeDiff);
-        $this->dispatchBrowserEvent('refresh-chart');
         $this->emit('thechart');
 
         return view('livewire.home', compact('income', 'spending', 'balance', 'prevIncome', 'prevSpending', 'incomeDiff', 'spendingDiff', 'spendingDiffPercent', 'incomeDiffPercent'));
