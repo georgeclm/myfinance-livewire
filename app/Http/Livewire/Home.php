@@ -74,7 +74,7 @@ class Home extends Component
         $incomeDiffPercent = ($income + $incomeDiff != 0) ?  round($incomeDiff / ($income + $incomeDiff) * 100) : 0;
         $spendingDiffPercent = ($spending + $spendingDiff != 0) ? round($spendingDiff / ($spending + $spendingDiff) * 100) : 0;
         for ($i = 1; $i <= 4; $i++) {
-            $cacheId = $i . auth()->id() . substr(now()->subMonth(4)->format('F'), 0, 3);
+            $cacheId = $i . auth()->id() . now()->format('F');
             $prevIncome[$i] = cache()->remember('prevIncome' . $cacheId, 60 * 60 * 24 * 30, function () use ($i) {
                 return Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
             });

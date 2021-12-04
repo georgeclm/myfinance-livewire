@@ -32,6 +32,6 @@ return [
     'google' => [
         'client_id' => '114594070523-a2k8lc6vjgvesqe82rm1qiq3m8ed5tl6.apps.googleusercontent.com',
         'client_secret' => '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',
-        'redirect' => 'https://myfinance-livewire.com/auth/google/callback',
+        'redirect' => 'https://epafroditusgeorge.com/auth/google/callback',
     ],
 ];
