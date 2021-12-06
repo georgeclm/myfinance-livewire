@@ -68,9 +68,53 @@
 
         </ul>
     </nav>
-    <nav class="navbar navbar-dark bg-black navbar-expand d-md-none d-lg-none d-xl-none fixed-bottom p-0"
-        id="bottom-nav">
-        <ul class="navbar-nav nav-justified w-100">
+    <nav class="navigation bg-black d-md-none d-lg-none d-xl-none fixed-bottom p-0 m-0" id="bottom-nav">
+        <ul>
+            <li class="list  @if (Route::current()->uri == '/') active @endif">
+                <a href="{{ route('home') }}">
+                    <span class="icon">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                    </span>
+                    <span class="text">Home</span>
+                </a>
+            </li>
+            <li class="list @if (Route::current()->uri == 'pockets') active @endif">
+                <a href="{{ route('rekening') }}">
+                    <span class="icon">
+                        <i class="fas fa-fw fa-wallet"></i>
+                    </span>
+                    <span class="text">Pockets</span>
+                </a>
+            </li>
+            <li class="list @if (Route::current()->uri == 'transactions') active @endif">
+                <a href="{{ route('transaction') }}">
+                    <span class="icon">
+                        <i class="fas fa-fw fa-dollar-sign"></i>
+                    </span>
+                    <span class="text">Records</span>
+                </a>
+            </li>
+            <li class="list @if (Route::current()->uri == 'financialplans') active @endif">
+                <a href="{{ route('financialplan') }}">
+                    <span class="icon">
+                        <i class="fas fa-fw fa-clipboard-list"></i>
+                    </span>
+                    <span class="text">Plan</span>
+                </a>
+            </li>
+            <li class="list @if (Route::current()->uri == 'investments') active @endif">
+                <a href="{{ route('investasi') }}">
+                    <span class="icon">
+                        <i class="fas fa-fw fa-chart-line"></i>
+                    </span>
+                    <span class="text">Investment</span>
+                </a>
+            </li>
+            <div class="indicator">
+
+            </div>
+        </ul>
+        {{-- <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item" style="line-height: 80% !important; word-wrap:normal;">
                 <a href="{{ route('home') }}" class="nav-link  @if (Route::current()->uri == '/') active @endif"><i
                         class="fas fa-fw fa-tachometer-alt"></i><br>
@@ -120,7 +164,7 @@
                     <span style="font-size: 10px">Investment</span>
                 </a>
             </li>
-        </ul>
+        </ul> --}}
     </nav>
     <!-- End of Topbar -->
     <!-- Logout Modal-->
