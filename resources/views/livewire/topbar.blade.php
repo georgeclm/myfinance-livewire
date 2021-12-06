@@ -68,8 +68,8 @@
 
         </ul>
     </nav>
-    <nav class="navigation bg-black d-md-none d-lg-none d-xl-none fixed-bottom p-0 m-0" id="bottom-nav">
-        <ul>
+    <nav class="navbar navbar-dark navbar-expand  bg-black d-md-none d-lg-none d-xl-none fixed-bottom p-0" id="bottom-nav">
+        {{-- <ul>
             <li class="list  @if (Route::current()->uri == '/') active @endif">
                 <a href="{{ route('home') }}">
                     <span class="icon">
@@ -113,8 +113,8 @@
             <div class="indicator">
 
             </div>
-        </ul>
-        {{-- <ul class="navbar-nav nav-justified w-100">
+        </ul> --}}
+        <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item" style="line-height: 80% !important; word-wrap:normal;">
                 <a href="{{ route('home') }}" class="nav-link  @if (Route::current()->uri == '/') active @endif"><i
                         class="fas fa-fw fa-tachometer-alt"></i><br>
@@ -164,7 +164,7 @@
                     <span style="font-size: 10px">Investment</span>
                 </a>
             </li>
-        </ul> --}}
+        </ul>
     </nav>
     <!-- End of Topbar -->
     <!-- Logout Modal-->
