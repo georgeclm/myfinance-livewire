@@ -21,7 +21,7 @@
                 <div class="h5 text-uppercase text-white">cavidjaja@gmail.com</div>
                 <div class="h5 text-uppercase mb-4 text-white">089647590083</div>
                 <a class="btn btn-secondary btn-lg"
-                    href="https://drive.google.com/file/d/16b8hLMNCLxBA7x554hI48zkQXkuqwAGq/view" target="_blank">
+                    href="https://drive.google.com/file/d/16b8hLMNCLxBA7x554hI48zkQXkuqwAGq/view?usp=sharing" target="_blank">
                     My
                     CV</a>
             </div>
