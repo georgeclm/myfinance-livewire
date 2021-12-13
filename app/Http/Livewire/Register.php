@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 
 class Register extends Component
@@ -24,16 +25,16 @@ class Register extends Component
         'form.password' => 'password'
     ];
 
-    protected $rules = [
-        'form.email'    => 'required|email|unique:users,email',
-        'form.name'     => 'required|min:6',
-        'form.password' => 'required|min:8|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/|confirmed',
-    ];
 
+    public function rules()
+    {
+        return [
+            'form.email'    => 'required|email|unique:users,email',
+            'form.name'     => 'required|min:6',
+            'form.password' => ['required',  Password::defaults()->mixedCase()->numbers(), 'confirmed'],
+        ];
+    }
 
-    protected $messages = [
-        'form.password.regex' => 'Password Must Include Uppercase and number',
-    ];
 
     public function updated($propertyName)
     {
