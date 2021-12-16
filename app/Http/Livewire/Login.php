@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 
 
@@ -27,6 +28,9 @@ class Login extends Component
     public function submit()
     {
         // $this->addError('email', 'The email field is invalid.');
+        $encrypted = Crypt::encryptString($this->form['password']);
+        $decrypted = Crypt::decryptString($encrypted);
+        // dd($decrypted);
         $this->validate();
         if (Auth::attempt($this->form, true)) {
             return redirect(route('home'));
