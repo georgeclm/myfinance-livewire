@@ -61,6 +61,12 @@
                                     <button wire:loading.remove type="submit" class="btn btn-primary">
                                         Update
                                     </button>
+                                    <button wire:loading wire:target="fileUpdate" class="btn btn-primary" type="button"
+                                        disabled>
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                            aria-hidden="true"></span>
+                                        Loading...
+                                    </button>
                                 </form>
                                 <div class="ml-5">
                                     <button wire:click="deleteFile({{ $fileupload->id }})" class="btn btn-danger"
