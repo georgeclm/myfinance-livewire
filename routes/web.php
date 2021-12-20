@@ -44,6 +44,10 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', Register::class)->name('register');
 });
 
+Route::get('info', function () {
+    echo phpinfo();
+});
+
 Route::get('/fileupload', FileUpload::class)->name('fileupload');
 Route::middleware('auth')->group(function () {
     Route::get('/', Home::class)->name('home');
