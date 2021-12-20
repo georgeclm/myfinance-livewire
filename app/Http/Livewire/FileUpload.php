@@ -19,9 +19,9 @@ class FileUpload extends Component
 
     public function uploadFile()
     {
-        // $this->validate([
-        //     'file' => 'required'
-        // ]);
+        $this->validate([
+            'file' => 'required'
+        ]);
         $file =  $this->file->store('public');
         ModelsFileupload::create([
             'file_name' => $file,
