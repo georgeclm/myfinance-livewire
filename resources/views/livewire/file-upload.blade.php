@@ -58,8 +58,14 @@
                             @if (@auth()->user()->email == 'admin@example.com')
                                 <form class="" wire:submit.prevent="updateFile({{ $fileupload->id }})">
                                     <input type="file" class="" wire:model.defer="fileUpdate" required>
-                                    <button type="submit" class="btn btn-primary">
+                                    <button wire:loading.remove type="submit" class="btn btn-primary">
                                         Update
+                                    </button>
+                                    <button wire:loading wire:target="fileUpdate" class="btn btn-primary" type="button"
+                                        disabled>
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                            aria-hidden="true"></span>
+                                        Loading...
                                     </button>
                                 </form>
                                 <div class="ml-5">
