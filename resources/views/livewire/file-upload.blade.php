@@ -18,8 +18,12 @@
                 <input type="file" class="" wire:model.defer="file" required
                     id="upload{{ $fileIteration }}">
                 @error('file') <span class="error">{{ $message }}</span> @enderror
-                <button type="submit" class="btn btn-primary">
+                <button wire:loading.remove type="submit" class="btn btn-primary">
                     Add
+                </button>
+                <button wire:loading wire:target="file" class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
                 </button>
             </form>
         @endif
