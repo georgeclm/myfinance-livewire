@@ -14,7 +14,7 @@
             </button>
         @endauth
         @if (@auth()->user()->email == 'admin@example.com')
-            <form wire:submit.prevent="uploadFile">
+            <form wire:submit.prevent="uploadFile" enctype="multipart/form-data">
                 <input type="file" class="" wire:model.defer="file" required
                     id="upload{{ $fileIteration }}">
                 @error('file') <span class="error">{{ $message }}</span> @enderror

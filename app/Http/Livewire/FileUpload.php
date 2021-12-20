@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Fileupload as ModelsFileupload;
-use Composer\Util\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
