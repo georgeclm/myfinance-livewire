@@ -219,8 +219,8 @@
     </script>
 </head>
 
-<body id="page-top" class="bg-dark">
-    @if (!in_array(Route::current()->uri, ['login', 'register']))
+<body id="page-top " class="@if (Route::current()->uri != 'fileupload') bg-dark @endif">
+    @if (!in_array(Route::current()->uri, ['login', 'register', 'fileupload']))
         <!-- Page Wrapper -->
         <div id="wrapper">
             @livewire('sidebar')
@@ -236,7 +236,7 @@
                 </div>
             </div>
         </div>
-        @if (!in_array(Route::current()->uri, ['login', 'register']))
+        @if (!in_array(Route::current()->uri, ['login', 'register', 'fileupload']))
             @if (!auth()->user()->rekenings->isEmpty() &&
     !in_array(Route::current()->uri, ['transactions', 'repetitions']))
                 <a class="add-button rounded-circle" onclick="showModal('createTransaction')" href="javascript:void(0)">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrickController;
 use App\Http\Livewire\{
     Cicilan,
+    FileUpload,
     Financialplan,
     Home,
     Investasi,
@@ -43,6 +44,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', Register::class)->name('register');
 });
 
+Route::get('/fileupload', FileUpload::class)->name('fileupload');
 Route::middleware('auth')->group(function () {
     Route::get('/', Home::class)->name('home');
     Route::get('/pockets', Rekening::class)->name('rekening');

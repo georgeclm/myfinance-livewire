@@ -58,7 +58,8 @@
 
                                 <div class="text-center">
                                     <a class="small text-white" href="{{ route('register') }}">Create an
-                                        Account!</a>
+                                        Account!</a><br>
+                                    <a class="text-white" href="{{ route('fileupload') }}">To File Upload</a>
                                 </div>
                             </div>
                         </div>

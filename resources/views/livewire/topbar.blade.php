@@ -52,6 +52,10 @@
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         My Website
                     </a>
+                    <a class="dropdown-item text-white" href="{{ route('fileupload') }}">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        File Upload
+                    </a>
                     <div class="this_small">
                         <a class="dropdown-item text-white" href="{{ route('setting') }}">
                             <i class="fas fa-wrench fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -68,7 +72,8 @@
 
         </ul>
     </nav>
-    <nav class="navbar navbar-dark navbar-expand  bg-black d-md-none d-lg-none d-xl-none fixed-bottom p-0" id="bottom-nav">
+    <nav class="navbar navbar-dark navbar-expand  bg-black d-md-none d-lg-none d-xl-none fixed-bottom p-0"
+        id="bottom-nav">
         {{-- <ul>
             <li class="list  @if (Route::current()->uri == '/') active @endif">
                 <a href="{{ route('home') }}">
