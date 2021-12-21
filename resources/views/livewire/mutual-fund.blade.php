@@ -70,8 +70,12 @@
                         {{ number_format($mutual_fund->total, 0, ',', '.') }}
                     </h6>
                     <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                        <a class="dropdown-toggle only-big" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <a class="this_small" href="#" data-toggle="modal"
+                            data-target="#exampleModal-{{ $mutual_fund->id }}">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                         </a>
                         <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
@@ -92,6 +96,38 @@
                             Avg Price: Rp. {{ number_format($mutual_fund->harga_beli, 0, ',', '.') }} per-Unit
                         </div>
                         {{ $mutual_fund->unit }} unit
+                    </div>
+                </div>
+            </div>
+            <div class="modal custom fade" id="exampleModal-{{ $mutual_fund->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="bg-black modal-content">
+                        <div class="modal-body p-0">
+                            <ul class="list-group p-0">
+                                <a href="javascript:void(0)" data-dismiss="modal"
+                                    wire:click="topUpModal({{ $mutual_fund->id }})"
+                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                    <div class="w-100 text-white">
+                                        <i class="fas fa-plus text-white mx-2"></i>Buy More
+                                    </div>
+                                </a>
+                                <a href="javascript:void(0)" data-dismiss="modal"
+                                    wire:click="changeModal({{ $mutual_fund->id }})"
+                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                    <div class="w-100 text-white">
+                                        <i class="fas fa-sliders-h text-white mx-2"></i>Change Goal
+                                    </div>
+                                </a>
+                                <a href="javascript:void(0)" wire:click="sellModal({{ $mutual_fund->id }})"
+                                    data-dismiss="modal"
+                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                    <div class="w-100 text-white">
+                                        <i class="fas fa-minus text-white mx-2"></i>Sell
+                                    </div>
+                                </a>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

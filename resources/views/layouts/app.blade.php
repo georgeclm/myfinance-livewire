@@ -171,6 +171,13 @@
             line-height: 46px;
         }
 
+        .modal.custom .modal-dialog {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            margin: 0;
+        }
+
     </style>
     @livewireStyles
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"

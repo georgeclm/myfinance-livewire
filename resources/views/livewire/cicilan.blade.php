@@ -27,10 +27,13 @@
                                 {{ number_format($cicilan->jumlah, 0, ',', '.') }}
                             </h6>
                             <div class="dropdown no-arrow">
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                <a class="dropdown-toggle only-big" href="#" role="button" id="dropdownMenuLink"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-caret-down"></i>
-                                    {{-- <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i> --}}
+                                </a>
+                                <a class="this_small" href="#" data-toggle="modal"
+                                    data-target="#exampleModal-{{ $cicilan->id }}">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                     aria-labelledby="dropdownMenuLink">
@@ -70,6 +73,31 @@
                             </div>
                         </div>
                         <hr class="bg-white my-1">
+                        <div class="modal custom fade" id="exampleModal-{{ $cicilan->id }}" tabindex="-1"
+                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="bg-black modal-content">
+                                    <div class="modal-body p-0">
+                                        <ul class="list-group p-0">
+                                            <a href="javascript:void(0)" data-dismiss="modal"
+                                                wire:click="editModal({{ $cicilan->id }})"
+                                                class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                                <div class="w-100 text-white">
+                                                    <i class="fas fa-edit text-white mx-2"></i>Edit
+                                                </div>
+                                            </a>
+                                            <a href="javascript:void(0)" wire:click="deleteModal({{ $cicilan->id }})"
+                                                data-dismiss="modal"
+                                                class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                                <div class="w-100 text-white">
+                                                    <i class="fas fa-trash text-white mx-2"></i>Delete
+                                                </div>
+                                            </a>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @empty
                             <div class="text-center font-weight-bold text-white-50">
                                 Empty

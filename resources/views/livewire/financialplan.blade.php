@@ -66,10 +66,15 @@
                                     {{ $financialplan->nama }}
                                     <span class="float-right">
                                         <div class="dropdown ml-2">
-                                            <button class="btn btn-secondary" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button class="btn btn-secondary only-big" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
                                                 <i class="fa fa-caret-down"></i>
                                             </button>
+                                            <a class="this_small" href="javascript:void(0)" data-toggle="modal"
+                                                data-target="#done-{{ $financialplan->id }}">
+                                                <i class="fas fa-ellipsis-v fa-fw text-gray-400"></i>
+                                            </a>
                                             <div class=" bg-dark border-0  dropdown-menu"
                                                 aria-labelledby="dropdownMenuButton">
                                                 <button wire:click="editModal({{ $financialplan->id }})"
@@ -96,6 +101,24 @@
                                 </h4>
                                 <div class="text-center  font-weight-bold text-white"> Rp.
                                     {{ number_format($financialplan->perbulan, 0, ',', '.') }} /Month
+                                </div>
+                            </div>
+                            <div class="modal custom fade" id="done-{{ $financialplan->id }}" tabindex="-1"
+                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="bg-black modal-content">
+                                        <div class="modal-body p-0">
+                                            <ul class="list-group p-0">
+                                                <a href="javascript:void(0)" data-dismiss="modal"
+                                                    wire:click="editModal({{ $financialplan->id }})"
+                                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                                    <div class="w-100 text-white">
+                                                        <i class="fas fa-edit text-white mx-2"></i>Edit
+                                                    </div>
+                                                </a>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             @if (!$loop->last)
@@ -126,10 +149,15 @@
                                     {{ $financialplan->nama }}
                                     <span class="float-right">
                                         <div class="dropdown ml-2">
-                                            <button class="btn btn-secondary" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button class="btn btn-secondary only-big" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
                                                 <i class="fa fa-caret-down"></i>
                                             </button>
+                                            <a class="this_small" href="#" data-toggle="modal"
+                                                data-target="#notdone-{{ $financialplan->id }}">
+                                                <i class="fas fa-ellipsis-v fa-fw text-gray-400"></i>
+                                            </a>
                                             <div class=" bg-dark border-0  dropdown-menu"
                                                 aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item text-white"
@@ -159,6 +187,39 @@
                                 </h4>
                                 <div class="text-center  font-weight-bold text-white"> Rp.
                                     {{ number_format($financialplan->perbulan, 0, ',', '.') }} /Month
+                                </div>
+                            </div>
+                            <div class="modal custom fade" id="notdone-{{ $financialplan->id }}" tabindex="-1"
+                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="bg-black modal-content">
+                                        <div class="modal-body p-0">
+                                            <ul class="list-group p-0">
+                                                <a href="javascript:void(0)" data-dismiss="modal"
+                                                    wire:click="editModal({{ $financialplan->id }})"
+                                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                                    <div class="w-100 text-white">
+                                                        <i class="fas fa-edit text-white mx-2"></i>Edit
+                                                    </div>
+                                                </a>
+                                                <a href="{{ route('investasi') }}"
+                                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                                    <div class="w-100 text-white">
+                                                        <i class="fas fa-chart-bar text-white mx-2"></i>Invest
+                                                    </div>
+                                                </a>
+                                                @if ($financialplan->jumlah == 0)
+                                                    <a href="javascript:void(0)" data-dismiss="modal"
+                                                        wire:click="deleteModal({{ $financialplan->id }})"
+                                                        class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                                        <div class="w-100 text-white">
+                                                            <i class="fas fa-trash text-white mx-2"></i>Delete
+                                                        </div>
+                                                    </a>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             @if (!$loop->last)

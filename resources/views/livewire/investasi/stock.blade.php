@@ -93,8 +93,12 @@
                         @endif
                     </h6>
                     <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                        <a class="dropdown-toggle only-big" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <a class="this_small" href="#" data-toggle="modal"
+                            data-target="#exampleModal-{{ $stock->id }}">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                         </a>
                         <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
@@ -122,6 +126,40 @@
                             @endif
                         </div>
                         {{ $stock->lot }} Lot
+                    </div>
+                </div>
+            </div>
+            <div class="modal custom fade" id="exampleModal-{{ $stock->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="bg-black modal-content">
+                        <div class="modal-body p-0">
+                            <ul class="list-group p-0">
+                                <a href="javascript:void(0)" data-dismiss="modal"
+                                    wire:click="topupModal({{ $stock->id }})"
+                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                    <div class="w-100 text-white">
+                                        <i class="fas fa-plus text-white mx-2"></i>Buy More
+                                    </div>
+                                </a>
+                                @if ($stock->financial_plan_id != 0)
+                                    <a href="javascript:void(0)" data-dismiss="modal"
+                                        wire:click="adjustModal({{ $stock->id }})"
+                                        class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                        <div class="w-100 text-white">
+                                            <i class="fas fa-sliders-h text-white mx-2"></i>Change Goal
+                                        </div>
+                                    </a>
+                                @endif
+                                <a href="javascript:void(0)" wire:click="sellModal({{ $stock->id }})"
+                                    data-dismiss="modal"
+                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                    <div class="w-100 text-white">
+                                        <i class="fas fa-minus text-white mx-2"></i>Sell
+                                    </div>
+                                </a>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

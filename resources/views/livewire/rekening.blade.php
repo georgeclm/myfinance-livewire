@@ -44,10 +44,13 @@
                         </a>
                         {{-- @endif --}}
                         <div class="dropdown no-arrow">
-                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            <a class="dropdown-toggle only-big" href="#" role="button" id="dropdownMenuLink"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-caret-down"></i>
-                                {{-- <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i> --}}
+                            </a>
+                            <a class="this_small" href="#" data-toggle="modal"
+                                data-target="#exampleModal-{{ $rekening->id }}">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                             </a>
                             <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in">
                                 <a wire:click="editModal({{ $rekening->id }})" class="dropdown-item text-white"
@@ -74,6 +77,45 @@
                         </div>
                     </div>
                     <hr class="bg-white my-1">
+                    <div class="modal custom fade" id="exampleModal-{{ $rekening->id }}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="bg-black modal-content">
+                                <div class="modal-body p-0">
+                                    <ul class="list-group p-0">
+                                        <a href="javascript:void(0)" data-dismiss="modal"
+                                            wire:click="editModal({{ $rekening->id }})"
+                                            class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                            <div class="w-100 text-white">
+                                                <i class="fas fa-edit text-white mx-2"></i>Edit
+                                            </div>
+                                        </a>
+                                        <a href="javascript:void(0)" wire:click="deleteModal({{ $rekening->id }})"
+                                            data-dismiss="modal"
+                                            class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                            <div class="w-100 text-white">
+                                                <i class="fas fa-trash text-white mx-2"></i>Delete
+                                            </div>
+                                        </a>
+                                        <a href="javascript:void(0)" wire:click="adjustModal({{ $rekening->id }})"
+                                            data-dismiss="modal"
+                                            class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                            <div class="w-100 text-white">
+                                                <i class="fas fa-sliders-h text-white mx-2"></i>Adjust
+                                            </div>
+                                        </a>
+                                        <a href="{{ route('rekening.show', $rekening->id) }}"
+                                            class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                            <div class="w-100 text-white">
+                                                <i class="fas fa-list-alt text-white mx-2"></i>Mutation
+                                            </div>
+                                        </a>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @empty
                     <div class="text-center font-weight-bold text-white-50">
                         Empty
@@ -217,7 +259,8 @@
                             required>
                             <option value="" selected disabled hidden>Choose Pocket</option>
                             @foreach (auth()->user()->rekenings as $rekening)
-                                <option value="{{ $rekening->id }}" @if($move_rekening_id == $rekening->id) hidden @endif>{{ $rekening->nama_akun }} - Rp.
+                                <option value="{{ $rekening->id }}" @if ($move_rekening_id == $rekening->id) hidden @endif>
+                                    {{ $rekening->nama_akun }} - Rp.
                                     {{ number_format($rekening->saldo_sekarang, 0, ',', '.') }}</option>
                             @endforeach
                         </select>
