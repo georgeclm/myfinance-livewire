@@ -68,6 +68,8 @@ class Rekening extends Component
         $this->emit('success', 'Money have been moved');
         $this->emit('refreshPocket');
         $this->emit('hidemodalFund');
+        $this->move['jumlah'] = '';
+        $this->move['rekening_id'] = '';
     }
 
     public function editModal($id)
