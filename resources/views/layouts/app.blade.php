@@ -353,6 +353,7 @@
         });
         window.livewire.on('thechart', () => {
             thechart();
+            chart2();
         });
         /*=============== SHOW MODAL ===============*/
         var showModal = (modalContent) => {
