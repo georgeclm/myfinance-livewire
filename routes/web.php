@@ -27,6 +27,7 @@ use App\Models\Ticker;
 use Illuminate\Http\Request;
 use App\Http\Controllers\GoogleController;
 use App\Http\Livewire\Investasi\Stock\History;
+use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -123,3 +124,5 @@ Route::get('yahoof/{stock}', function ($stock) {
     curl_close($ch);
     dd(json_decode($result)->quoteResponse->result[0]);
 });
+Route::get('health', HealthCheckResultsController::class);
+
