@@ -18,6 +18,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Health::checks([
+            UsedDiskSpaceCheck::new(),
+            EnvironmentCheck::new(),
+            CacheCheck::new(),
+        ]);
     }
 
     /**
