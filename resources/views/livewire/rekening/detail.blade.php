@@ -48,7 +48,7 @@
                             {{ number_format($transaction->jumlah, 0, ',', '.') }}
                         </h6>
                     </div>
-                    @if (in_array($transaction->jenisuang_id, [1, 2]) && $transaction->rekening->nama_akun != 'Pocket Deleted')
+                    @if (in_array($transaction->jenisuang_id, [1, 2]) && $transaction->rekening->nama_akun != 'Pocket Deleted' && $transaction->category_id != 10 && $transaction->category_masuk_id != 10)
                         <a href="javascript:void(0)" wire:click="refundModal({{ $transaction->id }})"
                             class="btn btn-sm btn-warning btn-icon-split">
                             <span class="icon text-white-50">
