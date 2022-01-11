@@ -33,9 +33,6 @@ class Login extends Component
         // dd($decrypted);
         $this->validate();
         if (Auth::attempt($this->form, true)) {
-            if (auth()->user()->email == 'admin@example.com') {
-                return redirect(route('fileupload'));
-            }
             return redirect(route('home'));
         } else {
             return $this->emit('error', 'Email or Password Is Incorrect');

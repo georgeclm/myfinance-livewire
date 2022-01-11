@@ -20,9 +20,7 @@ class Home extends Component
     public $new_user;
     public function mount()
     {
-        // if (!auth()->user()) {
-        //     return redirect(route('fileupload'));
-        // }
+
         if (auth()->user()->welcome == 1) {
             $this->new_user = 1;
             auth()->user()->welcome = 0;
