@@ -113,7 +113,7 @@
     </script>
 </head>
 
-<body id="page-top " bg-dark ">
+<body id="page-top " class="bg-dark">
     @if (!in_array(Route::current()->uri, ['login', 'register']))
         <!-- Page Wrapper -->
         <div id="wrapper">

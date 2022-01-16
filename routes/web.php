@@ -118,4 +118,3 @@ Route::get('yahoof/{stock}', function ($stock) {
     curl_close($ch);
     dd(json_decode($result)->quoteResponse->result[0]);
 });
-

@@ -52,6 +52,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <h4 class="small font-weight-bold text-white">
+                                    {{ $passwordStrengthLevels[$strengthScore] ?? 'Weak' }}
+                                </h4>
+                                <div class="progress mb-4">
+                                    <div role="progressbar"
+                                        style="width: {{ $passwordStrengthPercent[$strengthScore] ?? 0 }}%"
+                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
+                                        class="progress-bar bg-success">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="custom-control custom-checkbox small">
                                     <input onclick="myFunction()" type="checkbox" class="custom-control-input"
                                         id="customCheck">

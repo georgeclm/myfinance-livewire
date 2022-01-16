@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
+use ZxcvbnPhp\Zxcvbn;
+
 
 class Register extends Component
 {
@@ -16,7 +18,20 @@ class Register extends Component
         'password' => '',
         'password_confirmation' => '',
     ];
+    public int $strengthScore = 0;
 
+    public array $passwordStrengthLevels = [
+        1 => 'Weak',
+        2 => 'Fair',
+        3 => 'Good',
+        4 => 'Strong'
+    ];
+    public array $passwordStrengthPercent = [
+        1 => 0,
+        2 => 33,
+        3 => 66,
+        4 => 100
+    ];
 
 
     protected $validationAttributes = [
@@ -36,10 +51,14 @@ class Register extends Component
     }
 
 
-    public function updated($propertyName)
+    public function updated($propertyName, $value)
     {
+        if ($propertyName == 'form.password') {
+            $this->strengthScore = (new Zxcvbn())->passwordStrength($value)['score'];
+        }
         $this->validateOnly($propertyName);
     }
+
 
     public function submit()
     {
