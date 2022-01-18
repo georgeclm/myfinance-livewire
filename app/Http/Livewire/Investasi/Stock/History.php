@@ -10,7 +10,7 @@ class History extends Component
     public $stocks;
     public function mount()
     {
-        $this->stocks = Stock::where('user_id', auth()->id())->onlyTrashed()->latest()->get();
+        $this->stocks = Stock::where('user_id', auth()->id())->onlyTrashed()->orderBy('deleted_at', 'desc')->get();
     }
     public function render()
     {
