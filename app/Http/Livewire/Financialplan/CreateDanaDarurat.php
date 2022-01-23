@@ -20,7 +20,7 @@ class CreateDanaDarurat extends Component
     public function submit()
     {
         $frontJumlah = $this->form['jumlah'];
-        $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
+        $this->form['jumlah'] = convert_to_number($this->form['jumlah']);
         $this->validate();
         if ($this->form['jumlah'] == '0') {
             $this->form['jumlah'] = $frontJumlah;

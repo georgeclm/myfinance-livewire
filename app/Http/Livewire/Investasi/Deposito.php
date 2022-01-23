@@ -42,7 +42,7 @@ class Deposito extends Component
 
     public function sell()
     {
-        // $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
+        // $this->form['jumlah'] = convert_to_number($this->form['jumlah']);
         $this->form['harga_jual'] = str_replace('.', '', substr($this->form['harga_jual'], 4));
 
         $this->validate([
@@ -76,7 +76,7 @@ class Deposito extends Component
 
     public function change()
     {
-        $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
+        $this->form['jumlah'] = convert_to_number($this->form['jumlah']);
         // $this->form['harga_jual'] = str_replace('.', '', substr($this->form['harga_jual'], 4));
         $this->validate([
             'form.financial_plan_id' => ['required', 'numeric', 'in:' . auth()->user()->financialplans->pluck('id')->implode(',')],

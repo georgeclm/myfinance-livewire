@@ -17,16 +17,11 @@ class Create extends Component
     public $error;
     public $jenisuangs;
     public $form =  [
-        'user_id' => '',
         'sekarang' => 0,
-        'nama' => '',
-        'tanggal' => '',
         'bulan' => '',
         'jenisuang_id' => '',
-        'jumlah' => '',
         'rekening_id' => '',
         'rekening_id2' => '',
-        'keterangan' => '',
         'utang_id' => '',
         'utangteman_id' => '',
         'category_id' => '',
@@ -35,19 +30,20 @@ class Create extends Component
     public function rules()
     {
         return  [
-            'form.user_id' => 'required',
+            'form.user_id' => ['required', 'in:' . auth()->id()],
             'form.sekarang' => ['required', 'numeric', 'in:0'],
             'form.nama' => 'required',
-            'form.tanggal' => ['required', 'numeric'],
-            'form.jenisuang_id' => 'required',
+            'form.tanggal' => ['required', 'numeric', 'between:1,31'],
+            'form.jenisuang_id' => ['required', 'exists:jenisuangs,id'],
             'form.jumlah' => ['required', 'numeric'],
             'form.rekening_id' => ['required', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.rekening_id2' => ['nullable', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.keterangan' => 'nullable',
             'form.utang_id' => ['nullable', 'in:' . auth()->user()->utangs->pluck('id')->implode(',')],
             'form.utangteman_id' => ['nullable', 'in:' . auth()->user()->utangtemans->pluck('id')->implode(',')],
-            'form.category_id' => 'nullable',
-            'form.category_masuk_id' => 'nullable'
+            'form.category_id' => ['nullable', 'exists:categories,id'],
+            'form.category_masuk_id' => ['nullable', 'exists:categories,id'],
+            'form.bulan' => ['required', 'numeric']
         ];
     }
     public function mount()
@@ -75,7 +71,7 @@ class Create extends Component
         if ($this->form['rekening_id2'] == '') {
             $this->form['rekening_id2'] = null;
         }
-        if ($this->form['keterangan'] == '') {
+        if (@$this->form['keterangan'] == '') {
             $this->form['keterangan'] = null;
         }
         if ($this->form['utang_id'] == '') {
@@ -90,18 +86,17 @@ class Create extends Component
         if ($this->form['category_masuk_id'] == '') {
             $this->form['category_masuk_id'] = null;
         }
-        if ($this->form['bulan'] == '') {
-            $this->form['bulan'] = 0;
-        }
         $this->form['user_id'] = auth()->id();
         $this->frontJumlah = $this->form['jumlah'];
-        $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
-        $this->validate();
+        $this->form['jumlah'] = convert_to_number($this->form['jumlah']);
         if ($this->form['tanggal'] > 31 || $this->form['tanggal'] < 1) {
             $this->form['jumlah'] = $this->frontJumlah;
             return $this->emit('error', 'Date must be between 1 to 31');
         }
-        // dd($this->form);
+        if ($this->form['bulan'] == '') {
+            $this->form['bulan'] = 0;
+        }
+        $this->validate();
 
         $rekening1 = Rekening::findOrFail($this->form['rekening_id']);
         if ($this->form['jenisuang_id'] == 1) {
@@ -145,11 +140,8 @@ class Create extends Component
         $this->emit('hideCreatePocket');
         $this->form =  [
             'sekarang' => 0,
-            'nama' => '',
-            'tanggal' => '',
             'bulan' => '',
             'jenisuang_id' => '',
-            'jumlah' => '',
             'rekening_id' => '',
             'rekening_id2' => '',
             'keterangan' => '',

@@ -95,7 +95,7 @@ class Create extends Component
         $msg = 'Transaction have been saved';
         $this->form['user_id'] = auth()->id();
         $this->frontJumlah = $this->form['jumlah'];
-        $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
+        $this->form['jumlah'] = convert_to_number($this->form['jumlah']);
         if ($this->form['jumlah'] == '0') {
             $this->form['jumlah'] = $this->frontJumlah;
             return $this->emit('error', 'Total cannot be 0');

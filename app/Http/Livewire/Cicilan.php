@@ -70,7 +70,7 @@ class Cicilan extends Component
             $this->form['bulan'] = 0;
         }
         $this->frontJumlah = $this->form['jumlah'];
-        $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
+        $this->form['jumlah'] = convert_to_number($this->form['jumlah']);
         $this->validate();
         if ($this->form['tanggal'] > 31 || $this->form['tanggal'] < 1) {
             $this->form['jumlah'] = $this->frontJumlah;

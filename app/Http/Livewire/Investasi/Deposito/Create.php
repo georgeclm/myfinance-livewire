@@ -40,7 +40,7 @@ class Create extends Component
     public function submit()
     {
         $frontJumlah = $this->form['jumlah'];
-        $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
+        $this->form['jumlah'] = convert_to_number($this->form['jumlah']);
         // $frontJual = $this->form['harga_jual'];
         // $this->form['harga_jual'] = str_replace('.', '', substr($this->form['harga_jual'], 4));
         $this->validate();

@@ -34,7 +34,7 @@ class CreateDanaMenabung extends Component
         $frontTarget = $this->form['target'];
         $this->form['target'] = str_replace('.', '', substr($this->form['target'], 4));
         $frontJumlah = $this->form['jumlah'];
-        $this->form['jumlah'] = str_replace('.', '', substr($this->form['jumlah'], 4));
+        $this->form['jumlah'] = convert_to_number($this->form['jumlah']);
         $this->validate();
         if ($this->form['target'] == '0') {
             $this->form['target'] = $frontTarget;
