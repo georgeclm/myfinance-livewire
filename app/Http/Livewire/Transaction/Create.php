@@ -27,8 +27,8 @@ class Create extends Component
         'rekening_id' => '',
         'rekening_id2' => '',
         'keterangan' => '',
-        'utang_id' => '',
-        'utangteman_id' => '',
+        'utangid' => '',
+        'utangtemanid' => '',
         'category_id' => '',
         'category_masuk_id' => ''
     ];
@@ -42,8 +42,8 @@ class Create extends Component
             'form.rekening_id' => ['required', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.rekening_id2' => ['nullable', 'in:' . auth()->user()->rekenings->pluck('id')->implode(',')],
             'form.keterangan' => 'nullable',
-            'form.utang_id' => ['nullable', 'in:' . auth()->user()->utangs->pluck('id')->implode(',')],
-            'form.utangteman_id' => ['nullable', 'in:' . auth()->user()->utangtemans->pluck('id')->implode(',')],
+            'form.utangid' => ['nullable', 'in:' . auth()->user()->utangs->pluck('id')->implode(',')],
+            'form.utangtemanid' => ['nullable', 'in:' . auth()->user()->utangtemans->pluck('id')->implode(',')],
             'form.category_id' => ['nullable', 'in:' . Category::pluck('id')->implode(',')],
             'form.category_masuk_id' => ['nullable', 'in:' . CategoryMasuk::pluck('id')->implode(',')]
         ];
@@ -72,6 +72,18 @@ class Create extends Component
         $this->categorymasuks = CategoryMasuk::whereNotIn('nama',  ['Adjustment', 'Sell Investment'])->where('user_id', null)->orWhere('user_id', auth()->id())->get();
     }
 
+    public function updatedFormUtangid()
+    {
+        $utang = Utang::findOrFail($this->form['utangid']);
+        $this->form['jumlah'] = 'Rp  ' . number_format($utang->jumlah, 0, ',', '.');
+    }
+
+    public function updatedFormUtangtemanid()
+    {
+        $utang = Utangteman::findOrFail($this->form['utangtemanid']);
+        $this->form['jumlah'] = 'Rp  ' . number_format($utang->jumlah, 0, ',', '.');
+    }
+
     public function submit()
     {
         if ($this->form['rekening_id2'] == '') {
@@ -80,11 +92,11 @@ class Create extends Component
         if ($this->form['keterangan'] == '') {
             $this->form['keterangan'] = null;
         }
-        if ($this->form['utang_id'] == '') {
-            $this->form['utang_id'] = null;
+        if ($this->form['utangid'] == '') {
+            $this->form['utangid'] = null;
         }
-        if ($this->form['utangteman_id'] == '') {
-            $this->form['utangteman_id'] = null;
+        if ($this->form['utangtemanid'] == '') {
+            $this->form['utangtemanid'] = null;
         }
         if ($this->form['category_id'] == '') {
             $this->form['category_id'] = null;
@@ -120,7 +132,7 @@ class Create extends Component
                 $this->form['jumlah'] = $this->frontJumlah;
                 return $this->emit('error', 'Total is more than the curent pocket balance');
             }
-            $utang = Utang::findOrFail($this->form['utang_id']);
+            $utang = Utang::findOrFail($this->form['utangid']);
             if ($utang->jumlah < $this->form['jumlah']) {
                 $this->form['jumlah'] = $this->frontJumlah;
                 return $this->emit('error', 'Pay More than the debt');
@@ -133,7 +145,7 @@ class Create extends Component
             $rekening1->saldo_sekarang -= $this->form['jumlah'];
             $rekening1->save();
         } else if ($this->form['jenisuang_id'] == 5) {
-            $utang = Utangteman::findOrFail($this->form['utangteman_id']);
+            $utang = Utangteman::findOrFail($this->form['utangtemanid']);
             if ($utang->jumlah < $this->form['jumlah']) {
                 $this->form['jumlah'] = $this->frontJumlah;
                 return $this->emit('error', 'Pay More than the debt');
@@ -161,7 +173,7 @@ class Create extends Component
             $rekening2->save();
         }
 
-        Transaction::create($this->form);
+        Transaction::create($this->form + ['utang_id' => $this->form['utangid'],'utangteman_id' => $this->form['utangtemanid']] );
         $this->emit('success', $msg);
         $this->emit("hideCreateTransaction");
         $this->emit('refreshTransaction');
@@ -172,8 +184,8 @@ class Create extends Component
             'rekening_id' => '',
             'rekening_id2' => '',
             'keterangan' => '',
-            'utang_id' => '',
-            'utangteman_id' => '',
+            'utangid' => '',
+            'utangtemanid' => '',
             'category_id' => '',
             'category_masuk_id' => ''
         ];

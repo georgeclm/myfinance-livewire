@@ -26,8 +26,8 @@
                 </div>
                 <div class="form-group" id="utang">
                     <select disabled
-                        class="border-0 form-control form-control-user form-block @error('form.utang_id') is-invalid @enderror"
-                        wire:model.defer="form.utang_id" name="utang_id" style="padding: 0.5rem !important">
+                        class="border-0 form-control form-control-user form-block @error('form.utangid') is-invalid @enderror utang"
+                        wire:model.defer="form.utangid" name="utangid" style="padding: 0.5rem !important">
                         <option value='' selected disabled hidden>Debt Who</option>
                         @foreach (auth()->user()->utangs as $utang)
                             <option value="{{ $utang->id }}">
@@ -36,7 +36,7 @@
                             </option>
                         @endforeach
                     </select>
-                    @error('form.utang_id')
+                    @error('form.utangid')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -44,8 +44,8 @@
                 </div>
                 <div class="form-group" id="utangteman">
                     <select disabled
-                        class="border-0 form-control form-control-user form-block @error('form.utangteman_id') is-invalid @enderror"
-                        wire:model.defer="form.utangteman_id" name="utangteman_id" style="padding: 0.5rem !important">
+                        class="border-0 form-control form-control-user form-block @error('form.utangtemanid') is-invalid @enderror utangteman"
+                        wire:model.defer="form.utangtemanid" name="utangtemanid" style="padding: 0.5rem !important">
                         <option value='' selected disabled hidden>Debt Who</option>
                         @foreach (auth()->user()->utangtemans as $utang)
                             <option value="{{ $utang->id }}">
@@ -54,7 +54,7 @@
                             </option>
                         @endforeach
                     </select>
-                    @error('form.utangteman_id')
+                    @error('form.utangtemanid')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -197,6 +197,16 @@
                 $('#utangteman').show("slow");
                 $('#utangteman').prop('required', true);
             }
+        });
+        $('.utang').on('change', function(e) {
+            var valueSelected = this.value;
+            console.log(valueSelected);
+            @this.set('form.utangid', valueSelected);
+        });
+        $('.utangteman').on('change', function(e) {
+            var valueSelected = this.value;
+            console.log(valueSelected);
+            @this.set('form.utangtemanid', valueSelected);
         });
     </script>
 @endsection
