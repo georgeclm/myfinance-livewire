@@ -80,6 +80,7 @@ class CreateMutualFund extends Component
     public function render()
     {
         $this->emit('refresh-count', 'Rp. 0');
+        $this->emit('refresh-mutual-fund');
 
         return view('livewire.investasi.mutualfund.create-mutual-fund');
     }

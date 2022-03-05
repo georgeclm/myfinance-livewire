@@ -34,11 +34,6 @@ class MutualFund extends Component
         $this->emit('refresh-count', $this->form['harga_beli']);
     }
 
-    public function create()
-    {
-        $this->emit('CreatePocket');
-        $this->emit('refresh-count', 'Rp. 0');
-    }
 
     public function changeModal($primaryId)
     {
@@ -175,7 +170,7 @@ class MutualFund extends Component
             $this->form['total'] = $this->frontTotal;
         }
         $this->mutual_funds = ModelsMutualFund::where('user_id', auth()->id())->where('unit', '!=', 0)->latest()->get();
-
+        $this->emit('refresh-mutual-fund');
         return view('livewire.mutual-fund');
     }
 }

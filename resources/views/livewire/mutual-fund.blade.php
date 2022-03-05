@@ -11,8 +11,9 @@
         @endif
         @if (auth()->user()->rekenings->isNotEmpty() &&
     auth()->user()->financialplans->isNotEmpty())
-            <button wire:click="create" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Add Mutual Fund</button>
+            <a href="javascript:void(0)" onclick="create()"
+                class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i> Add Mutual Fund</a>
         @endif
     </div>
 
@@ -136,7 +137,7 @@
                 @livewire('partials.no-data', ['message' => 'Start Add Mutual Fund to Your Asset'])
             @endforelse
         </div>
-        <div class="col-xl-4 col-lg-5 small-when-0">
+        <div wire.ignore class="col-xl-4 col-lg-5 small-when-0">
             <div class="bg-dark card shadow mb-4 border-0">
                 <!-- Card Header - Dropdown -->
                 <div class="bg-gray-100 card-header py-3 border-0">
@@ -396,6 +397,11 @@
 @section('script')
     <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
     <script>
+        function create() {
+            showModal('new-pocket');
+            unitcalculate('Rp. 0');
+        }
+
         run();
         var unit = 0;
         var total = 0;
@@ -406,6 +412,7 @@
         Livewire.on('refresh-count', price => {
             unitcalculate(price);
         });
+
 
         function unitcalculate(price) {
             buyprice = price.replace(/[^0-9]+/g, '');
@@ -439,51 +446,56 @@
             }
         }
         unitcalculate('Rp. 0');
-        var ctx = document.getElementById("myPieChart");
-        var dynamicColors = function() {
-            var r = Math.floor(Math.random() * 255);
-            var g = Math.floor(Math.random() * 255);
-            var b = Math.floor(Math.random() * 255);
-            return "rgb(" + r + "," + g + "," + b + ")";
-        };
-        var label_name = [];
-        var data_mutual_fund = [];
-        var coloR = [];
-        var border = [];
-        @foreach ($mutual_funds as $mutual_fund)
-            coloR.push(dynamicColors());
-            label_name.push("{{ $mutual_fund->nama_reksadana }}");
-            data_mutual_fund.push("{{ round(($mutual_fund->total * 100) / Auth::user()->total_mutual_funds->sum('total')) }}");
-            border.push(0);
-        @endforeach
-        var myPieChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: label_name,
-                datasets: [{
-                    data: data_mutual_fund,
-                    backgroundColor: coloR,
-                    borderWidth: border
-                }],
-            },
-            options: {
-                maintainAspectRatio: false,
-                tooltips: {
-                    backgroundColor: "rgb(255,255,255)",
-                    bodyFontColor: "#858796",
-                    borderColor: '#dddfeb',
-                    borderWidth: 1,
-                    xPadding: 15,
-                    yPadding: 15,
-                    displayColors: false,
-                    caretPadding: 10,
+
+        function refreshChart() {
+            var ctx = document.getElementById("myPieChart");
+            var dynamicColors = function() {
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                return "rgb(" + r + "," + g + "," + b + ")";
+            };
+            var label_name = [];
+            var data_mutual_fund = [];
+            var coloR = [];
+            var border = [];
+            @foreach ($mutual_funds as $mutual_fund)
+                coloR.push(dynamicColors());
+                label_name.push("{{ $mutual_fund->nama_reksadana }}");
+                data_mutual_fund.push("{{ round(($mutual_fund->total * 100) / Auth::user()->total_mutual_funds->sum('total')) }}");
+                border.push(0);
+            @endforeach
+
+            var myPieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: label_name,
+                    datasets: [{
+                        data: data_mutual_fund,
+                        backgroundColor: coloR,
+                        borderWidth: border
+                    }],
                 },
-                legend: {
-                    display: true,
-                    position: 'bottom',
+                options: {
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        borderColor: '#dddfeb',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                    },
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                    },
+                    cutoutPercentage: 80,
                 },
-                cutoutPercentage: 80,
-            },
-        });
+            });
+        }
+        refreshChart();
     </script>
 @endsection

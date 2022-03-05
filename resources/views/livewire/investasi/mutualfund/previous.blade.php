@@ -2,7 +2,7 @@
     <div class="bg-black modal__content">
         <div class="modal-header bg-gray-100 border-0">
             <h5 class="modal-title text-white">Previous Earning From Mutual Fund</h5>
-            <button onclick="closeModal('previous_reksadana')" class="close text-white">
+            <button onclick="closeModal('editmodalEmergency')" class="close text-white">
                 <span aria-hidden="true">×</span>
             </button>
         </div>

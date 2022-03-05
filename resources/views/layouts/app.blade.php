@@ -254,6 +254,7 @@
             const bottomNav = document.getElementById('bottom-nav')
             bottomNav.classList.remove('d-none')
             modalContainer.classList.remove('show-modal')
+            refreshChart()
         }
         $('#new-user').modal('show');
 
