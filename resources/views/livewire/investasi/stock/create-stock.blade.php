@@ -121,30 +121,28 @@
         </div>
     </div>
 </div>
-@section('script')
-    <script>
-        run();
-        $('.livesearch').select2({
-            placeholder: 'Select Stock',
-            ajax: {
-                url: '/ticker-search',
-                dataType: 'json',
-                delay: 250,
-                processResults: function(data) {
-                    return {
-                        results: $.map(data, function(item) {
-                            return {
-                                text: item.nama + " - " + item.code,
-                                id: item.code
-                            }
-                        })
-                    };
-                }
+<script>
+    run();
+    $('.livesearch').select2({
+        placeholder: 'Select Stock',
+        ajax: {
+            url: '/ticker-search',
+            dataType: 'json',
+            delay: 250,
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(item) {
+                        return {
+                            text: item.nama + " - " + item.code,
+                            id: item.code
+                        }
+                    })
+                };
             }
-        });
-        $('.livesearch').on('change', function(e) {
-            var data = $('.livesearch').select2("val");
-            @this.set('form.kode', data);
-        });
-    </script>
-@endsection
+        }
+    });
+    $('.livesearch').on('change', function(e) {
+        var data = $('.livesearch').select2("val");
+        @this.set('form.kode', data);
+    });
+</script>

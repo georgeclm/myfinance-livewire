@@ -58,82 +58,99 @@
     auth()->user()->financialplans->isEmpty())
         @livewire('partials.no-data', ['message' => 'Create Pocket and Financial Plan First to Start'])
     @endif
-    <div class="card-body small-when-0 ">
-        @forelse ($mutual_funds as $mutual_fund)
-            {{-- @livewire('investasi.mutualfund.topup',['mutual_fund' => $mutual_fund])
+    <div class="row card-body small-when-0  px-2 ml-0">
+        <div class="col-xl-8 col-lg-7 small-when-0">
+            @forelse ($mutual_funds as $mutual_fund)
+                {{-- @livewire('investasi.mutualfund.topup',['mutual_fund' => $mutual_fund])
             @livewire('investasi.mutualfund.change',['mutual_fund' => $mutual_fund])
             @livewire('investasi.mutualfund.jual',['mutual_fund' => $mutual_fund]) --}}
-            <div class="bg-dark border-0 card shadow mb-4">
-                <div
-                    class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ $mutual_fund->nama_reksadana }} - Rp.
-                        {{ number_format($mutual_fund->total, 0, ',', '.') }}
-                    </h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle only-big" href="#" role="button" id="dropdownMenuLink"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <a class="this_small" href="#" data-toggle="modal"
-                            data-target="#exampleModal-{{ $mutual_fund->id }}">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <button class="dropdown-item text-white"
-                                wire:click="topUpModal({{ $mutual_fund->id }})">Buy More</button>
-                            <button class="dropdown-item text-white"
-                                wire:click="changeModal({{ $mutual_fund->id }})">Change Goal</button>
-                            <button class="dropdown-item text-white"
-                                wire:click="sellModal({{ $mutual_fund->id }})">Sell</button>
+                <div class="bg-dark border-0 card shadow mb-4">
+                    <div
+                        class="bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ $mutual_fund->nama_reksadana }} - Rp.
+                            {{ number_format($mutual_fund->total, 0, ',', '.') }}
+                        </h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle only-big" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <a class="this_small" href="#" data-toggle="modal"
+                                data-target="#exampleModal-{{ $mutual_fund->id }}">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="bg-dark border-0 dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <button class="dropdown-item text-white"
+                                    wire:click="topUpModal({{ $mutual_fund->id }})">Buy More</button>
+                                <button class="dropdown-item text-white"
+                                    wire:click="changeModal({{ $mutual_fund->id }})">Change Goal</button>
+                                <button class="dropdown-item text-white"
+                                    wire:click="sellModal({{ $mutual_fund->id }})">Sell</button>
+                            </div>
                         </div>
                     </div>
+                    <!-- Card Body -->
+                    <div class="card-body text-white">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                Avg Price: Rp. {{ number_format($mutual_fund->harga_beli, 0, ',', '.') }} per-Unit
+                            </div>
+                            {{ $mutual_fund->unit }} unit
+                        </div>
+                    </div>
+                </div>
+                <div class="modal custom fade" id="exampleModal-{{ $mutual_fund->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="bg-black modal-content">
+                            <div class="modal-body p-0">
+                                <ul class="list-group p-0">
+                                    <a href="javascript:void(0)" data-dismiss="modal"
+                                        wire:click="topUpModal({{ $mutual_fund->id }})"
+                                        class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                        <div class="w-100 text-white">
+                                            <i class="fas fa-plus text-white mx-2"></i>Buy More
+                                        </div>
+                                    </a>
+                                    <a href="javascript:void(0)" data-dismiss="modal"
+                                        wire:click="changeModal({{ $mutual_fund->id }})"
+                                        class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                        <div class="w-100 text-white">
+                                            <i class="fas fa-sliders-h text-white mx-2"></i>Change Goal
+                                        </div>
+                                    </a>
+                                    <a href="javascript:void(0)" wire:click="sellModal({{ $mutual_fund->id }})"
+                                        data-dismiss="modal"
+                                        class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
+                                        <div class="w-100 text-white">
+                                            <i class="fas fa-minus text-white mx-2"></i>Sell
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                @livewire('partials.no-data', ['message' => 'Start Add Mutual Fund to Your Asset'])
+            @endforelse
+        </div>
+        <div class="col-xl-4 col-lg-5 small-when-0">
+            <div class="bg-dark card shadow mb-4 border-0">
+                <!-- Card Header - Dropdown -->
+                <div class="bg-gray-100 card-header py-3 border-0">
+                    <h6 class="m-0 font-weight-bold text-primary">Mutual Fund Allocation</h6>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body text-white">
-                    <div class="d-flex">
-                        <div class="flex-grow-1">
-                            Avg Price: Rp. {{ number_format($mutual_fund->harga_beli, 0, ',', '.') }} per-Unit
-                        </div>
-                        {{ $mutual_fund->unit }} unit
+                <div class="card-body">
+                    <div class="chart-pie my-4">
+                        <canvas id="myPieChart"></canvas>
                     </div>
+
                 </div>
             </div>
-            <div class="modal custom fade" id="exampleModal-{{ $mutual_fund->id }}" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="bg-black modal-content">
-                        <div class="modal-body p-0">
-                            <ul class="list-group p-0">
-                                <a href="javascript:void(0)" data-dismiss="modal"
-                                    wire:click="topUpModal({{ $mutual_fund->id }})"
-                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
-                                    <div class="w-100 text-white">
-                                        <i class="fas fa-plus text-white mx-2"></i>Buy More
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0)" data-dismiss="modal"
-                                    wire:click="changeModal({{ $mutual_fund->id }})"
-                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
-                                    <div class="w-100 text-white">
-                                        <i class="fas fa-sliders-h text-white mx-2"></i>Change Goal
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0)" wire:click="sellModal({{ $mutual_fund->id }})"
-                                    data-dismiss="modal"
-                                    class="list-group-item list-group-item-action bg-black  d-flex align-items-center">
-                                    <div class="w-100 text-white">
-                                        <i class="fas fa-minus text-white mx-2"></i>Sell
-                                    </div>
-                                </a>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @empty
-            @livewire('partials.no-data', ['message' => 'Start Add Mutual Fund to Your Asset'])
-        @endforelse
+        </div>
     </div>
     <div class="modal__container" wire:ignore.self id="editModal">
         <div class="bg-black modal__content">
@@ -196,7 +213,8 @@
                             class="border-0 form-control form-control-user form-block @error('financial_plan_id') is-invalid @enderror"
                             style="padding: 0.5rem !important" name="financial_plan_id" disabled>
                             @foreach (auth()->user()->financialplans as $financialplan)
-                                <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
+                                <option value="{{ $financialplan->id }}"
+                                    @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
                                     {{ $financialplan->nama }} - Rp.
                                     {{ number_format($financialplan->target, 0, ',', '.') }}</option>
                             @endforeach
@@ -251,7 +269,8 @@
 
                     </div>
                     <div class="form-group">
-                        <select wire:model="form.rekening_id" class="border-0 form-control form-control-user form-block"
+                        <select wire:model="form.rekening_id"
+                            class="border-0 form-control form-control-user form-block"
                             style="padding: 0.5rem !important" disabled>
                             @foreach (auth()->user()->rekenings as $rekening)
                                 <option value="{{ $rekening->id }}">
@@ -265,7 +284,8 @@
                             class="border-0 form-control form-control-user form-block @error('financial_plan_id') is-invalid @enderror"
                             style="padding: 0.5rem !important" name="financial_plan_id">
                             @foreach (auth()->user()->financialplans as $financialplan)
-                                <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
+                                <option value="{{ $financialplan->id }}"
+                                    @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
                                     {{ $financialplan->nama }} - Rp.
                                     {{ number_format($financialplan->target, 0, ',', '.') }}</option>
                             @endforeach
@@ -344,7 +364,8 @@
                             class="border-0 form-control form-control-user form-block @error('form.financial_plan_id') is-invalid @enderror"
                             style="padding: 0.5rem !important" name="financial_plan_id" disabled>
                             @foreach (auth()->user()->financialplans as $financialplan)
-                                <option value="{{ $financialplan->id }}" @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
+                                <option value="{{ $financialplan->id }}"
+                                    @if ($financialplan->jumlah >= $financialplan->target) hidden @endif>
                                     {{ $financialplan->nama }} - Rp.
                                     {{ number_format($financialplan->target, 0, ',', '.') }}</option>
                             @endforeach
@@ -373,6 +394,7 @@
     <br><br><br><br><br><br><br>
 </div>
 @section('script')
+    <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
     <script>
         run();
         var unit = 0;
@@ -417,5 +439,45 @@
             }
         }
         unitcalculate('Rp. 0');
+        var ctx = document.getElementById("myPieChart");
+        var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    @foreach ($mutual_funds as $mutual_fund)
+                        "{{ $mutual_fund->nama_reksadana }}",
+                    @endforeach
+                ],
+                datasets: [{
+                    data: [
+                        @foreach ($mutual_funds as $mutual_fund)
+                            "{{ round(($mutual_fund->total * 100) / Auth::user()->total_mutual_funds->sum('total')) }}",
+                        @endforeach
+                    ],
+                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
+                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#e02d1b'],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                    borderWidth: [0, 0, 0, 0, 0]
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10,
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                },
+                cutoutPercentage: 80,
+            },
+        });
     </script>
 @endsection
