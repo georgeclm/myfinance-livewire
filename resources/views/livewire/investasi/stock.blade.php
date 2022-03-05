@@ -423,52 +423,6 @@
         </div>
     </div>
     @livewire('investasi.stock.previous')
-    @livewire('investasi.stock.create-stock')
+    @livewire('investasi.stock.create-stock',['stocks' => $stocks])
     <br><br><br><br><br><br><br>
-
 </div>
-@section('script')
-    <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
-    <script>
-        var ctx = document.getElementById("myPieChart");
-        var myPieChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: [
-                    @foreach ($stocks as $stock)
-                        "{{ $stock->kode }}",
-                    @endforeach
-                ],
-                datasets: [{
-                    data: [
-                        @foreach ($stocks as $stock)
-                            "{{ round(($stock->total * 100) / Auth::user()->total_stocks->sum('total')) }}",
-                        @endforeach
-                    ],
-                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
-                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#e02d1b'],
-                    hoverBorderColor: "rgba(234, 236, 244, 1)",
-                    borderWidth: [0, 0, 0, 0, 0]
-                }],
-            },
-            options: {
-                maintainAspectRatio: false,
-                tooltips: {
-                    backgroundColor: "rgb(255,255,255)",
-                    bodyFontColor: "#858796",
-                    borderColor: '#dddfeb',
-                    borderWidth: 1,
-                    xPadding: 15,
-                    yPadding: 15,
-                    displayColors: false,
-                    caretPadding: 10,
-                },
-                legend: {
-                    display: true,
-                    position: 'bottom',
-                },
-                cutoutPercentage: 80,
-            },
-        });
-    </script>
-@endsection

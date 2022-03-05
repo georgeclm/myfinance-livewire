@@ -440,24 +440,30 @@
         }
         unitcalculate('Rp. 0');
         var ctx = document.getElementById("myPieChart");
+        var dynamicColors = function() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+        };
+        var label_name = [];
+        var data_mutual_fund = [];
+        var coloR = [];
+        var border = [];
+        @foreach ($mutual_funds as $mutual_fund)
+            coloR.push(dynamicColors());
+            label_name.push("{{ $mutual_fund->nama_reksadana }}");
+            data_mutual_fund.push("{{ round(($mutual_fund->total * 100) / Auth::user()->total_mutual_funds->sum('total')) }}");
+            border.push(0);
+        @endforeach
         var myPieChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: [
-                    @foreach ($mutual_funds as $mutual_fund)
-                        "{{ $mutual_fund->nama_reksadana }}",
-                    @endforeach
-                ],
+                labels: label_name,
                 datasets: [{
-                    data: [
-                        @foreach ($mutual_funds as $mutual_fund)
-                            "{{ round(($mutual_fund->total * 100) / Auth::user()->total_mutual_funds->sum('total')) }}",
-                        @endforeach
-                    ],
-                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
-                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#e02d1b'],
-                    hoverBorderColor: "rgba(234, 236, 244, 1)",
-                    borderWidth: [0, 0, 0, 0, 0]
+                    data: data_mutual_fund,
+                    backgroundColor: coloR,
+                    borderWidth: border
                 }],
             },
             options: {

@@ -22,7 +22,7 @@ class CreateStock extends Component
         'keterangan' => null,
         'total' => ''
     ];
-
+    public $stocks;
 
 
     public function updated($propertyName)
