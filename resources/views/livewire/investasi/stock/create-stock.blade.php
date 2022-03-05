@@ -122,6 +122,7 @@
     </div>
 </div>
 @section('script')
+    <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
     <script>
         run();
         $('.livesearch').select2({
@@ -145,6 +146,53 @@
         $('.livesearch').on('change', function(e) {
             var data = $('.livesearch').select2("val");
             @this.set('form.kode', data);
+        });
+        var ctx = document.getElementById("myPieChart");
+        var dynamicColors = function() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+        };
+        var label_ticker = [];
+        var data_stock = [];
+        var coloR = [];
+        var border = [];
+        @foreach ($stocks as $stock)
+            coloR.push(dynamicColors());
+            label_ticker.push("{{ $stock->kode }}");
+            data_stock.push("{{ round(($stock->total * 100) / Auth::user()->total_stocks->sum('total')) }}");
+            border.push(0);
+        @endforeach
+
+        var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: label_ticker,
+                datasets: [{
+                    data: data_stock,
+                    backgroundColor: coloR,
+                    borderWidth: border
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10,
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                },
+                cutoutPercentage: 80,
+            },
         });
     </script>
 @endsection

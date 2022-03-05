@@ -196,7 +196,7 @@ class Stock extends Component
             // dd($result);
             curl_close($ch);
 
-            if (curl_errno($ch)) {
+            if (!isset(json_decode($result)->quoteResponse)) {
                 // abort(500, 'Error:' . curl_error($ch));
                 return $this->errorAPI = true;
             }
