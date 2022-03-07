@@ -242,6 +242,9 @@
             thechart();
             chart2();
         });
+        window.livewire.on('refresh-chart', () => {
+            refreshChart()
+        });
         /*=============== SHOW MODAL ===============*/
         var showModal = (modalContent) => {
             const modalContainer = document.getElementById(modalContent)

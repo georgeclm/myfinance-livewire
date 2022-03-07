@@ -218,6 +218,7 @@ class Stock extends Component
             }
         }
         $this->gain = ($this->unrealized >= 0) ? true : false;
+        $this->emit('refresh-chart');
         return view('livewire.investasi.stock');
     }
 }

@@ -171,6 +171,7 @@ class MutualFund extends Component
         }
         $this->mutual_funds = ModelsMutualFund::where('user_id', auth()->id())->where('unit', '!=', 0)->latest()->get();
         $this->emit('refresh-mutual-fund');
+        $this->emit('refresh-chart');
         return view('livewire.mutual-fund');
     }
 }
