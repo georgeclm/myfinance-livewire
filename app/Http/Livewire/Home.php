@@ -70,9 +70,8 @@ class Home extends Component
         $balance = $income - $spending;
         $incomeDiff = $income - $incomeDiff;
         $spendingDiff = $spending - $spendingDiff;
-
-        $incomeDiffPercent = ($income + $incomeDiff != 0) ?  round($incomeDiff / ($income + $incomeDiff) * 100) : 0;
-        $spendingDiffPercent = ($spending + $spendingDiff != 0) ? round($spendingDiff / ($spending + $spendingDiff) * 100) : 0;
+        $incomeDiffPercent = ($income + $incomeDiff != 0) ?  round($incomeDiff / ($income) * 100) : 0;
+        $spendingDiffPercent = ($spending + $spendingDiff != 0) ? round($spendingDiff / ($spending) * 100) : 0;
         for ($i = 1; $i <= 4; $i++) {
             $cacheId = $i . auth()->id() . now()->format('F');
             $prevIncome[$i] = cache()->remember('prevIncome' . $cacheId, 60 * 60 * 24 * 30, function () use ($i) {
