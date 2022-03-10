@@ -189,7 +189,7 @@ class Stock extends Component
 
             $headers = array();
             $headers[] = 'Accept: application/json';
-            $headers[] = 'X-Api-Key: XE6XBRrsIR2TJRK4UVUjhaY739kIFSD24TMxFRcl';
+            $headers[] = 'X-Api-Key: ApklkHS2Yc8EBpMPO2DAQ1jrBa0b3QEtkZM9FV20';
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
             $result = curl_exec($ch);
