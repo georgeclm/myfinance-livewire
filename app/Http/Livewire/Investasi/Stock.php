@@ -168,7 +168,7 @@ class Stock extends Component
 
     public function mount()
     {
-        $this->stocks = ModelsStock::where('user_id', auth()->id())->where('lot', '!=', 0)->latest()->get();
+        $this->stocks = ModelsStock::where('user_id', auth()->id())->where('lot', '!=', 0)->orderBy('total','desc')->get();
         $queryString = "https://yfapi.net/v6/finance/quote?symbols=";
         if ($this->stocks->isNotEmpty()) {
 
@@ -210,7 +210,7 @@ class Stock extends Component
 
     public function render()
     {
-        $this->stocks = ModelsStock::where('user_id', auth()->id())->where('lot', '!=', 0)->latest()->get();
+        $this->stocks = ModelsStock::where('user_id', auth()->id())->where('lot', '!=', 0)->orderBy('total','desc')->get();
         if (!$this->errorAPI) {
             $this->unrealized = 0;
             foreach ($this->stocks  as  $stock) {
