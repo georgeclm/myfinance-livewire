@@ -8,8 +8,7 @@
                     class="fas fa-plus fa-sm text-white-50"></i>
                 Previous Earning?</button>
         @endif
-        @if (auth()->user()->rekenings->isNotEmpty() &&
-    auth()->user()->financialplans->isNotEmpty())
+        @if (auth()->user()->rekenings->isNotEmpty())
             <button onclick="showModal('new-pocket')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
                     class="fas fa-download fa-sm text-white-50"></i> Add Stock</button>
         @endif
@@ -184,21 +183,22 @@
                 @livewire('partials.no-data', ['message' => 'Start Add Stock to Your Asset'])
             @endforelse
         </div>
-        <div class="col-xl-4 col-lg-5 small-when-0">
-            <div class="bg-dark card shadow mb-4 border-0">
-                <!-- Card Header - Dropdown -->
-                <div class="bg-gray-100 card-header py-3 border-0">
-                    <h6 class="m-0 font-weight-bold text-primary">Stock Allocation</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-pie my-4">
-                        <canvas id="myPieChart"></canvas>
+        @if($stocks->isNotEmpty())
+            <div class="col-xl-4 col-lg-5 small-when-0">
+                <div class="bg-dark card shadow mb-4 border-0">
+                    <!-- Card Header - Dropdown -->
+                    <div class="bg-gray-100 card-header py-3 border-0">
+                        <h6 class="m-0 font-weight-bold text-primary">Stock Allocation</h6>
                     </div>
-
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie my-4">
+                            <canvas id="myPieChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
     <div class="modal__container" wire:ignore.self id="editModal">
         <div class="bg-black modal__content">

@@ -137,21 +137,23 @@
                 @livewire('partials.no-data', ['message' => 'Start Add Mutual Fund to Your Asset'])
             @endforelse
         </div>
-        <div wire.ignore class="col-xl-4 col-lg-5 small-when-0">
-            <div class="bg-dark card shadow mb-4 border-0">
-                <!-- Card Header - Dropdown -->
-                <div class="bg-gray-100 card-header py-3 border-0">
-                    <h6 class="m-0 font-weight-bold text-primary">Mutual Fund Allocation</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-pie my-4">
-                        <canvas id="myPieChart"></canvas>
+        @if($mutual_funds->isNotEmpty())
+            <div wire.ignore class="col-xl-4 col-lg-5 small-when-0">
+                <div class="bg-dark card shadow mb-4 border-0">
+                    <!-- Card Header - Dropdown -->
+                    <div class="bg-gray-100 card-header py-3 border-0">
+                        <h6 class="m-0 font-weight-bold text-primary">Mutual Fund Allocation</h6>
                     </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie my-4">
+                            <canvas id="myPieChart"></canvas>
+                        </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
     <div class="modal__container" wire:ignore.self id="editModal">
         <div class="bg-black modal__content">
