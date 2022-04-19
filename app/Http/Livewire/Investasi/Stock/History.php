@@ -8,12 +8,17 @@ use Livewire\Component;
 class History extends Component
 {
     public $stocks;
-    public function mount()
-    {
-        $this->stocks = Stock::where('user_id', auth()->id())->onlyTrashed()->orderBy('deleted_at', 'desc')->get();
-    }
+    public $sort_by;
+
+
     public function render()
     {
+        $this->stocks = Stock::where('user_id', auth()->id())->onlyTrashed();
+        if ($this->sort_by  != '') {
+            $this->stocks = $this->stocks->orderBy('gain_or_loss', ($this->sort_by == 'gain' ? 'desc' : 'asc'))->get();
+        } else {
+            $this->stocks = $this->stocks->orderBy('deleted_at', 'desc')->get();
+        }
         return view('livewire.investasi.stock.history');
     }
 }

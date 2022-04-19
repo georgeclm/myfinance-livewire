@@ -23,6 +23,22 @@
                 </div>
             </div>
         </div>
+        <div class="small-when-0 col-xl-3 col-md-6 mb-4">
+            <div class="bg-gray-100 border-0 card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <select wire:model="sort_by" class="border-0 form-control form-control-user form-block"
+                                style="padding: 0.5rem !important">
+                                <option value=''>Sell Date</option>
+                                <option value='gain'>Gain</option>
+                                <option value='loss'>Loss</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     @if (auth()->user()->rekenings->isEmpty() &&
     auth()->user()->financialplans->isEmpty())
@@ -34,9 +50,14 @@
                 <div
                     class="@if ($stock->gain_or_loss > 0) text-success @else text-danger @endif bg-gray-100 border-0 card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold ">{{ $stock->kode }} -
-                        Rp. @if ($stock->gain_or_loss > 0) +@endif{{ number_format($stock->gain_or_loss, 0, ',', '.') }}
+                        Rp. @if ($stock->gain_or_loss > 0)
+                            +
+                        @endif{{ number_format($stock->gain_or_loss, 0, ',', '.') }}
                     </h6>
-                    @if ($stock->gain_or_loss > 0) +@endif{{ round((($stock->harga_jual - $stock->harga_beli) / $stock->harga_beli) * 100, 2) }}
+                    @if ($stock->gain_or_loss > 0)
+                        +
+                    @endif
+                    {{ round((($stock->harga_jual - $stock->harga_beli) / $stock->harga_beli) * 100, 2) }}
                     %
                 </div>
                 <!-- Card Body -->
@@ -53,11 +74,11 @@
                     </div>
                 </div>
             </div>
-        @empty
-            @livewire('partials.no-data', ['message' => 'No History'])
-        @endforelse
-    </div>
-    {{-- @livewire('investasi.stock.create-stock') --}}
-    {{-- @livewire('investasi.stock.previous') --}}
+            @empty
+                @livewire('partials.no-data', ['message' => 'No History'])
+            @endforelse
+        </div>
+        {{-- @livewire('investasi.stock.create-stock') --}}
+        {{-- @livewire('investasi.stock.previous') --}}
 
-</div>
+    </div>
