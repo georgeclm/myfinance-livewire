@@ -75,10 +75,10 @@ class Home extends Component
         for ($i = 1; $i <= 4; $i++) {
             $cacheId = $i . auth()->id() . now()->format('F');
             $prevIncome[$i] = cache()->remember('prevIncome' . $cacheId, 60 * 60 * 24 * 30, function () use ($i) {
-                return Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
+                return Auth::user()->all_transactions()->whereYear('created_at', now()->year)->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');
             });
             $prevSpending[$i] = cache()->remember('prevSpending' . $cacheId, 60 * 60 * 24 * 30, function () use ($i) {
-                return Auth::user()->all_transactions()->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
+                return Auth::user()->all_transactions()->whereYear('created_at', now()->year)->whereMonth('created_at', now()->subMonth($i)->month)->where('jenisuang_id', 2)->where('category_id', '!=', '10')->sum('jumlah');
             });
             $totalStockGainOrLoss = cache()->remember('totalStockGainOrLoss' . $cacheId, 60 * 60 * 24 * 30, function () use ($i, $stock) {
                 return $stock->totalGainOrLossMonth($i)->sum('gain_or_loss');

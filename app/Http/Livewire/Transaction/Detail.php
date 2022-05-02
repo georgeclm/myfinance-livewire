@@ -41,7 +41,7 @@ class Detail extends Component
             $this->transactions = $this->transactions->where('created_at', '>=', $date_range1[0]);
             $this->transactions = $this->transactions->where('created_at', '<=', $date_range1[1]);
         } else {
-            $this->transactions = $this->transactions->whereMonth('created_at', now()->month);
+            $this->transactions = $this->transactions->whereYear('created_at', now()->year)->whereMonth('created_at', now()->month);
         }
         $this->transactions = $this->transactions->latest()->get();
         if ($this->search) {

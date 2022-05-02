@@ -65,7 +65,7 @@ class Transaction extends Component
             $transactions = $transactions->where('created_at', '>=', $date_range1[0]);
             $transactions = $transactions->where('created_at', '<=', $date_range1[1]);
         } else {
-            $transactions = $transactions->whereMonth('created_at', now()->month);
+            $transactions = $transactions->whereYear('created_at', now()->year)->whereMonth('created_at', now()->month);
         }
         $transactions = $transactions->latest()->get();
         $income = $transactions->where('jenisuang_id', 1)->where('category_masuk_id', '!=', '10')->sum('jumlah');

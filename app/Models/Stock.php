@@ -29,11 +29,11 @@ class Stock extends Model
             $result = $result->where('deleted_at', '<=', $date_range1[1]);
             return $result->get();
         }
-        return $result->whereMonth('deleted_at', now()->month)->get();
+        return $result->whereYear('deleted_at', now()->year)->whereMonth('deleted_at', now()->month)->get();
     }
     public function totalGainOrLossMonth($month = null)
     {
         $result = $this->where('user_id', auth()->id())->onlyTrashed();
-        return $result->whereMonth('deleted_at', now()->subMonth($month)->month)->get();
+        return $result->whereYear('deleted_at', now()->year)->whereMonth('deleted_at', now()->subMonth($month)->month)->get();
     }
 }

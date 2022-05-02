@@ -90,7 +90,7 @@ class User extends Authenticatable implements JWTSubject
             $return = $return->where('created_at', '<=', $date_range1[1]);
             return $return->latest()->get();
         }
-        return $return->whereMonth('created_at', now()->month)->orderBy('created_at', 'desc');
+        return $return->whereYear('created_at', now()->year)->whereMonth('created_at', now()->month)->orderBy('created_at', 'desc');
     }
     public function utangs()
     {

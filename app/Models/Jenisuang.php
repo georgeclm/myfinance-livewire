@@ -28,7 +28,7 @@ class Jenisuang extends Model
             $return = $return->where('created_at', '<=', $date_range1[1]);
             return $return->latest()->get();
         }
-        return $return->whereMonth('created_at', now()->month)->latest()->get();
+        return $return->whereYear('created_at', now()->year)->whereMonth('created_at', now()->month)->latest()->get();
     }
 
     public function all_transactions()
