@@ -39,6 +39,24 @@
                 </div>
             </div>
         </div>
+        <div class="small-when-0 col-xl-3 col-md-6 mb-4">
+            <div class="bg-gray-100 border-0 card border-left-{{ ($winrate > 50) ? 'success' : 'danger' }} shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-{{ ($winrate > 50) ? 'success' : 'danger' }} text-uppercase mb-1">
+                                Win Rate</div>
+                            <div class="h7 mb-0 font-weight-bold text-{{ ($winrate > 50) ? 'success' : 'danger' }}">
+                                {{ $winrate }} %
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-signal fa-2x text-{{ ($winrate > 50) ? 'success' : 'danger' }}"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     @if (auth()->user()->rekenings->isEmpty() &&
     auth()->user()->financialplans->isEmpty())
