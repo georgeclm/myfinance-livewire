@@ -20,7 +20,7 @@ class History extends Component
             $this->stocks = $this->stocks->orderBy('deleted_at', 'desc')->get();
         }
         if($this->stocks->count() != 0){
-            $this->winrate = $this->stocks->where('gain_or_loss','<',0)->count()*100/$this->stocks->count();
+            $this->winrate = round($this->stocks->where('gain_or_loss','>',0)->count()*100/$this->stocks->count(),2);
         }
         return view('livewire.investasi.stock.history');
     }
