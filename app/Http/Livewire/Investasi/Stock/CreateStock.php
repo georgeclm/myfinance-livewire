@@ -59,6 +59,7 @@ class CreateStock extends Component
         }
         // dd(json_decode($result)->quoteResponse->result[0]);
         $this->form['harga_beli'] = 'Rp  ' . number_format(json_decode($result)->quoteResponse->result[0]->regularMarketPrice, 0, ',', '.');
+        $this->emit('count-again');
     }
     protected $validationAttributes = [
         'form.kode' => 'code',

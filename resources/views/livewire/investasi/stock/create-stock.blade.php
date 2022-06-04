@@ -115,6 +115,8 @@
                     @enderror
                 </div>
             </form>
+            <b class="text-white">Total Price</b>
+            <span class="float-right text-white"> <span id="Create"></span></span>
         </div>
         <div class="modal-footer border-0">
             <input type="submit" class="btn btn-primary btn-block" form="addStock" value="Add" />
@@ -124,7 +126,34 @@
 @section('script')
     <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
     <script>
+        var unitCreate = 0;
+        var totalCreate = 0;
+        var buypriceCreate = 0;
+
         run();
+        function unitcalculate() {
+            buypriceCreate = $('input[name=harga_beli]').val().replace(/[^0-9]+/g, '');
+            totalCreate = $('input[name=lot]').val().replace(/[^0-9]+/g, '');
+            count();
+            $('input[name=lot]').on('input', function(e) {
+                totalCreate = $('input[name=lot]').val().replace(/[^0-9]+/g, '');
+                count();
+            });
+            $('input[name=harga_beli]').on('input', function(e) {
+                buypriceCreate = $('input[name=harga_beli]').val().replace(/[^0-9]+/g, '');
+                count();
+            });
+        }
+        unitcalculate();
+        Livewire.on('count-again', () => {
+            unitcalculate();
+        });
+        function count() {
+            if (!isNaN(totalCreate) && !isNaN(buypriceCreate)) {
+                unitCreate = totalCreate * 100 * buypriceCreate;
+                document.getElementById("Create").innerHTML =  'Rp. ' + parseFloat(unitCreate).toLocaleString().replaceAll(",",".");
+            }
+        }
         $('.livesearch').select2({
             placeholder: 'Select Stock',
             ajax: {
