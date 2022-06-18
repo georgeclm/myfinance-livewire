@@ -169,7 +169,7 @@ class MutualFund extends Component
             $this->form['harga_beli'] = $this->frontJumlah;
             $this->form['total'] = $this->frontTotal;
         }
-        $this->mutual_funds = ModelsMutualFund::where('user_id', auth()->id())->where('unit', '!=', 0)->latest()->get();
+        $this->mutual_funds = ModelsMutualFund::where('user_id', auth()->id())->where('unit', '!=', 0)->orderBy('total','desc')->get();
         $this->emit('refresh-mutual-fund');
         $this->emit('refresh-chart');
         return view('livewire.mutual-fund');
