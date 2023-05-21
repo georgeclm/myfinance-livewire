@@ -53,6 +53,7 @@ class CreateStock extends Component
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
         $result = curl_exec($ch);
+        dd($result);
         curl_close($ch);
         if (!isset(json_decode($result)->quoteResponse)) {
             return $this->emit('error', 'Error Code Search');
