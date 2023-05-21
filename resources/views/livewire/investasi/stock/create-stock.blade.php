@@ -126,6 +126,16 @@
 @section('script')
     <script src="{{ asset('js/chart.js/Chart.min.js') }}" data-turbolinks-track="true"></script>
     <script>
+        window.addEventListener('name-updated', event => {
+            document.getElementById('prediction').textContent = event.detail.prediction; // Update the text
+            document.getElementById('current').textContent = event.detail.current; // Update the text
+            document.getElementById("prediction").classList.add(event.detail.color);
+        })
+
+        window.addEventListener('error-predict', event => {
+            document.getElementById('err-msg-predict').textContent = event.detail.msg; // Update the text
+        })
+
         var unitCreate = 0;
         var totalCreate = 0;
         var buypriceCreate = 0;
@@ -172,9 +182,31 @@
                 }
             }
         });
+        $('.livesearch2').select2({
+            placeholder: 'Select Stock',
+            ajax: {
+                url: '/ticker-search',
+                dataType: 'json',
+                delay: 250,
+                processResults: function(data) {
+                    return {
+                        results: $.map(data, function(item) {
+                            return {
+                                text: item.nama + " - " + item.code,
+                                id: item.code
+                            }
+                        })
+                    };
+                }
+            }
+        });
         $('.livesearch').on('change', function(e) {
             var data = $('.livesearch').select2("val");
             @this.set('form.kode', data);
+        });
+        $('.livesearch2').on('change', function(e) {
+            var data = $('.livesearch2').select2("val");
+            Livewire.emit('changeSymbol', data);
         });
 
         function refreshChart() {

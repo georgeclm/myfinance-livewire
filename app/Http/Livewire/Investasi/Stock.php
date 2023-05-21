@@ -9,6 +9,12 @@ use App\Models\Rekening;
 use App\Models\Stock as ModelsStock;
 use App\Models\Transaction;
 use Livewire\Component;
+use Phpml\Regression\LeastSquares;
+use Phpml\Metric\Regression;
+use Scheb\YahooFinanceApi\ApiClientFactory;
+use Scheb\YahooFinanceApi\ApiClient;
+use DateInterval;
+use DateTime;
 
 class Stock extends Component
 {
@@ -18,7 +24,7 @@ class Stock extends Component
     public $gain;
     public $stock;
     public $form;
-    protected $listeners = ['refreshStock', 'refreshStockRender'];
+    protected $listeners = ['refreshStock', 'refreshStockRender', 'changeSymbol'];
     public $errorAPI = false;
 
     public function refreshStockRender()
@@ -29,6 +35,112 @@ class Stock extends Component
     public function refreshStock()
     {
         $this->mount();
+    }
+
+    public function changeSymbol($symbol)
+    {
+        // Get the current date in the desired timezone
+        $currentDate = new DateTime('now');
+
+        // Subtract one day if it's a weekday and before 5 PM
+        if ($currentDate->format('N') < 6 && $currentDate->format('H') < 17) {
+            $currentDate->sub(new DateInterval('P1D'));
+        }
+
+        // Subtract one day at a time until we reach a weekday
+        while ($currentDate->format('N') >= 6) {
+            $currentDate->sub(new DateInterval('P1D'));
+        }
+
+        // The $currentDate now contains the last weekday
+        $lastWeekday = $currentDate->format('Y-m-d');
+        // Step 1: Collect the data
+        $symbol = $symbol . '.JK';
+        $start_date = '2010-01-01';
+        $end_date = $lastWeekday;
+        // Retrieve the historical data for the given stock symbol and date range
+        try {
+            // Initialize the API client
+            $client = ApiClientFactory::createApiClient();
+
+            // Retrieve the historical data for the given stock symbol and date range
+            $historicalData = $client->getHistoricalQuoteData(
+                $symbol,
+                ApiClient::INTERVAL_1_DAY,
+                new \DateTime($start_date),
+                new \DateTime($end_date)
+            );
+        } catch (\Exception $e) {
+            // Handle the exception gracefully
+            // Log the error or display a generic error message to the user
+            error_log($e->getMessage()); // Log the error message to your server's error log
+            // Display a user-friendly error message to the user
+            return $this->dispatchBrowserEvent('error-predict', ['msg' => 'Error on the Stock API or the symbol is not valid. Choose Other Stock.']);
+        }
+
+        // Convert the data to a pandas dataframe-like structure
+        $data = array_map(function($entry) {
+            return [
+                'Open' => $entry->getOpen(),
+                'High' => $entry->getHigh(),
+                'Low' => $entry->getLow(),
+                'Close' => $entry->getClose(),
+                'Adj Close' => $entry->getAdjClose(),
+                'Volume' => $entry->getVolume(),
+            ];
+        }, $historicalData);
+
+        // Extract the features (samples) and target variable
+        $samples = array_map(function($entry) {
+            return [
+                $entry['Open'],
+                $entry['High'],
+                $entry['Low'],
+                $entry['Volume']
+            ];
+        }, $data);
+        $targets = array_column($data, 'Close');
+
+        // Create the dataset
+        $df = new \Phpml\Dataset\ArrayDataset($samples, $targets);
+
+
+        // Step 2: Split the data
+        $split = new \Phpml\CrossValidation\StratifiedRandomSplit($df, 0.2);
+
+        // Step 3: Train the model
+        $regression = new LeastSquares();
+        $regression->train($split->getTrainSamples(), $split->getTrainLabels());
+
+        // Step 4: Predict with the model on sample
+        // $predicted = $regression->predict($split->getTestSamples());
+
+        // Step 5: Evaluate the model mse
+        // $rmse = Regression::meanSquaredError($split->getTestLabels(), $predicted);
+
+        // Step 6: Make predictions on new data
+        $new_data = array_map(function($entry) {
+            return [
+                $entry->getOpen(),
+                $entry->getHigh(),
+                $entry->getLow(),
+                $entry->getVolume()
+            ];
+        }, $client->getHistoricalQuoteData($symbol, ApiClient::INTERVAL_1_DAY, new \DateTime($end_date), new \DateTime('2030-01-01')));
+
+        $predictions = $regression->predict($new_data);
+        $curr = (!empty($data)) ? end($data)['Close'] : '';
+        $pred = (!empty($predictions)) ? end($predictions) : '';
+        $diff = $pred - $curr;
+        $percent_diff = ($diff / $curr) * 100;
+        $percent_diff = number_format($percent_diff, 2);
+        $color = ($percent_diff > 0) ? 'text-success' : 'text-danger';
+        $predNumber = (($percent_diff > 0) ? '+' : ''). $percent_diff . '% Rp  ' . number_format($pred ?? 0, 0, ',', '.');
+        $currNumber = 'Rp  ' . number_format($curr ?? 0, 0, ',', '.');
+        if ($pred == ''){
+            $predNumber = 'Not Enough History Data to Predict';
+        }
+        $this->dispatchBrowserEvent('name-updated', ['current' => $currNumber, 'prediction' => $predNumber, 'color' => $color]);
     }
 
     public function topupModal($primaryId)

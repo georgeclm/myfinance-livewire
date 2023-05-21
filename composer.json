@@ -16,6 +16,9 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "livewire/livewire": "^2.5",
+        "markrogoyski/math-php": "2.*",
+        "php-ai/php-ml": "^0.10.0",
+        "scheb/yahoo-finance-api": "^4.5",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
@@ -32,7 +35,8 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Phpml\\": "vendor/php-ai/php-ml/src/"
         },
         "files":[
             "app/Http/Helpers.php"

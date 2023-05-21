@@ -12,6 +12,7 @@
             <button onclick="showModal('new-pocket')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
                     class="fas fa-download fa-sm text-white-50"></i> Add Stock</button>
         @endif
+        <button onclick="showModal('predictStock')" class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Predict Stock (ML)</button>
     </div>
     <div class="row px-2 ml-0">
         <div class="small-when-0 col-xl-3 col-md-6 mb-4">
@@ -99,8 +100,13 @@
                                     @if ($stockPrice[$stock->kode] > $stock->harga_beli)
                                         +
                                     @endif
+                                    {{-- {{ ($stockPrice[$stock->kode] * $stock->lot * 100) -  $stock->total }} --}}
                                     {{ round((($stockPrice[$stock->kode] - $stock->harga_beli) / $stock->harga_beli) * 100, 2) }}
                                     %
+                                </span>
+                                <span
+                                    class="badge @if ($stockPrice[$stock->kode] >= $stock->harga_beli) badge-success @else badge-danger @endif">
+                                    Rp. {{ number_format(($stockPrice[$stock->kode] * $stock->lot * 100) -  $stock->total) }}
                                 </span>
                             @endif
                         </h6>
@@ -132,12 +138,12 @@
                     <div class="card-body text-white">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                Avg Price: Rp. {{ number_format($stock->harga_beli, 0, ',', '.') }} per-Lembar
+                                Avg : Rp. {{ number_format($stock->harga_beli, 0, ',', '.') }}
                                 <br>
                                 @if (!$errorAPI)
                                     @if ($stockPrice[$stock->kode] != 0)
-                                        Current Price: Rp.
-                                        {{ number_format($stockPrice[$stock->kode], 0, ',', '.') }} per-Lembar
+                                        Last : Rp.
+                                        {{ number_format($stockPrice[$stock->kode], 0, ',', '.') }}
                                     @endif
                                 @endif
                             </div>
@@ -273,6 +279,32 @@
             </div>
             <div class="modal-footer border-0">
                 <input type="submit" class="btn btn-primary btn-block" form="formeditModal" value="Buy" />
+            </div>
+        </div>
+    </div>
+    <div class="modal__container" id="predictStock" wire:ignore.self>
+        <div class="bg-black modal__content">
+            <div class="modal-header bg-gray-100 border-0">
+                <h5 class="modal-title text-white">Predict Stock Price (ML)</h5>
+                <button onclick="closeModal('predictStock')" class="close text-white">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" wire:ignore>
+                    <select
+                        class="livesearch2 border-0 form-control form-control-user"
+                        style="width: 100%; " name="kode" required>
+                    </select>
+                </div>
+                <b class="text-white">Current Price :</b>
+                <span class="float-right text-white"> <span id="current"></span></span>
+                <br>
+                <b class="text-white">Tomorrow Price Prediction :</b>
+                <span class="float-right text-white"> <span id="prediction"></span></span>
+                <br>
+                <br>
+                <b id="err-msg-predict" class="text-warning"><i class="fas fa-info fa-sm text-warning mr-2"></i>Please note that this is not a buy or sell recommendation</b>
             </div>
         </div>
     </div>
